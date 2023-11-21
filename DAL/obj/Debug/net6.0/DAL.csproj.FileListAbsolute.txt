@@ -1,0 +1,14 @@
+D:\BTL_API_BanMyPham\DAL\bin\Debug\net6.0\DAL.deps.json
+D:\BTL_API_BanMyPham\DAL\bin\Debug\net6.0\DAL.runtimeconfig.json
+D:\BTL_API_BanMyPham\DAL\bin\Debug\net6.0\DAL.dll
+D:\BTL_API_BanMyPham\DAL\bin\Debug\net6.0\DAL.pdb
+D:\BTL_API_BanMyPham\DAL\obj\Debug\net6.0\DAL.csproj.AssemblyReference.cache
+D:\BTL_API_BanMyPham\DAL\obj\Debug\net6.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\BTL_API_BanMyPham\DAL\obj\Debug\net6.0\DAL.AssemblyInfoInputs.cache
+D:\BTL_API_BanMyPham\DAL\obj\Debug\net6.0\DAL.AssemblyInfo.cs
+D:\BTL_API_BanMyPham\DAL\obj\Debug\net6.0\DAL.csproj.CoreCompileInputs.cache
+D:\BTL_API_BanMyPham\DAL\obj\Debug\net6.0\DAL.dll
+D:\BTL_API_BanMyPham\DAL\obj\Debug\net6.0\refint\DAL.dll
+D:\BTL_API_BanMyPham\DAL\obj\Debug\net6.0\DAL.pdb
+D:\BTL_API_BanMyPham\DAL\obj\Debug\net6.0\DAL.genruntimeconfig.cache
+D:\BTL_API_BanMyPham\DAL\obj\Debug\net6.0\ref\DAL.dll

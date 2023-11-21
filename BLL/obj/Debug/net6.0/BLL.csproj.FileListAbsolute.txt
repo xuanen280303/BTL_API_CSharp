@@ -1,0 +1,14 @@
+D:\BTL_API_BanMyPham\BLL\bin\Debug\net6.0\BLL.deps.json
+D:\BTL_API_BanMyPham\BLL\bin\Debug\net6.0\BLL.runtimeconfig.json
+D:\BTL_API_BanMyPham\BLL\bin\Debug\net6.0\BLL.dll
+D:\BTL_API_BanMyPham\BLL\bin\Debug\net6.0\BLL.pdb
+D:\BTL_API_BanMyPham\BLL\obj\Debug\net6.0\BLL.csproj.AssemblyReference.cache
+D:\BTL_API_BanMyPham\BLL\obj\Debug\net6.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
+D:\BTL_API_BanMyPham\BLL\obj\Debug\net6.0\BLL.AssemblyInfoInputs.cache
+D:\BTL_API_BanMyPham\BLL\obj\Debug\net6.0\BLL.AssemblyInfo.cs
+D:\BTL_API_BanMyPham\BLL\obj\Debug\net6.0\BLL.csproj.CoreCompileInputs.cache
+D:\BTL_API_BanMyPham\BLL\obj\Debug\net6.0\BLL.dll
+D:\BTL_API_BanMyPham\BLL\obj\Debug\net6.0\refint\BLL.dll
+D:\BTL_API_BanMyPham\BLL\obj\Debug\net6.0\BLL.pdb
+D:\BTL_API_BanMyPham\BLL\obj\Debug\net6.0\BLL.genruntimeconfig.cache
+D:\BTL_API_BanMyPham\BLL\obj\Debug\net6.0\ref\BLL.dll
