@@ -8,9 +8,12 @@ GO
 CREATE TABLE Users
 (
 UserID Nvarchar(10) PRIMARY KEY,
+Username Nvarchar(20) not null,
 Password Nvarchar(30) not null,
+EmailUser Varchar(30) CHECK (EmailUser LIKE '%@%'),
 Permission int
 )
+
 
 -- LoaiMyPham(MaLoaiMP, TenMP, GhiChu) 
 CREATE TABLE LoaiMyPham
@@ -44,6 +47,7 @@ SDTNV Varchar(11) DEFAULT N'Không có',
 DiachiNV Nvarchar(30),
 Email Varchar(30) CHECK (Email LIKE '%@%')
 )
+
 
 --KhachHang (IDKH, HoTenKH, SDTKH, DiaChiKH)
 CREATE TABLE KhachHang
@@ -104,11 +108,11 @@ CREATE TABLE ChiTietHoaDonBan
 MaHDB Nvarchar(10) CONSTRAINT FK_ChiTietHoaDonNhap_HDB FOREIGN KEY REFERENCES HoaDonBan(MaHDB),
 MaMP Nvarchar(10) CONSTRAINT FK_ChiTietHoaDonBan_MyPham FOREIGN KEY REFERENCES MyPham(MaMP),
 TenMP Nvarchar(50) not null,
-SLBan float check (SLBan>0),
+SLBan int check (SLBan>0),
 DGBan float check (DGBan>0),
-GiamGia float Check (GiamGia>=0),
 ThanhTien float check (ThanhTien>0)
 )
+
 
 SELECT TOP 1 MyPham.MaMP, MyPham.TenMP, SUM(ChiTietHoaDonBan.SLBan) AS TongSoLuongBan
 FROM MyPham
@@ -119,10 +123,20 @@ ORDER BY SUM(ChiTietHoaDonBan.SLBan) DESC
 drop table ChiTietHoaDonBan
 
 -- INSERT THÔNG TIN VÀO CÁC BẢNG
---INSERT Users(UserID, Password, Permission)
-INSERT INTO Users(UserID, Password, Permission)
-VALUES('ADMIN',N'ChuCuaHang',1),
-      ('USER',N'NhanVien',0)
+CREATE TABLE Users
+(
+UserID Nvarchar(10) PRIMARY KEY,
+Username Nvarchar(20) not null,
+Password Nvarchar(30) not null,
+EmailUser Varchar(30) CHECK (EmailUser LIKE '%@%'),
+Permission int
+)
+
+--INSERT Users(UserID, Username, Password, EmailUser, Permission)
+INSERT INTO Users(UserID, Username, Password, EmailUser, Permission)
+VALUES('ADMIN',N'ChuCuaHang',12345,N'enchan280303@gmail.com',1),
+      ('USER',N'NhanVien',123456,N'enchan280303@gmail.com',0)
+
 SELECT * FROM Users
 
 -- INSERT LoaiMyPham(MaLoaiMP, TenLoaiMP, MoTa)
@@ -287,3 +301,28 @@ VALUES('HDB01','MP01',N'Kem chống nắng Cetella',10, 350000,0,3500000),
 	  ('HDB08','MP26',N'Sữa tắm Terosi',20, 250000,0,5000000),
 	  ('HDB09','MP19',N'Vaseline PX50',2, 250000,0,500000),
 	  ('HDB10','MP05',N'Sữa rửa mặt SVR',10, 450000,0,4500000)
+
+
+	  create PROCEDURE getnhanvienbyid(@id Nvarchar(10))
+AS
+BEGIN
+SELECT*from NhanVien where MaNV = @id 
+END;
+
+
+create PROCEDURE sp_nhanvien_create(
+@MaNV Nvarchar(10),
+@HoTenNV Nvarchar(30),
+@NgaySinh DATE,
+@GioiTinh Nvarchar(3),
+@CaLam Nvarchar(8),
+@SDTNV Varchar(11),
+@DiachiNV Nvarchar(30),
+@Email Varchar(30)
+)
+AS
+    BEGIN
+       insert into NhanVien(TenKH,GioiTinh,DiaChi,SDT,Email)
+	   values(@TenKH,@GioiTinh,@DiaChi,@SDT,@Email);
+    END;
+GO

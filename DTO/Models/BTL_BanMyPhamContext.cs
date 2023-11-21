@@ -282,18 +282,18 @@ namespace API.Models
 
             modelBuilder.Entity<NhanVien>(entity =>
             {
-                entity.HasKey(e => e.MaNv)
+                entity.HasKey(e => e.MaNV)
                     .HasName("PK__NhanVien__2725D70A8CABFD04");
 
                 entity.ToTable("NhanVien");
 
-                entity.Property(e => e.MaNv)
+                entity.Property(e => e.MaNV)
                     .HasMaxLength(10)
                     .HasColumnName("MaNV");
 
                 entity.Property(e => e.CaLam).HasMaxLength(8);
 
-                entity.Property(e => e.DiachiNv)
+                entity.Property(e => e.DiachiNV)
                     .HasMaxLength(30)
                     .HasColumnName("DiachiNV");
 
@@ -303,13 +303,13 @@ namespace API.Models
 
                 entity.Property(e => e.GioiTinh).HasMaxLength(3);
 
-                entity.Property(e => e.HoTenNv)
+                entity.Property(e => e.HoTenNV)
                     .HasMaxLength(30)
                     .HasColumnName("HoTenNV");
 
                 entity.Property(e => e.NgaySinh).HasColumnType("date");
 
-                entity.Property(e => e.Sdtnv)
+                entity.Property(e => e.SDTNV)
                     .HasMaxLength(11)
                     .IsUnicode(false)
                     .HasColumnName("SDTNV")

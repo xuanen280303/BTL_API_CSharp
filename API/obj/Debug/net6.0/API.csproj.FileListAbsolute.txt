@@ -70,3 +70,12 @@ D:\BTL_API_BanMyPham\API\obj\Debug\net6.0\refint\API.dll
 D:\BTL_API_BanMyPham\API\obj\Debug\net6.0\API.pdb
 D:\BTL_API_BanMyPham\API\obj\Debug\net6.0\API.genruntimeconfig.cache
 D:\BTL_API_BanMyPham\API\obj\Debug\net6.0\ref\API.dll
+D:\BTL_API_BanMyPham\API\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
+D:\BTL_API_BanMyPham\API\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\BTL_API_BanMyPham\API\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\BTL_API_BanMyPham\API\bin\Debug\net6.0\BLL.dll
+D:\BTL_API_BanMyPham\API\bin\Debug\net6.0\DAL.dll
+D:\BTL_API_BanMyPham\API\bin\Debug\net6.0\DTO.dll
+D:\BTL_API_BanMyPham\API\bin\Debug\net6.0\BLL.pdb
+D:\BTL_API_BanMyPham\API\bin\Debug\net6.0\DTO.pdb
+D:\BTL_API_BanMyPham\API\bin\Debug\net6.0\DAL.pdb

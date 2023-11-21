@@ -722,6 +722,43 @@
             "rid": "win"
           }
         }
+      },
+      "DAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "DTO": "1.0.0",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.24",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.24",
+          "Microsoft.Extensions.Configuration": "7.0.0",
+          "Newtonsoft.Json": "13.0.3",
+          "System.Data.SqlClient": "4.8.5",
+          "System.IdentityModel.Tokens.Jwt": "7.0.3"
+        },
+        "compile": {
+          "bin/placeholder/DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DAL.dll": {}
+        }
+      },
+      "DTO/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.24",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.24",
+          "Microsoft.Extensions.Configuration": "7.0.0",
+          "Newtonsoft.Json": "13.0.3",
+          "System.Data.SqlClient": "4.8.5",
+          "System.IdentityModel.Tokens.Jwt": "7.0.3"
+        },
+        "compile": {
+          "bin/placeholder/DTO.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DTO.dll": {}
+        }
       }
     }
   },
@@ -2094,10 +2131,22 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "DAL/1.0.0": {
+      "type": "project",
+      "path": "../DAL/DAL.csproj",
+      "msbuildProject": "../DAL/DAL.csproj"
+    },
+    "DTO/1.0.0": {
+      "type": "project",
+      "path": "../DTO/DTO.csproj",
+      "msbuildProject": "../DTO/DTO.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "DAL >= 1.0.0",
+      "DTO >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.24",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.24",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.24",
@@ -2134,7 +2183,14 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\BTL_API_BanMyPham\\DAL\\DAL.csproj": {
+              "projectPath": "D:\\BTL_API_BanMyPham\\DAL\\DAL.csproj"
+            },
+            "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
+              "projectPath": "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
