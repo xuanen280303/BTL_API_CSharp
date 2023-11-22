@@ -11,5 +11,7 @@ namespace BLL.Interfaces
     {
         NhanVien GetNhanVienbyID(string id);
         bool Create(NhanVien model);
+        bool Update(NhanVien model);
+        public List<NhanVien> Search(int pageIndex, int pageSize, out long total, string ten_nv, string dia_chinv);
     }
 }

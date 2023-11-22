@@ -184,24 +184,24 @@ namespace API.Models
 
             modelBuilder.Entity<KhachHang>(entity =>
             {
-                entity.HasKey(e => e.Idkh)
+                entity.HasKey(e => e.IDKH)
                     .HasName("PK__KhachHan__B87DC1A7ED4A33D1");
 
                 entity.ToTable("KhachHang");
 
-                entity.Property(e => e.Idkh)
+                entity.Property(e => e.IDKH)
                     .HasMaxLength(10)
                     .HasColumnName("IDKH");
 
-                entity.Property(e => e.DiaChiKh)
+                entity.Property(e => e.DiaChiKH)
                     .HasMaxLength(30)
                     .HasColumnName("DiaChiKH");
 
-                entity.Property(e => e.HoTenKh)
+                entity.Property(e => e.HoTenKH)
                     .HasMaxLength(30)
                     .HasColumnName("HoTenKH");
 
-                entity.Property(e => e.Sdtkh)
+                entity.Property(e => e.SDTKH)
                     .HasMaxLength(11)
                     .IsUnicode(false)
                     .HasColumnName("SDTKH")

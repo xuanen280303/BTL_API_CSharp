@@ -10,10 +10,10 @@ namespace API.Models
             HoaDonBans = new HashSet<HoaDonBan>();
         }
 
-        public string Idkh { get; set; } = null!;
-        public string? HoTenKh { get; set; }
-        public string? Sdtkh { get; set; }
-        public string? DiaChiKh { get; set; }
+        public string IDKH { get; set; } = null!;
+        public string? HoTenKH { get; set; }
+        public string? SDTKH { get; set; }
+        public string? DiaChiKH { get; set; }
 
         public virtual ICollection<HoaDonBan> HoaDonBans { get; set; }
     }

@@ -1,4 +1,3 @@
-
 using BLL;
 using BLL.Interfaces;
 using DAL;
@@ -18,6 +17,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddTransient<IDatabaseHelper, DatabaseHelper>();
 builder.Services.AddTransient<INhanVienRepository, NhanVienRepository>();
 builder.Services.AddTransient<INhanVienBusiness, NhanVienBusiness>();
+builder.Services.AddTransient<IKhachHangRepository, KhachHangRepository>();
+builder.Services.AddTransient<IKhachHangBusiness, KhachHangBusiness>();
 
 
 
