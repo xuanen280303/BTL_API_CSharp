@@ -13,7 +13,7 @@ namespace API.Models
         public string? Sdtncc { get; set; }
         public double? TongTien { get; set; }
 
-        public virtual NhaCc? MaNccNavigation { get; set; }
+        public virtual NhaCC? MaNccNavigation { get; set; }
         public virtual NhanVien? MaNvNavigation { get; set; }
     }
 }

@@ -19,6 +19,8 @@ builder.Services.AddTransient<INhanVienRepository, NhanVienRepository>();
 builder.Services.AddTransient<INhanVienBusiness, NhanVienBusiness>();
 builder.Services.AddTransient<IKhachHangRepository, KhachHangRepository>();
 builder.Services.AddTransient<IKhachHangBusiness, KhachHangBusiness>();
+builder.Services.AddTransient<INhaCCRepository, NhaCCRepository>();
+builder.Services.AddTransient<INhaCCBusiness, NhaCCBusiness>();
 
 
 

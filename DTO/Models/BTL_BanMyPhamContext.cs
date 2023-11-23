@@ -23,7 +23,7 @@ namespace API.Models
         public virtual DbSet<KhachHang> KhachHangs { get; set; } = null!;
         public virtual DbSet<LoaiMyPham> LoaiMyPhams { get; set; } = null!;
         public virtual DbSet<MyPham> MyPhams { get; set; } = null!;
-        public virtual DbSet<NhaCc> NhaCcs { get; set; } = null!;
+        public virtual DbSet<NhaCC> NhaCcs { get; set; } = null!;
         public virtual DbSet<NhanVien> NhanViens { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -254,26 +254,26 @@ namespace API.Models
                     .HasConstraintName("FK_MP_MaLoaiMP");
             });
 
-            modelBuilder.Entity<NhaCc>(entity =>
+            modelBuilder.Entity<NhaCC>(entity =>
             {
-                entity.HasKey(e => e.MaNcc)
+                entity.HasKey(e => e.MaNCC)
                     .HasName("PK__NhaCC__3A185DEB2E1D216C");
 
                 entity.ToTable("NhaCC");
 
-                entity.Property(e => e.MaNcc)
+                entity.Property(e => e.MaNCC)
                     .HasMaxLength(10)
                     .HasColumnName("MaNCC");
 
-                entity.Property(e => e.DiaChiNcc)
+                entity.Property(e => e.DiaChiNCC)
                     .HasMaxLength(30)
                     .HasColumnName("DiaChiNCC");
 
-                entity.Property(e => e.HoTenNcc)
+                entity.Property(e => e.HoTenNCC)
                     .HasMaxLength(30)
                     .HasColumnName("HoTenNCC");
 
-                entity.Property(e => e.Sdtncc)
+                entity.Property(e => e.SDTNCC)
                     .HasMaxLength(11)
                     .IsUnicode(false)
                     .HasColumnName("SDTNCC")

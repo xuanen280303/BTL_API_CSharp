@@ -303,7 +303,7 @@ VALUES('HDB01','MP01',N'Kem chống nắng Cetella',10, 350000,0,3500000),
 	  ('HDB10','MP05',N'Sữa rửa mặt SVR',10, 450000,0,4500000)
 
 
-	  create PROCEDURE getnhanvienbyid(@id Nvarchar(10))
+create PROCEDURE getnhanvienbyid(@id Nvarchar(10))
 AS
 BEGIN
 SELECT*from NhanVien where MaNV = @id 
@@ -322,7 +322,118 @@ create PROCEDURE sp_nhanvien_create(
 )
 AS
     BEGIN
-       insert into NhanVien(TenKH,GioiTinh,DiaChi,SDT,Email)
-	   values(@TenKH,@GioiTinh,@DiaChi,@SDT,@Email);
+       insert into NhanVien(MaNV,HoTenNV,NgaySinh,GioiTinh,CaLam,SDTNV,DiachiNV,Email)
+	   values(@MaNV,@HoTenNV,@NgaySinh,@GioiTinh,@CaLam,@SDTNV,@DiachiNV,@Email);
+    END;
+GO
+
+create PROCEDURE [dbo].[sp_nhanvien_update](
+@MaNV Nvarchar(10),
+@HoTenNV Nvarchar(30),
+@NgaySinh DATE,
+@GioiTinh Nvarchar(3),
+@CaLam Nvarchar(8),
+@SDTNV Varchar(11),
+@DiachiNV Nvarchar(30),
+@Email Varchar(30)
+)
+AS
+    BEGIN
+		update NhanVien set @HoTenNV = @HoTenNV where manv = @MaNV; 
+    END;
+GO
+
+
+create PROCEDURE [dbo].[sp_nhanvien_search] (@page_index  INT, 
+                                       @page_size   INT,
+									   @ten_nv Nvarchar(30),
+									   @dia_chinv Nvarchar(30)
+									   )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY TenKH ASC)) AS RowNumber, 
+                              n.Manv,
+							  n.TenNV,
+							  n.DiachiNV
+                        INTO #Results1
+                        FROM NhanVien AS n
+					    WHERE  (@ten_nv = '' Or n.HoTenNV like N'%'+@ten_nv+'%') and						
+						(@dia_chinv = '' Or n.DiaChiNV like N'%'+@dia_chinv+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY HoTenNV ASC)) AS RowNumber, 
+                              n.Manv,
+							  n.HoTenNV,
+							  n.DiachiNV
+                        INTO #Results2
+                        FROM KhachHangs AS n
+					    WHERE  (@ten_nv = '' Or n.HoTenNV like N'%'+@ten_nv+'%') and						
+						(@dia_chinv = '' Or n.DiaChiNV like N'%'+@dia_chinv+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
+GO
+
+
+
+create PROCEDURE getkhachhangbyid(@id Nvarchar(10))
+AS
+BEGIN
+SELECT*from KhachHang where IDKH = @id 
+END;
+
+
+create PROCEDURE sp_khachhang_create(
+@IDKH Nvarchar(10),
+@HoTenKH Nvarchar(30),
+@SDTKH Varchar(11),
+@DiaChiKH Nvarchar(30)
+)
+AS
+    BEGIN
+       insert into KhachHang(IDKH, HoTenKH, SDTKH, DiaChiKH)
+	   values(@IDKH, @HoTenKH, @SDTKH, @DiaChiKH);
+    END;
+GO
+
+
+create PROCEDURE getnhaccbyid(@id Nvarchar(10))
+AS
+BEGIN
+SELECT*from NhaCC where MaNCC = @id 
+END;
+
+
+create PROCEDURE sp_nhacc_create(
+@MaNCC Nvarchar(10),
+@HoTenNCC Nvarchar(30),
+@SDTNCC Varchar(11),
+@DiaChiNCC Nvarchar(30)
+)
+AS
+    BEGIN
+       insert into NhaCC(MaNCC, HoTenNCC, SDTNCC, DiaChiNCC)
+	   values(@MaNCC, @HoTenNCC, @SDTNCC, @DiaChiNCC);
     END;
 GO

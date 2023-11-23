@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace API.Models
 {
-    public partial class NhaCc
+    public partial class NhaCC
     {
-        public NhaCc()
+        public NhaCC()
         {
             HoaDonNhaps = new HashSet<HoaDonNhap>();
         }
 
-        public string MaNcc { get; set; } = null!;
-        public string HoTenNcc { get; set; } = null!;
-        public string? Sdtncc { get; set; }
-        public string? DiaChiNcc { get; set; }
+        public string MaNCC { get; set; } = null!;
+        public string HoTenNCC { get; set; } = null!;
+        public string? SDTNCC { get; set; }
+        public string? DiaChiNCC { get; set; }
 
         public virtual ICollection<HoaDonNhap> HoaDonNhaps { get; set; }
     }
