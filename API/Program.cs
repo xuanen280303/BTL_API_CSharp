@@ -13,6 +13,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
+
 // Add services to the container.
 builder.Services.AddTransient<IDatabaseHelper, DatabaseHelper>();
 builder.Services.AddTransient<INhanVienRepository, NhanVienRepository>();
@@ -21,6 +22,8 @@ builder.Services.AddTransient<IKhachHangRepository, KhachHangRepository>();
 builder.Services.AddTransient<IKhachHangBusiness, KhachHangBusiness>();
 builder.Services.AddTransient<INhaCCRepository, NhaCCRepository>();
 builder.Services.AddTransient<INhaCCBusiness, NhaCCBusiness>();
+builder.Services.AddTransient<IMyPhamRepository, MyPhamRepository>();
+builder.Services.AddTransient<IMyPhamBusiness, MyPhamBusiness>();
 
 
 

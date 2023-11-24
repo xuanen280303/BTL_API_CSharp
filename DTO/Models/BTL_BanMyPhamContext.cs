@@ -226,30 +226,30 @@ namespace API.Models
 
             modelBuilder.Entity<MyPham>(entity =>
             {
-                entity.HasKey(e => e.MaMp)
+                entity.HasKey(e => e.MaMP)
                     .HasName("PK_MaMP");
 
                 entity.ToTable("MyPham");
 
-                entity.Property(e => e.MaMp)
+                entity.Property(e => e.MaMP)
                     .HasMaxLength(10)
                     .HasColumnName("MaMP");
 
                 entity.Property(e => e.GhiChu).HasMaxLength(30);
 
-                entity.Property(e => e.MaLoaiMp)
+                entity.Property(e => e.MaLoaiMP)
                     .HasMaxLength(10)
                     .HasColumnName("MaLoaiMP");
 
-                entity.Property(e => e.Slton).HasColumnName("SLTon");
+                entity.Property(e => e.SLTon).HasColumnName("SLTon");
 
-                entity.Property(e => e.TenMp)
+                entity.Property(e => e.TenMP)
                     .HasMaxLength(50)
                     .HasColumnName("TenMP");
 
                 entity.HasOne(d => d.MaLoaiMpNavigation)
                     .WithMany(p => p.MyPhams)
-                    .HasForeignKey(d => d.MaLoaiMp)
+                    .HasForeignKey(d => d.MaLoaiMP)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_MP_MaLoaiMP");
             });
