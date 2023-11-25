@@ -26,5 +26,9 @@ namespace BLL
         {
             return _nhacc.Create(model);
         }
+        public bool Update(NhaCC model)
+        {
+            return _nhacc.Update(model);
+        }
     }
 }

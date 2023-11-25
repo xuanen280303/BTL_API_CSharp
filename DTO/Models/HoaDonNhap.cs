@@ -5,15 +5,15 @@ namespace API.Models
 {
     public partial class HoaDonNhap
     {
-        public string MaHdn { get; set; } = null!;
+        public string MaHDN { get; set; } = null!;
         public DateTime? NgayNhap { get; set; }
-        public string? MaNv { get; set; }
-        public string? MaNcc { get; set; }
-        public string? HoTenNcc { get; set; }
-        public string? Sdtncc { get; set; }
+        public string? MaNV { get; set; }
+        public string? MaNCC { get; set; }
+        public string? HoTenNCC { get; set; }
+        public string? SDTNCC { get; set; }
         public double? TongTien { get; set; }
 
-        public virtual NhaCC? MaNccNavigation { get; set; }
-        public virtual NhanVien? MaNvNavigation { get; set; }
+        public virtual NhaCC? MaNCCNavigation { get; set; }
+        public virtual NhanVien? MaNVNavigation { get; set; }
     }
 }

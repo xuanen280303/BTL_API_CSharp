@@ -11,5 +11,6 @@ namespace BLL.Interfaces
     {
         KhachHang GetKhachHangbyID(string id);
         bool Create(KhachHang model);
+        bool Update(KhachHang model);
     }
 }

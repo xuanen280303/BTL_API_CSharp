@@ -10,8 +10,8 @@ namespace API.Models
             MyPhams = new HashSet<MyPham>();
         }
 
-        public string MaLoaiMp { get; set; } = null!;
-        public string TenLoaiMp { get; set; } = null!;
+        public string MaLoaiMP { get; set; } = null!;
+        public string TenLoaiMP { get; set; } = null!;
         public string? MoTa { get; set; }
 
         public virtual ICollection<MyPham> MyPhams { get; set; }

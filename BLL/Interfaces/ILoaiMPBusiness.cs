@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public partial interface IMyPhamBusiness
+    public partial interface ILoaiMPBusiness
     {
-        MyPham GetMyPhambyID(string id);
-        bool Create(MyPham model);
-        bool Update(MyPham model);
+        LoaiMyPham GetLoaiMyPhambyID(string id);
+        bool Create(LoaiMyPham model);
+        bool Update(LoaiMyPham model);
     }
 }

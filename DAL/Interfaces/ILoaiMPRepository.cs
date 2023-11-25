@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public partial interface IMyPhamRepository
+    public partial interface ILoaiMPRepository
     {
-        MyPham GetMyPhambyID(string id);
-        bool Create(MyPham model);
-        bool Update(MyPham model);
+        LoaiMyPham GetLoaiMyPhambyID(string id);
+        bool Create(LoaiMyPham model);
+        bool Update(LoaiMyPham model);
     }
 }

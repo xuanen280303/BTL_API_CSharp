@@ -5,15 +5,15 @@ namespace API.Models
 {
     public partial class ChiTietHoaDonBan
     {
-        public string? MaHdb { get; set; }
-        public string? MaMp { get; set; }
-        public string TenMp { get; set; } = null!;
-        public double? Slban { get; set; }
-        public double? Dgban { get; set; }
+        public string? MaHDB { get; set; }
+        public string? MaMP { get; set; }
+        public string TenMP { get; set; } = null!;
+        public double? SLBan { get; set; }
+        public double? DGBan { get; set; }
         public double? GiamGia { get; set; }
         public double? ThanhTien { get; set; }
 
-        public virtual HoaDonBan? MaHdbNavigation { get; set; }
-        public virtual MyPham? MaMpNavigation { get; set; }
+        public virtual HoaDonBan? MaHDBNavigation { get; set; }
+        public virtual MyPham? MaMPNavigation { get; set; }
     }
 }

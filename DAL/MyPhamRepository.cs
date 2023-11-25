@@ -56,5 +56,29 @@ namespace DAL
             }
         }
 
+        public bool Update(MyPham model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_mypham_update",
+                "@MaMP", model.MaMP,
+                "@TenMP", model.TenMP,
+                "@MaLoaiMP", model.MaLoaiMP,
+                "@SLTon", model.SLTon,
+                "@MoTa", model.MoTa,
+                "@GhiChu", model.GhiChu);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

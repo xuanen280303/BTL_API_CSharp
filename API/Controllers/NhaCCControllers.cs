@@ -30,5 +30,13 @@ namespace API.Controllers
             _nhaccBusiness.Create(model);
             return model;
         }
+
+        [Route("update-nhacc")]
+        [HttpPost]
+        public NhaCC UpdateItem([FromBody] NhaCC model)
+        {
+            _nhaccBusiness.Update(model);
+            return model;
+        }
     }
 }

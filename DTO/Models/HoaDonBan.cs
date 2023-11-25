@@ -5,14 +5,14 @@ namespace API.Models
 {
     public partial class HoaDonBan
     {
-        public string MaHdb { get; set; } = null!;
+        public string MaHDB { get; set; } = null!;
         public DateTime? NgayBan { get; set; }
-        public string? MaNv { get; set; }
-        public string? Idkh { get; set; }
-        public string? HoTenKh { get; set; }
+        public string? MaNV { get; set; }
+        public string? IDKH { get; set; }
+        public string? HoTenKH { get; set; }
         public double? TongTien { get; set; }
 
-        public virtual KhachHang? IdkhNavigation { get; set; }
-        public virtual NhanVien? MaNvNavigation { get; set; }
+        public virtual KhachHang? IDKHNavigation { get; set; }
+        public virtual NhanVien? MaNVNavigation { get; set; }
     }
 }

@@ -437,3 +437,26 @@ AS
 	   values(@MaNCC, @HoTenNCC, @SDTNCC, @DiaChiNCC);
     END;
 GO
+
+
+create PROCEDURE getmyphambyid(@id Nvarchar(10))
+AS
+BEGIN
+SELECT*from MyPham where MaMP = @id 
+END;
+
+create PROCEDURE sp_mypham_create(
+@MaMP Nvarchar(10),
+@TenMP Nvarchar(50),
+@MaLoaiMP Nvarchar(10),
+@SLTon int,
+@MoTa Nvarchar(MAX),
+@GhiChu Nvarchar(30)
+)
+AS
+    BEGIN
+       insert into MyPham(MaMP, TenMP, MaLoaiMP, SLTon, MoTa, GhiChu)
+	   values(@MaMP, @TenMP, @MaLoaiMP, @SLTon, @MoTa, @GhiChu);
+    END;
+GO
+

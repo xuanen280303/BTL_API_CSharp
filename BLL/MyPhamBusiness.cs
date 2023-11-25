@@ -26,5 +26,9 @@ namespace BLL
         {
             return _mypham.Create(model);
         }
+        public bool Update(MyPham model)
+        {
+            return _mypham.Update(model);
+        }
     }
 }

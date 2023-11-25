@@ -11,5 +11,6 @@ namespace BLL.Interfaces
     {
         NhaCC GetNhaCCbyID(string id);
         bool Create(NhaCC model);
+        bool Update(NhaCC model);
     }
 }

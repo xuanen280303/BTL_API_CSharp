@@ -26,5 +26,9 @@ namespace BLL
         {
             return _khachhang.Create(model);
         }
+        public bool Update(KhachHang model)
+        {
+            return _khachhang.Update(model);
+        }
     }
 }

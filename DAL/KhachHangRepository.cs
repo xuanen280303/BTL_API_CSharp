@@ -54,5 +54,27 @@ namespace DAL
             }
         }
 
+        public bool Update(KhachHang model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_khachhang_update",
+                "@IDKH", model.IDKH,
+                "@HoTenKH", model.HoTenKH,
+                "@SDTKH", model.SDTKH,
+                "@DiaChiKH", model.DiaChiKH);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

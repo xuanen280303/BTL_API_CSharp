@@ -9,60 +9,38 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class NhaCCRepository : INhaCCRepository
+    public class LoaiMPRepository : ILoaiMPRepository
     {
         private IDatabaseHelper _dbHelper;
-        public NhaCCRepository(IDatabaseHelper dbHelper)
+        public LoaiMPRepository(IDatabaseHelper dbHelper)
         {
             _dbHelper = dbHelper;
         }
 
-        public NhaCC GetNhaCCbyID(string id)
+        public LoaiMyPham GetLoaiMyPhambyID(string id)
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getnhaccbyid", "@id", id);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getloaimyphambyid", "@id", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<NhaCC>().FirstOrDefault();
+                return dt.ConvertTo<LoaiMyPham>().FirstOrDefault();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public bool Create(NhaCC model)
+        public bool Create(LoaiMyPham model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_nhacc_create",
-                "@MaNCC", model.MaNCC,
-                "@HoTenNCC", model.HoTenNCC,
-                "@SDTNCC", model.SDTNCC,
-                "@DiaChiNCC", model.DiaChiNCC);
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public bool Update(NhaCC model)
-        {
-            string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_nhacc_update",
-                "@MaNCC", model.MaNCC,
-                "@HoTenNCC", model.HoTenNCC,
-                "@SDTNCC", model.SDTNCC,
-                "@DiaChiNCC", model.DiaChiNCC);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_loaimypham_create",
+                "@MaLoaiMP", model.MaLoaiMP,
+                "@TenLoaiMP", model.TenLoaiMP,
+                "@MoTa", model.MoTa);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -75,5 +53,25 @@ namespace DAL
             }
         }
 
+        public bool Update(LoaiMyPham model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_loaimypham_update",
+                "@MaLoaiMP", model.MaLoaiMP,
+                "@TenLoaiMP", model.TenLoaiMP,
+                "@MoTa", model.MoTa);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

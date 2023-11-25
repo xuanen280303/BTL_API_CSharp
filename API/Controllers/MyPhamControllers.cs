@@ -30,5 +30,13 @@ namespace API.Controllers
             _myPhamBusiness.Create(model);
             return model;
         }
+
+        [Route("update-mypham")]
+        [HttpPost]
+        public MyPham UpdateItem([FromBody] MyPham model)
+        {
+            _myPhamBusiness.Update(model);
+            return model;
+        }
     }
 }

@@ -24,6 +24,8 @@ builder.Services.AddTransient<INhaCCRepository, NhaCCRepository>();
 builder.Services.AddTransient<INhaCCBusiness, NhaCCBusiness>();
 builder.Services.AddTransient<IMyPhamRepository, MyPhamRepository>();
 builder.Services.AddTransient<IMyPhamBusiness, MyPhamBusiness>();
+builder.Services.AddTransient<ILoaiMPRepository, LoaiMPRepository>();
+builder.Services.AddTransient<ILoaiMPBusiness, LoaiMPBusiness>();
 
 
 

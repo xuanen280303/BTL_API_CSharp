@@ -30,5 +30,14 @@ namespace API.Controllers
             _khachHangBusiness.Create(model);
             return model;
         }
+
+        [Route("update-khachhang")]
+        [HttpPost]
+        public KhachHang UpdateItem([FromBody] KhachHang model)
+        {
+            _khachHangBusiness.Update(model);
+            return model;
+        }
+
     }
 }

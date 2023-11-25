@@ -44,30 +44,30 @@ namespace API.Models
 
                 entity.ToTable("ChiTietHoaDonBan");
 
-                entity.Property(e => e.Dgban).HasColumnName("DGBan");
+                entity.Property(e => e.DGBan).HasColumnName("DGBan");
 
-                entity.Property(e => e.MaHdb)
+                entity.Property(e => e.MaHDB)
                     .HasMaxLength(10)
                     .HasColumnName("MaHDB");
 
-                entity.Property(e => e.MaMp)
+                entity.Property(e => e.MaMP)
                     .HasMaxLength(10)
                     .HasColumnName("MaMP");
 
-                entity.Property(e => e.Slban).HasColumnName("SLBan");
+                entity.Property(e => e.SLBan).HasColumnName("SLBan");
 
-                entity.Property(e => e.TenMp)
+                entity.Property(e => e.TenMP)
                     .HasMaxLength(50)
                     .HasColumnName("TenMP");
 
-                entity.HasOne(d => d.MaHdbNavigation)
+                entity.HasOne(d => d.MaHDBNavigation)
                     .WithMany()
-                    .HasForeignKey(d => d.MaHdb)
+                    .HasForeignKey(d => d.MaHDB)
                     .HasConstraintName("FK_ChiTietHoaDonNhap_HDB");
 
-                entity.HasOne(d => d.MaMpNavigation)
+                entity.HasOne(d => d.MaMPNavigation)
                     .WithMany()
-                    .HasForeignKey(d => d.MaMp)
+                    .HasForeignKey(d => d.MaMP)
                     .HasConstraintName("FK_ChiTietHoaDonBan_MyPham");
             });
 
@@ -77,108 +77,108 @@ namespace API.Models
 
                 entity.ToTable("ChiTietHoaDonNhap");
 
-                entity.Property(e => e.Dgnhap).HasColumnName("DGNhap");
+                entity.Property(e => e.DGNhap).HasColumnName("DGNhap");
 
-                entity.Property(e => e.MaHdn)
+                entity.Property(e => e.MaHDN)
                     .HasMaxLength(10)
                     .HasColumnName("MaHDN");
 
-                entity.Property(e => e.MaMp)
+                entity.Property(e => e.MaMP)
                     .HasMaxLength(10)
                     .HasColumnName("MaMP");
 
-                entity.Property(e => e.Slnhap).HasColumnName("SLNhap");
+                entity.Property(e => e.SLNhap).HasColumnName("SLNhap");
 
-                entity.Property(e => e.TenMp)
+                entity.Property(e => e.TenMP)
                     .HasMaxLength(50)
                     .HasColumnName("TenMP");
 
-                entity.HasOne(d => d.MaHdnNavigation)
+                entity.HasOne(d => d.MaHDNNavigation)
                     .WithMany()
-                    .HasForeignKey(d => d.MaHdn)
+                    .HasForeignKey(d => d.MaHDN)
                     .HasConstraintName("FK_ChiTietHoaDonNhap_HDN");
 
-                entity.HasOne(d => d.MaMpNavigation)
+                entity.HasOne(d => d.MaMPNavigation)
                     .WithMany()
-                    .HasForeignKey(d => d.MaMp)
+                    .HasForeignKey(d => d.MaMP)
                     .HasConstraintName("FK_ChiTietHoaDonNhap_MyPham");
             });
 
             modelBuilder.Entity<HoaDonBan>(entity =>
             {
-                entity.HasKey(e => e.MaHdb)
+                entity.HasKey(e => e.MaHDB)
                     .HasName("PK__HoaDonBa__3C90E8FA259F4949");
 
                 entity.ToTable("HoaDonBan");
 
-                entity.Property(e => e.MaHdb)
+                entity.Property(e => e.MaHDB)
                     .HasMaxLength(10)
                     .HasColumnName("MaHDB");
 
-                entity.Property(e => e.HoTenKh)
+                entity.Property(e => e.HoTenKH)
                     .HasMaxLength(30)
                     .HasColumnName("HoTenKH");
 
-                entity.Property(e => e.Idkh)
+                entity.Property(e => e.IDKH)
                     .HasMaxLength(10)
                     .HasColumnName("IDKH");
 
-                entity.Property(e => e.MaNv)
+                entity.Property(e => e.MaNV)
                     .HasMaxLength(10)
                     .HasColumnName("MaNV");
 
                 entity.Property(e => e.NgayBan).HasColumnType("date");
 
-                entity.HasOne(d => d.IdkhNavigation)
+                entity.HasOne(d => d.IDKHNavigation)
                     .WithMany(p => p.HoaDonBans)
-                    .HasForeignKey(d => d.Idkh)
+                    .HasForeignKey(d => d.IDKH)
                     .HasConstraintName("FK_HoaDonBan_IDKH");
 
-                entity.HasOne(d => d.MaNvNavigation)
+                entity.HasOne(d => d.MaNVNavigation)
                     .WithMany(p => p.HoaDonBans)
-                    .HasForeignKey(d => d.MaNv)
+                    .HasForeignKey(d => d.MaNV)
                     .HasConstraintName("FK_HoaDonBan_MaNV");
             });
 
             modelBuilder.Entity<HoaDonNhap>(entity =>
             {
-                entity.HasKey(e => e.MaHdn)
+                entity.HasKey(e => e.MaHDN)
                     .HasName("PK__HoaDonNh__3C90E8C65F5A5B2B");
 
                 entity.ToTable("HoaDonNhap");
 
-                entity.Property(e => e.MaHdn)
+                entity.Property(e => e.MaHDN)
                     .HasMaxLength(10)
                     .HasColumnName("MaHDN");
 
-                entity.Property(e => e.HoTenNcc)
+                entity.Property(e => e.HoTenNCC)
                     .HasMaxLength(30)
                     .HasColumnName("HoTenNCC");
 
-                entity.Property(e => e.MaNcc)
+                entity.Property(e => e.MaNCC)
                     .HasMaxLength(10)
                     .HasColumnName("MaNCC");
 
-                entity.Property(e => e.MaNv)
+                entity.Property(e => e.MaNV)
                     .HasMaxLength(10)
                     .HasColumnName("MaNV");
 
                 entity.Property(e => e.NgayNhap).HasColumnType("date");
 
-                entity.Property(e => e.Sdtncc)
+                entity.Property(e => e.SDTNCC)
                     .HasMaxLength(11)
                     .IsUnicode(false)
                     .HasColumnName("SDTNCC")
                     .HasDefaultValueSql("(N'Không có')");
 
-                entity.HasOne(d => d.MaNccNavigation)
+                entity.HasOne(d => d.MaNCCNavigation)
                     .WithMany(p => p.HoaDonNhaps)
-                    .HasForeignKey(d => d.MaNcc)
+                    .HasForeignKey(d => d.MaNCC)
                     .HasConstraintName("FK_HoaDonNhap_MaNCC");
 
-                entity.HasOne(d => d.MaNvNavigation)
+                entity.HasOne(d => d.MaNVNavigation)
                     .WithMany(p => p.HoaDonNhaps)
-                    .HasForeignKey(d => d.MaNv)
+                    .HasForeignKey(d => d.MaNV)
                     .HasConstraintName("FK_HoaDonNhap_MaNV");
             });
 
@@ -210,16 +210,16 @@ namespace API.Models
 
             modelBuilder.Entity<LoaiMyPham>(entity =>
             {
-                entity.HasKey(e => e.MaLoaiMp)
+                entity.HasKey(e => e.MaLoaiMP)
                     .HasName("PK_MaLoaiMP");
 
                 entity.ToTable("LoaiMyPham");
 
-                entity.Property(e => e.MaLoaiMp)
+                entity.Property(e => e.MaLoaiMP)
                     .HasMaxLength(10)
                     .HasColumnName("MaLoaiMP");
 
-                entity.Property(e => e.TenLoaiMp)
+                entity.Property(e => e.TenLoaiMP)
                     .HasMaxLength(30)
                     .HasColumnName("TenLoaiMP");
             });
@@ -318,7 +318,7 @@ namespace API.Models
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.UserId)
+                entity.Property(e => e.UserID)
                     .HasMaxLength(10)
                     .HasColumnName("UserID");
 
