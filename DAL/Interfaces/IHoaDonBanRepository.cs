@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Interfaces
+namespace DAL.Interfaces
 {
-    public partial interface IHoaDonBanBusiness
+    public partial interface IHoaDonBanRepository
     {
         HoaDonBan GetHoaDonBanbyID(string id);
         bool Create(HoaDonBan model);
         bool Update(HoaDonBan model);
-
     }
 }

@@ -26,8 +26,8 @@ builder.Services.AddTransient<IMyPhamRepository, MyPhamRepository>();
 builder.Services.AddTransient<IMyPhamBusiness, MyPhamBusiness>();
 builder.Services.AddTransient<ILoaiMPRepository, LoaiMPRepository>();
 builder.Services.AddTransient<ILoaiMPBusiness, LoaiMPBusiness>();
-
-
+builder.Services.AddTransient<IHoaDonBanRepository, HoaDonBanRepository>();
+builder.Services.AddTransient<IHoaDonBanBusiness, HoaDonBanBusiness>();
 
 // configure strongly typed settings objects
 IConfiguration configuration = builder.Configuration;

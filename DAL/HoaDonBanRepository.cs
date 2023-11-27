@@ -1,4 +1,7 @@
-﻿using System;
+﻿using API.Models;
+using DAL.Helper.Interfaces;
+using DAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,62 +9,72 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public class HoaDonRepository 
+    public class HoaDonBanRepository : IHoaDonBanRepository
     {
-        //private IDatabaseHelper _dbHelper;
-        //public HoaDonRepository(IDatabaseHelper dbHelper)
-        //{
-        //    _dbHelper = dbHelper;
-        //}
+        private IDatabaseHelper _dbHelper;
+        public HoaDonBanRepository(IDatabaseHelper dbHelper)
+        {
+            _dbHelper = dbHelper;
+        }
 
-        //public HoaDonBanModels GetDatabyID(int id)
+        public HoaDonBan GetHoaDonBanbyID(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "gethoadonbanbyid", "@id", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<HoaDonBan>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool Create(HoaDonBan model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoadonban_create",
+                "@MaHDB", model.MaHDB,
+                "@NgayBan", model.NgayBan,
+                "@MaNV", model.MaNV,
+                "@IDKH", model.IDKH,
+                "@HoTenKH", model.HoTenKH,
+                "@TongTien", model.TongTien);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool Update(HoaDonBan model)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public bool Update(HoaDonBan model)
         //{
-        //    string msgError = "";
+        //    string msgerror = "";
         //    try
         //    {
-        //        var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_hoadon_get_by_id",
-        //             "@MaHoaDon", id);
-        //        if (!string.IsNullOrEmpty(msgError))
-        //            throw new Exception(msgError);
-        //        return dt.ConvertTo<HoaDonBanModels>().FirstOrDefault();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-        //public bool Create(HoaDonBanModels model)
-        //{
-        //    string msgError = "";
-        //    try
-        //    {
-        //        var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoadon_create",
-        //        "@TenKH", model.TenKH,
-        //        "@Diachi", model.Diachi,
-        //        "@TrangThai", model.TrangThai,
-        //        "@list_json_chitiethoadon", model.list_json_chitiethoadon != null ? MessageConvert.SerializeObject(model.list_json_chitiethoadon) : null);
-        //        if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-        //        {
-        //            throw new Exception(Convert.ToString(result) + msgError);
-        //        }
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-        //public bool Update(HoaDonBanModels model)
-        //{
-        //    string msgError = "";
-        //    try
-        //    {
-        //        var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoa_don_update",
-        //        "@MaHoaDon", model.MaHoaDon,
-        //        "@TenKH", model.TenKH,
-        //        "@Diachi", model.Diachi,
-        //        "@TrangThai", model.TrangThai,
-        //        "@list_json_chitiethoadon", model.list_json_chitiethoadon != null ? MessageConvert.SerializeObject(model.list_json_chitiethoadon) : null);
+        //        var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgerror, "sp_hoadonban_update",
+        //        "@MaHDB", model.MaHDB,
+        //        "@NgayBan", model.NgayBan,
+        //        "@MaNV", model.MaNV,
+        //        "@IDKH", model.IDKH,
+        //        "@HoTenKH", model.HoTenKH,
+        //        "@TongTien", model.TongTien);
+        //        "@list_json_chitiethoadon", model.list_json_chitiethoadon != null ? messageconvert.serializeobject(model.list_json_chitiethoadon) : null);
         //        if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
         //        {
         //            throw new Exception(Convert.ToString(result) + msgError);

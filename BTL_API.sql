@@ -162,7 +162,6 @@ VALUES('L01',N'Kem chống nắng',N'Các loại mỹ phẩm kem chống nắng'
 	  ('L19',N'Son',N' Các loại mỹ phẩm son'),
 	  ('L20',N'Tẩy da chết',N' Các loại mỹ phẩm tẩy da chết')
 
-
 --MyPham(MaMP, TenMP, MaLoaiMP, SLTon, MoTa, GhiChu)
 INSERT INTO MyPham(MaMP, TenMP, MaLoaiMP, SLTon, MoTa, GhiChu)
 VALUES('MP01',N'Kem chống nắng Cetella','L01',5,N'Kem chống nắng Cetella',N'Phù hợp với da dầu'),
@@ -222,7 +221,7 @@ VALUES('KH01',N'Trần Thị Liễu',09875678888,N'Yên Mỹ, Hưng Yên'),
 	  ('KH08',N'Đỗ Nhật Dương', 09655671232,N'Nam Sách, Hải Dương'),
 	  ('KH09',N'Trịnh Thị Duyên', 03535556777,N'Mỹ Hào, Hưng Yên'),
 	  ('KH10',N'Hà Diệp Hoa', 03538312793,N'Vân Đồn, Quảng Ninh')
-
+SELECT * From KhachHang
 
 --NHACC(MaNCC, HoTenNCC, SDTNCC, DiaChiNCC)
 INSERT INTO NHACC(MaNCC, HoTenNCC, SDTNCC, DiaChiNCC)
@@ -302,14 +301,15 @@ VALUES('HDB01','MP01',N'Kem chống nắng Cetella',10, 350000,0,3500000),
 	  ('HDB09','MP19',N'Vaseline PX50',2, 250000,0,500000),
 	  ('HDB10','MP05',N'Sữa rửa mặt SVR',10, 450000,0,4500000)
 
-
+----------------------NHÂN VIÊN---------------------
+-------------------GET BY ID-------------------------
 create PROCEDURE getnhanvienbyid(@id Nvarchar(10))
 AS
 BEGIN
 SELECT*from NhanVien where MaNV = @id 
 END;
 
-
+-------------------THÊM-------------------
 create PROCEDURE sp_nhanvien_create(
 @MaNV Nvarchar(10),
 @HoTenNV Nvarchar(30),
@@ -327,6 +327,7 @@ AS
     END;
 GO
 
+------------------------------SỬA----------------------
 create PROCEDURE [dbo].[sp_nhanvien_update](
 @MaNV Nvarchar(10),
 @HoTenNV Nvarchar(30),
@@ -343,7 +344,7 @@ AS
     END;
 GO
 
-
+--------------------------TÌM KIẾM------------------------------
 create PROCEDURE [dbo].[sp_nhanvien_search] (@page_index  INT, 
                                        @page_size   INT,
 									   @ten_nv Nvarchar(30),
@@ -356,9 +357,9 @@ AS
             BEGIN
 						SET NOCOUNT ON;
                         SELECT(ROW_NUMBER() OVER(
-                              ORDER BY TenKH ASC)) AS RowNumber, 
+                              ORDER BY HoTenNV ASC)) AS RowNumber, 
                               n.Manv,
-							  n.TenNV,
+							  n.HoTennv,
 							  n.DiachiNV
                         INTO #Results1
                         FROM NhanVien AS n
@@ -395,7 +396,8 @@ AS
     END;
 GO
 
-
+--------------------------KHÁCH HÀNG--------------------
+-------------------GET BY ID--------------------
 
 create PROCEDURE getkhachhangbyid(@id Nvarchar(10))
 AS
@@ -403,7 +405,7 @@ BEGIN
 SELECT*from KhachHang where IDKH = @id 
 END;
 
-
+------------------------THÊM----------------------
 create PROCEDURE sp_khachhang_create(
 @IDKH Nvarchar(10),
 @HoTenKH Nvarchar(30),
@@ -417,14 +419,28 @@ AS
     END;
 GO
 
+------------------------------SỬA----------------------
+create PROCEDURE [dbo].[sp_khachhang_update](
+@IDKH Nvarchar(10),
+@HoTenKH Nvarchar(30),
+@SDTKH Varchar(11),
+@DiaChiKH Nvarchar(30)
+)
+AS
+    BEGIN
+		update KhachHang set @HoTenKH = @HoTenKH where idkh = @IDKH; 
+    END;
+GO
 
+-----------------------------NHÀ CUNG CẤP---------------------
+------------------GET BY ID--------------------
 create PROCEDURE getnhaccbyid(@id Nvarchar(10))
 AS
 BEGIN
 SELECT*from NhaCC where MaNCC = @id 
 END;
 
-
+------------------------THÊM-------------------
 create PROCEDURE sp_nhacc_create(
 @MaNCC Nvarchar(10),
 @HoTenNCC Nvarchar(30),
@@ -438,13 +454,28 @@ AS
     END;
 GO
 
+------------------------------SỬA----------------------
+create PROCEDURE [dbo].[sp_nhacc_update](
+@MaNCC Nvarchar(10),
+@HoTenNCC Nvarchar(30),
+@SDTNCC Varchar(11),
+@DiaChiNCC Nvarchar(30)
+)
+AS
+    BEGIN
+		update NhaCC set @HoTenNCC = @HoTenNCC where mancc = @MaNCC; 
+    END;
+GO
 
+--------------Mỹ phẩm----------------------------
+---------GetByID---------------------
 create PROCEDURE getmyphambyid(@id Nvarchar(10))
 AS
 BEGIN
 SELECT*from MyPham where MaMP = @id 
 END;
 
+---------------------THÊM---------------------------
 create PROCEDURE sp_mypham_create(
 @MaMP Nvarchar(10),
 @TenMP Nvarchar(50),
@@ -459,4 +490,55 @@ AS
 	   values(@MaMP, @TenMP, @MaLoaiMP, @SLTon, @MoTa, @GhiChu);
     END;
 GO
+
+------------------------------SỬA----------------------
+create PROCEDURE [dbo].[sp_mypham_update](
+@MaMP Nvarchar(10),
+@TenMP Nvarchar(50),
+@MaLoaiMP Nvarchar(10),
+@SLTon int,
+@MoTa Nvarchar(MAX),
+@GhiChu Nvarchar(30)
+)
+AS
+    BEGIN
+		update MyPham set @TenMP = @TenMP where mamp = @MaMP; 
+    END;
+GO
+
+
+--------------Loại Mỹ phẩm----------------------------
+---------GetByID---------------------
+create PROCEDURE getloaimyphambyid(@id Nvarchar(10))
+AS
+BEGIN
+SELECT*from LoaiMyPham where MaLoaiMP = @id 
+END;
+
+---------------------THÊM---------------------------
+create PROCEDURE sp_loaimypham_create(
+@MaLoaiMP Nvarchar(10),
+@TenLoaiMP Nvarchar(30),
+@MoTa Nvarchar(MAX)
+)
+AS
+    BEGIN
+       insert into LoaiMyPham(MaLoaiMP,TenLoaiMP, MoTa)
+	   values(@MaLoaiMP, @TenLoaiMP, @MoTa);
+    END;
+GO
+
+------------------------------SỬA----------------------
+create PROCEDURE [dbo].[sp_loaimypham_update](
+@MaLoaiMP Nvarchar(10),
+@TenLoaiMP Nvarchar(30),
+@MoTa Nvarchar(MAX)
+)
+AS
+    BEGIN
+		update LoaiMyPham set @TenLoaiMP = @TenLoaiMP where maloaimp = @MaLoaiMP; 
+    END;
+GO
+
+
 
