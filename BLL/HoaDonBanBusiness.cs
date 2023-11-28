@@ -26,10 +26,9 @@ namespace BLL
         {
             return _hdb.Create(model);
         }
-
         public bool Update(HoaDonBan model)
         {
-            throw new NotImplementedException();
+            return _hdb.Update(model);
         }
     }
 }

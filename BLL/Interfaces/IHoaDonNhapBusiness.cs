@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public partial interface IHoaDonBanBusiness
+    public partial interface IHoaDonNhapBusiness
     {
-        HoaDonBan GetHoaDonBanbyID(string id);
-        bool Create(HoaDonBan model);
-        bool Update(HoaDonBan model);
+        HoaDonBan GetHoaDonNhapbyID(string id);
+        bool Create(HoaDonNhap model);
     }
 }

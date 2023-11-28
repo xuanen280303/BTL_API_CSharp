@@ -340,9 +340,10 @@ create PROCEDURE [dbo].[sp_nhanvien_update](
 )
 AS
     BEGIN
-		update NhanVien set @HoTenNV = @HoTenNV where manv = @MaNV; 
+		update NhanVien set hotennv = @HoTenNV, calam = @CaLam, sdtnv = @SDTNV, diachinv = @DiachiNV, email = @Email where manv = @MaNV; 
     END;
 GO
+
 
 --------------------------TÌM KIẾM------------------------------
 create PROCEDURE [dbo].[sp_nhanvien_search] (@page_index  INT, 
@@ -428,9 +429,10 @@ create PROCEDURE [dbo].[sp_khachhang_update](
 )
 AS
     BEGIN
-		update KhachHang set @HoTenKH = @HoTenKH where idkh = @IDKH; 
+		update KhachHang set hotenkh = @HoTenKH, sdtkh = @SDTKH, diachikh = @DiaChiKH where idkh = @IDKH; 
     END;
 GO
+
 
 -----------------------------NHÀ CUNG CẤP---------------------
 ------------------GET BY ID--------------------
@@ -504,7 +506,7 @@ create PROCEDURE [dbo].[sp_mypham_update](
 )
 AS
     BEGIN
-		update MyPham set tenmp = @TenMP, mota = @MoTa, ghichu=@GhiChu where mamp = @MaMP; 
+		update MyPham set tenmp = @TenMP, mota = @MoTa, ghichu = @GhiChu where mamp = @MaMP; 
     END;
 GO
 
@@ -567,3 +569,32 @@ AS
 	   values(@MaHDB, @NgayBan, @MaNV, @IDKH, @HoTenKH, @TongTien);
     END;
 GO
+
+----------------Hoá đơn nhập------------------------
+---------------------GET BY ID------------------
+create PROCEDURE gethoadonnhapbyid(@id Nvarchar(10))
+AS
+BEGIN
+SELECT*from HoaDonNhap where MaHDN = @id 
+END;
+
+---------------------THÊM---------------------------
+create PROCEDURE sp_hoadonnhap_create(
+@MaHDN Nvarchar(10),
+@NgayNhap Date,
+@MaNV Nvarchar(10),
+@MaNCC Nvarchar(10),
+@HoTenNCC Nvarchar(30),
+@SDTNCC Varchar(11),
+@TongTien float
+)
+AS
+    BEGIN
+       insert into HoaDonNhap(MaHDN, NgayNhap, MaNV, MaNCC, HoTenNCC, SDTNCC, TongTien)
+	   values(@MaHDN, @NgayNhap, @MaNV, @MaNCC, @HoTenNCC, @SDTNCC, @TongTien);
+    END;
+GO
+
+
+
+
