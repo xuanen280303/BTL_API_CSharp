@@ -289,17 +289,17 @@ VALUES('HDN01','MP01',N'Kem chống nắng Cetella',20, 250000,0,4500000),
 	  ('HDN10','MP05',N'Sữa rửa mặt SVR',10, 400000,0,4000000)
 
 --ChiTietHoaDonBan(MaMP, TenMP, SLBan, DGBan, GiamGia, ThanhTien)
-INSERT INTO ChiTietHoaDonBan(MaHDB, MaMP, TenMP, SLBan, DGBan, GiamGia, ThanhTien)
-VALUES('HDB01','MP01',N'Kem chống nắng Cetella',10, 350000,0,3500000),
-      ('HDB02','MP03',N'Kem dưỡng ẩm Klieh',10, 400000,0,4000000),
-	  ('HDB03','MP06',N'Sữa rửa mặt Cerave',10, 450000,0,4500000),
-	  ('HDB04','MP09',N'Mask Whitening',20, 25000,0,450000),
-	  ('HDB05','MP15',N'Tinh dầu bưởi Cococoon',30, 250000,0,7500000),
-	  ('HDB06','MP22',N'Eyeliner maybeline',10, 200000,0,2000000),
-      ('HDB07','MP25',N'Body mist Victoria ',20, 400000,0,8000000),
-	  ('HDB08','MP26',N'Sữa tắm Terosi',20, 250000,0,5000000),
-	  ('HDB09','MP19',N'Vaseline PX50',2, 250000,0,500000),
-	  ('HDB10','MP05',N'Sữa rửa mặt SVR',10, 450000,0,4500000)
+INSERT INTO ChiTietHoaDonBan(MaHDB, MaMP, TenMP, SLBan, DGBan, ThanhTien)
+VALUES('HDB01','MP01',N'Kem chống nắng Cetella',10, 350000,3500000),
+      ('HDB02','MP03',N'Kem dưỡng ẩm Klieh',10, 400000,4000000),
+	  ('HDB03','MP06',N'Sữa rửa mặt Cerave',10, 450000,4500000),
+	  ('HDB04','MP09',N'Mask Whitening',20, 25000,450000),
+	  ('HDB05','MP15',N'Tinh dầu bưởi Cococoon',30, 250000,7500000),
+	  ('HDB06','MP22',N'Eyeliner maybeline',10, 200000,2000000),
+      ('HDB07','MP25',N'Body mist Victoria ',20, 400000,8000000),
+	  ('HDB08','MP26',N'Sữa tắm Terosi',20, 250000,5000000),
+	  ('HDB09','MP19',N'Vaseline PX50',2, 250000,500000),
+	  ('HDB10','MP05',N'Sữa rửa mặt SVR',10, 450000,4500000)
 
 ----------------------NHÂN VIÊN---------------------
 -------------------GET BY ID-------------------------
@@ -463,9 +463,11 @@ create PROCEDURE [dbo].[sp_nhacc_update](
 )
 AS
     BEGIN
-		update NhaCC set @HoTenNCC = @HoTenNCC where mancc = @MaNCC; 
+		update NhaCC set hotenncc = @HoTenNCC, sdtncc = @SDTNCC, diachincc = @DiaChiNCC where mancc = @MaNCC; 
     END;
 GO
+
+
 
 --------------Mỹ phẩm----------------------------
 ---------GetByID---------------------
@@ -502,7 +504,7 @@ create PROCEDURE [dbo].[sp_mypham_update](
 )
 AS
     BEGIN
-		update MyPham set @TenMP = @TenMP where mamp = @MaMP; 
+		update MyPham set tenmp = @TenMP, mota = @MoTa, ghichu=@GhiChu where mamp = @MaMP; 
     END;
 GO
 
@@ -536,9 +538,32 @@ create PROCEDURE [dbo].[sp_loaimypham_update](
 )
 AS
     BEGIN
-		update LoaiMyPham set @TenLoaiMP = @TenLoaiMP where maloaimp = @MaLoaiMP; 
+		update LoaiMyPham set tenloaimp = @TenLoaiMP, mota = @MoTa where maloaimp = @MaLoaiMP; 
     END;
 GO
 
 
 
+----------------Hoá đơn bán------------------------
+---------------------GET BY ID------------------
+create PROCEDURE gethoadonbanbyid(@id Nvarchar(10))
+AS
+BEGIN
+SELECT*from HoaDonBan where MaHDB = @id 
+END;
+
+---------------------THÊM---------------------------
+create PROCEDURE sp_hoadonban_create(
+@MaHDB Nvarchar(10),
+@NgayBan Date ,
+@MaNV Nvarchar(10),
+@IDKH Nvarchar(10),
+@HoTenKH Nvarchar(30),
+@TongTien float
+)
+AS
+    BEGIN
+       insert into HoaDonBan(MaHDB,NgayBan, MaNV, IDKH, HoTenKH, TongTien)
+	   values(@MaHDB, @NgayBan, @MaNV, @IDKH, @HoTenKH, @TongTien);
+    END;
+GO

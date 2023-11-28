@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BTL_API_BanMyPham\\API\\API.csproj": {}
+    "D:\\BanMyPham\\BTL_API_BanMyPham\\API\\API.csproj": {}
   },
   "projects": {
-    "D:\\BTL_API_BanMyPham\\API\\API.csproj": {
+    "D:\\BanMyPham\\BTL_API_BanMyPham\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BTL_API_BanMyPham\\API\\API.csproj",
+        "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "D:\\BTL_API_BanMyPham\\API\\API.csproj",
+        "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\API\\API.csproj",
         "packagesPath": "C:\\Users\\np\\.nuget\\packages\\",
-        "outputPath": "D:\\BTL_API_BanMyPham\\API\\obj\\",
+        "outputPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\np\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,11 +28,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\BTL_API_BanMyPham\\BLL\\BLL.csproj": {
-                "projectPath": "D:\\BTL_API_BanMyPham\\BLL\\BLL.csproj"
+              "D:\\BanMyPham\\BTL_API_BanMyPham\\BLL\\BLL.csproj": {
+                "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\BLL\\BLL.csproj"
               },
-              "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
-                "projectPath": "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj"
+              "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
+                "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj"
               }
             }
           }
@@ -110,14 +110,14 @@
         }
       }
     },
-    "D:\\BTL_API_BanMyPham\\BLL\\BLL.csproj": {
+    "D:\\BanMyPham\\BTL_API_BanMyPham\\BLL\\BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BTL_API_BanMyPham\\BLL\\BLL.csproj",
+        "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham\\BLL\\BLL.csproj",
         "projectName": "BLL",
-        "projectPath": "D:\\BTL_API_BanMyPham\\BLL\\BLL.csproj",
+        "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\BLL\\BLL.csproj",
         "packagesPath": "C:\\Users\\np\\.nuget\\packages\\",
-        "outputPath": "D:\\BTL_API_BanMyPham\\BLL\\obj\\",
+        "outputPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\BLL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\np\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -134,11 +134,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\BTL_API_BanMyPham\\DAL\\DAL.csproj": {
-                "projectPath": "D:\\BTL_API_BanMyPham\\DAL\\DAL.csproj"
+              "D:\\BanMyPham\\BTL_API_BanMyPham\\DAL\\DAL.csproj": {
+                "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DAL\\DAL.csproj"
               },
-              "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
-                "projectPath": "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj"
+              "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
+                "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj"
               }
             }
           }
@@ -209,14 +209,14 @@
         }
       }
     },
-    "D:\\BTL_API_BanMyPham\\DAL\\DAL.csproj": {
+    "D:\\BanMyPham\\BTL_API_BanMyPham\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BTL_API_BanMyPham\\DAL\\DAL.csproj",
+        "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "D:\\BTL_API_BanMyPham\\DAL\\DAL.csproj",
+        "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DAL\\DAL.csproj",
         "packagesPath": "C:\\Users\\np\\.nuget\\packages\\",
-        "outputPath": "D:\\BTL_API_BanMyPham\\DAL\\obj\\",
+        "outputPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\np\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -233,8 +233,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
-                "projectPath": "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj"
+              "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
+                "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj"
               }
             }
           }
@@ -305,14 +305,14 @@
         }
       }
     },
-    "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
+    "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj",
+        "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj",
         "projectName": "DTO",
-        "projectPath": "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj",
+        "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj",
         "packagesPath": "C:\\Users\\np\\.nuget\\packages\\",
-        "outputPath": "D:\\BTL_API_BanMyPham\\DTO\\obj\\",
+        "outputPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\np\\AppData\\Roaming\\NuGet\\NuGet.Config",

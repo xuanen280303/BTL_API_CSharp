@@ -2114,11 +2114,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj",
+      "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj",
       "projectName": "DTO",
-      "projectPath": "D:\\BTL_API_BanMyPham\\DTO\\DTO.csproj",
+      "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj",
       "packagesPath": "C:\\Users\\np\\.nuget\\packages\\",
-      "outputPath": "D:\\BTL_API_BanMyPham\\DTO\\obj\\",
+      "outputPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\np\\AppData\\Roaming\\NuGet\\NuGet.Config",
