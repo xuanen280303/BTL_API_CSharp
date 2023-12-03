@@ -2138,11 +2138,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham\\DAL\\DAL.csproj",
+      "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\DAL\\DAL.csproj",
       "projectName": "DAL",
-      "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DAL\\DAL.csproj",
+      "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\DAL\\DAL.csproj",
       "packagesPath": "C:\\Users\\np\\.nuget\\packages\\",
-      "outputPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DAL\\obj\\",
+      "outputPath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\DAL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\np\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2159,8 +2159,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
-              "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj"
+            "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\DTO\\DTO.csproj": {
+              "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\DTO\\DTO.csproj"
             }
           }
         }

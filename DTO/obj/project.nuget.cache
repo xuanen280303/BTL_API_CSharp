@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "648rQVNzHgdS7kGe1jvCt+v4udSMGDTNWOSqBAl1vE/iZI5J5zUJ6WMTuvx3fMca5/5LknQ9E2/XqChHkpApow==",
+  "dgSpecHash": "Z/nWZuf6hSZm6TmoLemNJSK/da+6Ajy9s5F/worPCtRZkyVSywtKkYp6xw8Nrl2XbVp9JIrqjJg+dyUnJ2Cr0g==",
   "success": true,
-  "projectFilePath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj",
+  "projectFilePath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\DTO\\DTO.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\np\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\np\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.24\\microsoft.aspnetcore.authentication.jwtbearer.6.0.24.nupkg.sha512",

@@ -2385,11 +2385,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham\\API\\API.csproj",
+      "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\API\\API.csproj",
+      "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\API\\API.csproj",
       "packagesPath": "C:\\Users\\np\\.nuget\\packages\\",
-      "outputPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\API\\obj\\",
+      "outputPath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\np\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2406,11 +2406,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\BanMyPham\\BTL_API_BanMyPham\\BLL\\BLL.csproj": {
-              "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\BLL\\BLL.csproj"
+            "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\BLL\\BLL.csproj": {
+              "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\BLL\\BLL.csproj"
             },
-            "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj": {
-              "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham\\DTO\\DTO.csproj"
+            "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\DTO\\DTO.csproj": {
+              "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\DTO\\DTO.csproj"
             }
           }
         }
