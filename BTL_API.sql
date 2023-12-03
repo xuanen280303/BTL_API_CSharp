@@ -2,18 +2,41 @@
 USE BTL_BanMyPham
 GO
 
--- Tạo các bảng 
---Users( UserID, Password, Permission)
-
-CREATE TABLE Users
-(
-UserID Nvarchar(10) PRIMARY KEY,
-Username Nvarchar(20) not null,
-Password Nvarchar(30) not null,
-EmailUser Varchar(30) CHECK (EmailUser LIKE '%@%'),
-Permission int
+--LoaiTaiKhoan(MaLoaiTK, TenLoaiTK, MoTa)
+CREATE Table LoaiTaiKhoan (
+MaLoaiTK INT IDENTITY(1,1) PRIMARY KEY,
+TenLoaiTK Nvarchar(20),
+MoTa Nvarchar(30)
 )
 
+--TaiKhoan(MaTaiKhoan, LoaiTaiKhoan, TenTaiKhoan, MatKhau, Email)
+CREATE TABLE TaiKhoan (
+MaTaiKhoan INT IDENTITY(1,1) PRIMARY KEY,
+LoaiTaiKhoan INT CONSTRAINT TK_LoaiTK_FK FOREIGN KEY (LoaiTaiKhoan) REFERENCES  LoaiTaiKhoan(MaLoaiTK),
+TenTaiKhoan Nvarchar(20),
+MatKhau Nvarchar(20),
+Email Varchar(30) CHECK (Email LIKE '%@%')
+)
+
+--ChiTietTaiKhoan(MaChiTietTaiKhoan, MaTaiKhoan, HoTen, DiaChi, SDT, AnhDaiDien)
+CREATE TABLE ChiTietTaiKhoan (
+MaChitietTaiKhoan INT IDENTITY(1,1) PRIMARY KEY,
+MaTaiKhoan INT CONSTRAINT CTTK_MaTK_FK  FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan),
+HoTen Nvarchar(30),
+DiaChi Nvarchar(30),
+SDT Varchar(11) DEFAULT N'Không có',
+AnhDaiDien Nvarchar(500)
+)
+
+--BaiViet(MaBV, TieuDe, NguoiDang, TGDang, NgayKT, NoiDung)
+CREATE TABLE BaiViet (
+MaBV Nvarchar(10) CONSTRAINT PK_MaBV PRIMARY KEY,
+TieuDe Nvarchar(100),
+NguoiDang Nvarchar(20),
+TGDang Date,
+NgayKT Date, 
+NoiDung Nvarchar(MAX)
+)
 
 -- LoaiMyPham(MaLoaiMP, TenMP, GhiChu) 
 CREATE TABLE LoaiMyPham
@@ -34,6 +57,16 @@ SLTon int check (SLTon>=0),
 MoTa Nvarchar(MAX),
 GhiChu Nvarchar(30)
 )
+
+--ChiTietMyPham(MaChiTietMP, MaMP, MaNCC, MoTa, ChiTiet)
+CREATE TABLE ChiTietMyPham (
+MaChiTietMyPham Nvarchar(10) PRIMARY KEY,
+MaMP Nvarchar(10) CONSTRAINT CTMP_MaMP_FK FOREIGN KEY (MaMP) REFERENCES MyPham(MaMP),
+MaNCC Nvarchar(10) CONSTRAINT FK_NhaCC_MaNCC FOREIGN KEY REFERENCES NhaCC(MaNCC),
+MoTa Nvarchar(MAX),
+ChiTiet Nvarchar(MAX)
+)
+
 
 --NhanVien(MaNV, HoTenNV, NgaySinh, GioiTinh, CaLam, SDTNV, DiaChiNV, Email)
 CREATE TABLE NhanVien
@@ -72,22 +105,22 @@ CREATE TABLE HoaDonNhap
 (
 MaHDN Nvarchar(10) PRIMARY KEY,
 NgayNhap Date,
-MaNV Nvarchar(10) CONSTRAINT FK_HoaDonNhap_MaNV FOREIGN KEY REFERENCES NhanVien(MaNV),
+MaTaiKhoan INT CONSTRAINT HDN_MaTK_FK FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan),
 MaNCC Nvarchar(10) CONSTRAINT FK_HoaDonNhap_MaNCC FOREIGN KEY REFERENCES NhaCC(MaNCC),
-HoTenNCC Nvarchar(30),
-SDTNCC Varchar(11) DEFAULT N'Không có',
+KieuThanhToan Nvarchar(20),
 TongTien float check(TongTien>=0)
 )
+
 
 --ChiTietHoaDonNhap(MaHDN, MaMP, TenMP, SoLuong, DonGia, TrietKhau, ThanhTien)
 CREATE TABLE ChiTietHoaDonNhap
 (
+MaCTHDN Nvarchar(10) PRIMARY KEY,
 MaHDN Nvarchar(10) CONSTRAINT FK_ChiTietHoaDonNhap_HDN FOREIGN KEY REFERENCES HoaDonNhap(MaHDN),
 MaMP Nvarchar(10) CONSTRAINT FK_ChiTietHoaDonNhap_MyPham FOREIGN KEY REFERENCES MyPham(MaMP),
 TenMP Nvarchar(50) not null, 
 SLNhap float check (SLNhap>0),
 DGNhap float check (DGNhap>0),
-TrietKhau float Check(TrietKhau>=0),
 ThanhTien float check (ThanhTien>=0)
 )
 
@@ -96,7 +129,7 @@ CREATE TABLE HoaDonBan
 (
 MaHDB Nvarchar(10) PRIMARY KEY,
 NgayBan Date ,
-MaNV Nvarchar(10) CONSTRAINT FK_HoaDonBan_MaNV FOREIGN KEY REFERENCES NhanVien(MaNV),
+MaTaiKhoan INT CONSTRAINT HDB_MaTK_FK FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan),
 IDKH Nvarchar(10) CONSTRAINT FK_HoaDonBan_IDKH FOREIGN KEY REFERENCES KhachHang(IDKH),
 HoTenKH Nvarchar(30),
 TongTien float check(TongTien>=0)
@@ -105,39 +138,37 @@ TongTien float check(TongTien>=0)
 --ChiTietHoaDonBan(MaCTHDB, MaHDB, MaSP, SoLuong, DonGia)
 CREATE TABLE ChiTietHoaDonBan
 (
+MaCTHDB Nvarchar(10) PRIMARY KEY,
 MaHDB Nvarchar(10) CONSTRAINT FK_ChiTietHoaDonNhap_HDB FOREIGN KEY REFERENCES HoaDonBan(MaHDB),
 MaMP Nvarchar(10) CONSTRAINT FK_ChiTietHoaDonBan_MyPham FOREIGN KEY REFERENCES MyPham(MaMP),
 TenMP Nvarchar(50) not null,
-SLBan int check (SLBan>0),
-DGBan float check (DGBan>0),
-ThanhTien float check (ThanhTien>0)
+SLBan INT CHECK (SLBan>0),
+DGBan FLOAT CHECK (DGBan>0),
+ThanhTien  FLOAT CHECK(ThanhTien>0)
 )
+ 
+------------------------------------INSERT THÔNG TIN VÀO CÁC BẢNG---------------------------------------------
+--INSERT LoaiTaiKhoan(TenLoaiTK, MoTa)
+INSERT INTO LoaiTaiKhoan(TenLoaiTK, MoTa)
+VALUES (N'Nhân viên', null),
+       (N'Quản lý', null),
+	   (N'Khách hàng', null)
 
+-- INSERT TaiKhoan(LoaiTaiKhoan, TenTaiKhoan, MatKhau, Email)
+INSERT INTO TaiKhoan (LoaiTaiKhoan, TenTaiKhoan, MatKhau, Email)
+VALUES (1, N'enchan', N'123456', N'enchan2803@gmail.com'),
+       (0, N'ngocmun', N'123456', N'ngoc06@gmail.com')
 
-SELECT TOP 1 MyPham.MaMP, MyPham.TenMP, SUM(ChiTietHoaDonBan.SLBan) AS TongSoLuongBan
-FROM MyPham
-INNER JOIN ChiTietHoaDonBan ON MyPham.MaMP = ChiTietHoaDonBan.MaMP
-GROUP BY MyPham.MaMP, MyPham.TenMP
-ORDER BY SUM(ChiTietHoaDonBan.SLBan) DESC
+--INSERT ChiTietTaiKhoan(MaTaiKhoan, HoTen, DiaChi, SDT, AnhDaiDien)
+INSERT INTO ChiTietTaiKhoan(MaTaiKhoan, HoTen, DiaChi, SDT, AnhDaiDien)
+VALUES (1, N'Trần Thị Xuân Én', N'Hà Nội', '0987233625', null),
+       (0, N'Nguyễn Ngọc', N'Hưng Yên', '0358312793', null)
 
-drop table ChiTietHoaDonBan
-
--- INSERT THÔNG TIN VÀO CÁC BẢNG
-CREATE TABLE Users
-(
-UserID Nvarchar(10) PRIMARY KEY,
-Username Nvarchar(20) not null,
-Password Nvarchar(30) not null,
-EmailUser Varchar(30) CHECK (EmailUser LIKE '%@%'),
-Permission int
-)
-
---INSERT Users(UserID, Username, Password, EmailUser, Permission)
-INSERT INTO Users(UserID, Username, Password, EmailUser, Permission)
-VALUES('ADMIN',N'ChuCuaHang',12345,N'enchan280303@gmail.com',1),
-      ('USER',N'NhanVien',123456,N'enchan280303@gmail.com',0)
-
-SELECT * FROM Users
+--INSERT BaiViet(MaBV, TieuDe, NguoiDang, TGDang, NgayKT, NoiDung)
+INSERT INTO BaiViet(MaBV, TieuDe, NguoiDang, TGDang, NgayKT, NoiDung)
+VALUES('BV01', N'Dùng kem chống nắng như thế nào?', N'Nhân viên', '09-09-2023', '01-09-2024', N'Dùng mỗi ngày'),
+      ('BV02', N'Dùng nước tẩy trang như thế nào?', N'Quản lý', '05-12-2023', '01-01-2024', N'Dùng mỗi ngày'),
+	  ('BV03', N'Dùng toner như thế nào?', N'Nhân viên', '03-08-2023', '05-03-2024', N'Dùng mỗi ngày')
 
 -- INSERT LoaiMyPham(MaLoaiMP, TenLoaiMP, MoTa)
 INSERT INTO LoaiMyPham(MaLoaiMP, TenLoaiMP, MoTa)
@@ -195,6 +226,19 @@ VALUES('MP01',N'Kem chống nắng Cetella','L01',5,N'Kem chống nắng Cetella
 	  ('MP29',N'Son Color Key','L19', 100,N'Son Color Key',N'Son nhẹ, đánh mềm môi'),
 	  ('MP30',N'Tẩy da chết Cocoon','L20', 50,N'Tẩy da chết Cocoon',N'Phù hợp với người trên 16 tuổi')
 
+--ChiTietMyPham(MaChiTietMP, MaMP, MaNCC, MoTa, ChiTiet)
+INSERT INTO ChiTietMyPham(MaChiTietMyPham, MaMP, MaNCC, MoTa, ChiTiet)
+VALUES ('MaCT01', 'MP01', 'NCC01', null, null),
+       ('MaCT02', 'MP02', 'NCC02', null, null),
+	   ('MaCT03', 'MP03', 'NCC03', null, null),
+	   ('MaCT04', 'MP04', 'NCC04', null, null),
+	   ('MaCT05', 'MP05', 'NCC05', null, null),
+	   ('MaCT06', 'MP06', 'NCC06', null, null),
+	   ('MaCT07', 'MP07', 'NCC07', null, null),
+	   ('MaCT08', 'MP08', 'NCC08', null, null),
+	   ('MaCT09', 'MP09', 'NCC09', null, null),
+	   ('MaCT10', 'MP10', 'NCC10', null, null)
+       
 --NhanVien(MaNV, HoTenNV,NgaySinh,GioiTinh, CaLam, Email, SDTNV, DiaChiNV)
 INSERT INTO NhanVien(MaNV, HoTenNV,NgaySinh,GioiTinh, CaLam, Email, SDTNV, DiaChiNV)
 VALUES('NV01',N'Mai Thị Hoa','09-09-1999',N'Nữ','FullTime',N'HoaMH09@gmail.com',0981890898,N'Mỹ Hào, Hưng Yên'),

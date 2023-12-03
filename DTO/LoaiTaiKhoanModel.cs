@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DTO
 {
-    public class LoaiMyPhamModel
+    public class LoaiTaiKhoanModel
     {
-        public string MaLoaiMP { get; set; } 
-        public string TenLoaiMP { get; set; } 
+        public int MaLoaiTK { get; set; }
+        public string TenLoaiTK { get; set; }
         public string MoTa { get; set; }
     }
 }
