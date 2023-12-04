@@ -2385,9 +2385,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\API\\API.csproj",
-      "projectName": "API",
-      "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\API\\API.csproj",
+      "projectUniqueName": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\API\\API_ADMIN.csproj",
+      "projectName": "API_ADMIN",
+      "projectPath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\API\\API_ADMIN.csproj",
       "packagesPath": "C:\\Users\\np\\.nuget\\packages\\",
       "outputPath": "D:\\BanMyPham\\BTL_API_BanMyPham_ADMIN\\API\\obj\\",
       "projectStyle": "PackageReference",

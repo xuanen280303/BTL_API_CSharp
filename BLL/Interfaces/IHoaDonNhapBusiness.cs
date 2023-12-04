@@ -9,7 +9,7 @@ namespace BLL.Interfaces
 {
     public partial interface IHoaDonNhapBusiness
     {
-        HoaDonBan GetHoaDonNhapbyID(string id);
+        HoaDonNhap GetHoaDonNhapbyID(string id);
         bool Create(HoaDonNhap model);
     }
 }

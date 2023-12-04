@@ -157,12 +157,12 @@ VALUES (N'Nhân viên', null),
 -- INSERT TaiKhoan(LoaiTaiKhoan, TenTaiKhoan, MatKhau, Email)
 INSERT INTO TaiKhoan (LoaiTaiKhoan, TenTaiKhoan, MatKhau, Email)
 VALUES (1, N'enchan', N'123456', N'enchan2803@gmail.com'),
-       (0, N'ngocmun', N'123456', N'ngoc06@gmail.com')
+       (2, N'ngocmun', N'123456', N'ngoc06@gmail.com')
 
 --INSERT ChiTietTaiKhoan(MaTaiKhoan, HoTen, DiaChi, SDT, AnhDaiDien)
 INSERT INTO ChiTietTaiKhoan(MaTaiKhoan, HoTen, DiaChi, SDT, AnhDaiDien)
-VALUES (1, N'Trần Thị Xuân Én', N'Hà Nội', '0987233625', null),
-       (0, N'Nguyễn Ngọc', N'Hưng Yên', '0358312793', null)
+VALUES (9, N'Trần Thị Xuân Én', N'Hà Nội', '0987233625', null),
+       (10, N'Nguyễn Ngọc', N'Hưng Yên', '0358312793', null)
 
 --INSERT BaiViet(MaBV, TieuDe, NguoiDang, TGDang, NgayKT, NoiDung)
 INSERT INTO BaiViet(MaBV, TieuDe, NguoiDang, TGDang, NgayKT, NoiDung)

@@ -14,14 +14,4 @@ namespace DTO
         public string DiaChiKH { get; set; }
 
     }
-    public class KhachHangModel_deletes
-    {
-        public List<ChiTietKhachHangModel> list_json_idkhachhang { get; set; }
-    }
-    public class ChiTietKhachHangModel
-    {
-        public int IDKH { get; set; }
-        public int GhiChu { get; set; }
-
-    }
 }
