@@ -34,4 +34,11 @@
   "ghiChu": "Son nhẹ, đánh mềm môi"
 }
 
+--------------Thêm và sửa LOẠI MỸ PHẨM------------------
+{
+  "maLoaiMP": "L21",
+  "tenLoaiMP": "son dưỡng",
+  "moTa": "làm hồng môi"
+}
+
 

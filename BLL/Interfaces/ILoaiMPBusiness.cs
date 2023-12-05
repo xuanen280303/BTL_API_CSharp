@@ -12,5 +12,7 @@ namespace BLL.Interfaces
         LoaiMyPhamModel GetLoaiMyPhambyID(string id);
         bool Create(LoaiMyPhamModel model);
         bool Update(LoaiMyPhamModel model);
+        bool Delete(string id);
+        public List<LoaiMyPhamModel> Search(int pageIndex, int pageSize, out long total, string tenloai_mp, string motaloai_mp);
     }
 }

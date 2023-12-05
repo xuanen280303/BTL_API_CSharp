@@ -388,9 +388,19 @@ AS
     END;
 GO
 
+----------------------------XOÁ---------------------------------
+CREATE PROCEDURE sp_nhanvien_delete
+@MaNV Nvarchar(10)
+AS
+	BEGIN
+		DELETE NhanVien WHERE MaNV = @MaNV
+	END;
+GO
 
+SELECT * FROM NhanVien
+ exec [sp_nhanvien_search]  @page_index = 1 , @page_size = 5 , @ten_nv = '' , @dia_chinv = ''
 --------------------------TÌM KIẾM------------------------------
-create PROCEDURE [dbo].[sp_nhanvien_search] (@page_index  INT, 
+CREATE PROCEDURE [dbo].[sp_nhanvien_search] (@page_index  INT, 
                                        @page_size   INT,
 									   @ten_nv Nvarchar(30),
 									   @dia_chinv Nvarchar(30)
@@ -403,9 +413,14 @@ AS
 						SET NOCOUNT ON;
                         SELECT(ROW_NUMBER() OVER(
                               ORDER BY HoTenNV ASC)) AS RowNumber, 
-                              n.Manv,
-							  n.HoTennv,
-							  n.DiachiNV
+                              n.MaNV,
+							  n.HoTenNV,
+							  n.NgaySinh,
+							  n.GioiTinh,
+							  n.CaLam,
+							  n.SDTNV,
+							  n.DiachiNV,
+							  n.Email
                         INTO #Results1
                         FROM NhanVien AS n
 					    WHERE  (@ten_nv = '' Or n.HoTenNV like N'%'+@ten_nv+'%') and						
@@ -424,11 +439,16 @@ AS
 						SET NOCOUNT ON;
                         SELECT(ROW_NUMBER() OVER(
                               ORDER BY HoTenNV ASC)) AS RowNumber, 
-                              n.Manv,
+                              n.MaNV,
 							  n.HoTenNV,
-							  n.DiachiNV
+							  n.NgaySinh,
+							  n.GioiTinh,
+							  n.CaLam,
+							  n.SDTNV,
+							  n.DiachiNV,
+							  n.Email
                         INTO #Results2
-                        FROM KhachHangs AS n
+                        FROM NhanVien AS n
 					    WHERE  (@ten_nv = '' Or n.HoTenNV like N'%'+@ten_nv+'%') and						
 						(@dia_chinv = '' Or n.DiaChiNV like N'%'+@dia_chinv+'%');                   
                         SELECT @RecordCount = COUNT(*)
@@ -440,6 +460,9 @@ AS
         END;
     END;
 GO
+
+
+
 
 --------------------------KHÁCH HÀNG--------------------
 -------------------GET BY ID--------------------
@@ -513,9 +536,75 @@ AS
     END;
 GO
 
+-----------------------Xoá Nhà cung cấp----------------------
+CREATE PROCEDURE sp_nhacc_delete
+@MaNCC Nvarchar(10)
+AS
+	BEGIN
+		DELETE NhaCC WHERE MaNCC = @MaNCC
+	END;
+GO
+
+SELECT * FROM NhaCC
+
+
+-------------------------Tìm kiếm----------------------------
+CREATE PROCEDURE [dbo].[sp_nhacc_search] (@page_index  INT, 
+                                       @page_size   INT,
+									   @ten_ncc Nvarchar(30),
+									   @dia_chincc Nvarchar(30)
+									   )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY HoTenNCC ASC)) AS RowNumber, 
+                              n.MaNCC,
+							  n.HoTenNCC,
+							  n.SDTNCC,
+							  n.DiaChiNCC
+                        INTO #Results1
+                        FROM NhaCC AS n
+					    WHERE  (@ten_ncc = '' Or n.HoTenNCC like N'%'+@ten_ncc+'%') and						
+						(@dia_chincc = '' Or n.DiaChiNCC like N'%'+@dia_chincc+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+                         SELECT(ROW_NUMBER() OVER(
+                              ORDER BY HoTenNCC ASC)) AS RowNumber, 
+                               n.MaNCC,
+							  n.HoTenNCC,
+							  n.SDTNCC,
+							  n.DiaChiNCC
+                        INTO #Results2
+                        FROM NhaCC AS n
+					    WHERE  (@ten_ncc = '' Or n.HoTenNCC like N'%'+@ten_ncc+'%') and						
+						(@dia_chincc = '' Or n.DiaChiNCC like N'%'+@dia_chincc+'%');                  
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
+GO
 
 --------------Mỹ phẩm----------------------------
 ---------GetByID---------------------
+
 create PROCEDURE getmyphambyid(@id Nvarchar(10))
 AS
 BEGIN
@@ -553,9 +642,82 @@ AS
     END;
 GO
 
+-----------------------Xoá Mỹ phẩm----------------------
+CREATE PROCEDURE sp_mypham_delete
+@MaMP Nvarchar(10)
+AS
+	BEGIN
+		DELETE MyPham WHERE MaMP = @MaMP
+	END;
+GO
+
+
+SELECT * FROM MyPham
+
+
+-------------------------Tìm kiếm----------------------------
+CREATE PROCEDURE [dbo].[sp_mypham_search] (@page_index  INT, 
+                                       @page_size   INT,
+									   @ten_mp Nvarchar(30),
+									   @mota_mp Nvarchar(30)
+									   )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY TenMP ASC)) AS RowNumber, 
+                              n.MaMP,
+							  n.TenMP,
+							  n.MaLoaiMP,
+							  n.SLTon,
+							  n.MoTa,
+							  n.GhiChu						  
+                        INTO #Results1
+                        FROM MyPham AS n
+					    WHERE  (@ten_mp = '' Or n.TenMP like N'%'+@ten_mp+'%') and						
+						(@mota_mp = '' Or n.MoTa like N'%'+@mota_mp+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY TenMP ASC)) AS RowNumber, 
+                              n.MaMP,
+							  n.TenMP,
+							  n.MaLoaiMP,
+							  n.SLTon,
+							  n.MoTa,
+							  n.GhiChu	
+                        INTO #Results2
+                        FROM MyPham AS n
+					     WHERE  (@ten_mp = '' Or n.TenMP like N'%'+@ten_mp+'%') and						
+						(@mota_mp = '' Or n.MoTa like N'%'+@mota_mp+'%');                  
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
+GO
+
+SELECT * FROM MyPham
+
 
 --------------Loại Mỹ phẩm----------------------------
----------GetByID---------------------
+-------------------GetByID---------------------
 create PROCEDURE getloaimyphambyid(@id Nvarchar(10))
 AS
 BEGIN
@@ -587,6 +749,68 @@ AS
     END;
 GO
 
+-----------------------Xoá loại Mỹ phẩm----------------------
+CREATE PROCEDURE sp_loaimypham_delete
+@MaLoaiMP Nvarchar(10)
+AS
+	BEGIN
+		DELETE LoaiMyPham WHERE MaLoaiMP = @MaLoaiMP
+	END;
+GO
+
+SELECT * FROM LoaiMyPham
+
+-------------------------Tìm kiếm----------------------------
+CREATE PROCEDURE [dbo].[sp_loaimypham_search] (@page_index  INT, 
+                                       @page_size   INT,
+									   @tenloai_mp Nvarchar(30),
+									   @motaloai_mp Nvarchar(30)
+									   )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY TenLoaiMP ASC)) AS RowNumber, 
+							  n.MaLoaiMP,
+							  n.TenLoaiMP,
+							  n.MoTa				  
+                        INTO #Results1
+                        FROM LoaiMyPham AS n
+					    WHERE  (@tenloai_mp = '' Or n.TenLoaiMP like N'%'+@tenloai_mp+'%') and						
+						(@motaloai_mp = '' Or n.MoTa like N'%'+@motaloai_mp+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY TenLoaiMP ASC)) AS RowNumber, 
+							  n.MaLoaiMP,
+							  n.TenLoaiMP,
+							  n.MoTa	
+                        INTO #Results2
+                        FROM LoaiMyPham AS n
+					    WHERE  (@tenloai_mp = '' Or n.TenLoaiMP like N'%'+@tenloai_mp+'%') and						
+						(@motaloai_mp = '' Or n.MoTa like N'%'+@motaloai_mp+'%');                  
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
+GO
 
 
 ----------------Hoá đơn bán------------------------
