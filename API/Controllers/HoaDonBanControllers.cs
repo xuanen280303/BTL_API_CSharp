@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BLL;
 using BLL.Interfaces;
-using API.Models;
+using DTO;
 
 namespace API.Controllers
 {
@@ -18,14 +18,14 @@ namespace API.Controllers
 
         [Route("get-hoadonban-id/{id}")]
         [HttpGet]
-        public HoaDonBan GetHoaDonBanbyID(string id)
+        public HoaDonBanModel GetHoaDonBanbyID(string id)
         {
             return _hoadonBanBusiness.GetHoaDonBanbyID(id);
         }
 
         [Route("create-hoadonban")]
         [HttpPost]
-        public HoaDonBan CreateItem([FromBody] HoaDonBan model)
+        public HoaDonBanModel CreateItem([FromBody] HoaDonBanModel model)
         {
             _hoadonBanBusiness.Create(model);
             return model;

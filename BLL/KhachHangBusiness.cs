@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using BLL.Interfaces;
 using DAL;
 using DAL.Interfaces;
@@ -18,15 +18,15 @@ namespace BLL
         {
             _khachhang = khachhang;
         }
-        public KhachHang GetKhachHangbyID(string id)
+        public KhachHangModel GetKhachHangbyID(string id)
         {
             return _khachhang.GetKhachHangbyID(id);
         }
-        public bool Create(KhachHang model)
+        public bool Create(KhachHangModel model)
         {
             return _khachhang.Create(model);
         }
-        public bool Update(KhachHang model)
+        public bool Update(KhachHangModel model)
         {
             return _khachhang.Update(model);
         }

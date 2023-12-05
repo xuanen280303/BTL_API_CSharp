@@ -514,7 +514,6 @@ AS
 GO
 
 
-
 --------------Mỹ phẩm----------------------------
 ---------GetByID---------------------
 create PROCEDURE getmyphambyid(@id Nvarchar(10))

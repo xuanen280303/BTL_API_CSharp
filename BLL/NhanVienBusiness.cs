@@ -1,7 +1,7 @@
-﻿using API.Models;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using DAL;
 using DAL.Interfaces;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,21 +18,23 @@ namespace BLL
         {
             _nhanvien = nhanvien;
         }
-
-        public NhanVien GetNhanVienbyID(string id)
+        public NhanVienModel GetNhanVienbyID(string id)
         {
             return _nhanvien.GetNhanVienbyID(id);
         }
-        public bool Create(NhanVien model)
+        public bool Create(NhanVienModel model)
         {
             return _nhanvien.Create(model);
         }
-        public bool Update(NhanVien model)
+        public bool Update(NhanVienModel model)
         {
             return _nhanvien.Update(model);
         }
-
-        public List<NhanVien> Search(int pageIndex, int pageSize, out long total, string ten_nv, string dia_chinv)
+        public bool Delete(string id)
+        {
+            return _nhanvien.Delete(id);
+        }
+        public List<NhanVienModel> Search(int pageIndex, int pageSize, out long total, string ten_nv, string dia_chinv)
         {
             return _nhanvien.Search(pageIndex, pageSize, out total, ten_nv, dia_chinv);
         }

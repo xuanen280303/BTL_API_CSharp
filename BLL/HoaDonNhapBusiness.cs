@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using BLL.Interfaces;
 using DAL;
 using DAL.Interfaces;
@@ -18,11 +18,11 @@ namespace BLL
         {
             _hdn = hdn;
         }
-        public HoaDonNhap GetHoaDonNhapbyID(string id)
+        public HoaDonNhapModel GetHoaDonNhapbyID(string id)
         {
             return _hdn.GetHoaDonNhapbyID(id);
         }
-        public bool Create(HoaDonNhap model)
+        public bool Create(HoaDonNhapModel model)
         {
             return _hdn.Create(model);
         }

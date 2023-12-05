@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace BLL.Interfaces
 {
     public partial interface IHoaDonNhapBusiness
     {
-        HoaDonNhap GetHoaDonNhapbyID(string id);
-        bool Create(HoaDonNhap model);
+        HoaDonNhapModel GetHoaDonNhapbyID(string id);
+        bool Create(HoaDonNhapModel model);
     }
 }

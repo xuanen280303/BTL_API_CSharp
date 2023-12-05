@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,7 @@ namespace DAL.Interfaces
 {
     public partial interface IHoaDonBanRepository
     {
-        HoaDonBan GetHoaDonBanbyID(string id);
-        bool Create(HoaDonBan model);
-        bool Update(HoaDonBan model);
+        HoaDonBanModel GetHoaDonBanbyID(string id);
+        bool Create(HoaDonBanModel model);
     }
 }

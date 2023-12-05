@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using BLL.Interfaces;
 using DAL;
 using DAL.Interfaces;
@@ -18,17 +18,25 @@ namespace BLL
         {
             _mypham = mypham;
         }
-        public MyPham GetMyPhambyID(string id)
+        public MyPhamModel GetMyPhambyID(string id)
         {
             return _mypham.GetMyPhambyID(id);
         }
-        public bool Create(MyPham model)
+        public bool Create(MyPhamModel model)
         {
             return _mypham.Create(model);
         }
-        public bool Update(MyPham model)
+        public bool Update(MyPhamModel model)
         {
             return _mypham.Update(model);
+        }
+        public bool Delete(string id)
+        {
+            return _mypham.Delete(id);
+        }
+        public List<MyPhamModel> Search(int pageIndex, int pageSize, out long total, string ten_mp, string mota_mp)
+        {
+            return _mypham.Search(pageIndex, pageSize, out total, ten_mp, mota_mp);
         }
     }
 }

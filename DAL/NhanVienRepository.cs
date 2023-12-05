@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using DAL.Helper.Interfaces;
 using DAL.Interfaces;
 using System;
@@ -17,7 +17,7 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public NhanVien GetNhanVienbyID(string id)
+        public NhanVienModel GetNhanVienbyID(string id)
         {
             string msgError = "";
             try
@@ -25,7 +25,7 @@ namespace DAL
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getnhanvienbyid","@id", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<NhanVien>().FirstOrDefault();
+                return dt.ConvertTo<NhanVienModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -33,7 +33,7 @@ namespace DAL
             }
         }
 
-        public bool Create(NhanVien model)
+        public bool Create(NhanVienModel model)
         {
             string msgError = "";
             try
@@ -59,7 +59,7 @@ namespace DAL
             }
         }
 
-        public bool Update(NhanVien model)
+        public bool Update(NhanVienModel model)
         {
             string msgError = "";
             try
@@ -85,7 +85,26 @@ namespace DAL
             }
         }
 
-        public List<NhanVien> Search(int pageIndex, int pageSize, out long total, string ten_nv, string dia_chinv)
+        public bool Delete(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_nhanvien_delete",
+                     "@MaNV", id);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<NhanVienModel> Search(int pageIndex, int pageSize, out long total, string ten_nv, string dia_chinv)
         {
             string msgError = "";
             total = 0;
@@ -99,7 +118,7 @@ namespace DAL
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
-                return dt.ConvertTo<NhanVien>().ToList();
+                return dt.ConvertTo<NhanVienModel>().ToList();
             }
             catch (Exception ex)
             {

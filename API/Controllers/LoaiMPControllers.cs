@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BLL;
 using BLL.Interfaces;
-using API.Models;
+using DTO;
 
 namespace API.Controllers
 {
@@ -18,14 +18,14 @@ namespace API.Controllers
 
         [Route("get-loaimypham-id/{id}")]
         [HttpGet]
-        public LoaiMyPham GetLoaiMyPhambyID(string id)
+        public LoaiMyPhamModel GetLoaiMyPhambyID(string id)
         {
             return _loaimyPhamBusiness.GetLoaiMyPhambyID(id);
         }
 
         [Route("create-loaimypham")]
         [HttpPost]
-        public LoaiMyPham CreateItem([FromBody] LoaiMyPham model)
+        public LoaiMyPhamModel CreateItem([FromBody] LoaiMyPhamModel model)
         {
             _loaimyPhamBusiness.Create(model);
             return model;
@@ -33,7 +33,7 @@ namespace API.Controllers
 
         [Route("update-loaimypham")]
         [HttpPost]
-        public LoaiMyPham UpdateItem([FromBody] LoaiMyPham model)
+        public LoaiMyPhamModel UpdateItem([FromBody] LoaiMyPhamModel model)
         {
             _loaimyPhamBusiness.Update(model);
             return model;

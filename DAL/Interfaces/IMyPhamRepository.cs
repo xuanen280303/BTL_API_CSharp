@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,10 @@ namespace DAL.Interfaces
 {
     public partial interface IMyPhamRepository
     {
-        MyPham GetMyPhambyID(string id);
-        bool Create(MyPham model);
-        bool Update(MyPham model);
+        MyPhamModel GetMyPhambyID(string id);
+        bool Create(MyPhamModel model);
+        bool Update(MyPhamModel model);
+        bool Delete(string id);
+        public List<MyPhamModel> Search(int pageIndex, int pageSize, out long total, string ten_mp, string mota_mp);
     }
 }

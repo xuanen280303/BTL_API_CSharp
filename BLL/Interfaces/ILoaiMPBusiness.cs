@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,8 @@ namespace BLL.Interfaces
 {
     public partial interface ILoaiMPBusiness
     {
-        LoaiMyPham GetLoaiMyPhambyID(string id);
-        bool Create(LoaiMyPham model);
-        bool Update(LoaiMyPham model);
+        LoaiMyPhamModel GetLoaiMyPhambyID(string id);
+        bool Create(LoaiMyPhamModel model);
+        bool Update(LoaiMyPhamModel model);
     }
 }

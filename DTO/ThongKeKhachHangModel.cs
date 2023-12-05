@@ -16,6 +16,5 @@ namespace DTO
         public string HoTenKH { get; set; }
         public string DiachiKH { get; set; }
     }
+}
 
-}
-}

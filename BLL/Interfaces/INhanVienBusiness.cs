@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,10 @@ namespace BLL.Interfaces
 {
     public partial interface INhanVienBusiness
     {
-        NhanVien GetNhanVienbyID(string id);
-        bool Create(NhanVien model);
-        bool Update(NhanVien model);
-        public List<NhanVien> Search(int pageIndex, int pageSize, out long total, string ten_nv, string dia_chinv);
+        NhanVienModel GetNhanVienbyID(string id);
+        bool Create(NhanVienModel model);
+        bool Update(NhanVienModel model);
+        bool Delete(string id);
+        public List<NhanVienModel> Search(int pageIndex, int pageSize, out long total, string ten_nv, string dia_chinv);
     }
 }

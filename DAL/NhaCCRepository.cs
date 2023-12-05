@@ -1,6 +1,6 @@
-﻿using API.Models;
-using DAL.Helper.Interfaces;
+﻿using DAL.Helper.Interfaces;
 using DAL.Interfaces;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public NhaCC GetNhaCCbyID(string id)
+        public NhaCCModel GetNhaCCbyID(string id)
         {
             string msgError = "";
             try
@@ -25,14 +25,14 @@ namespace DAL
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getnhaccbyid", "@id", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<NhaCC>().FirstOrDefault();
+                return dt.ConvertTo<NhaCCModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public bool Create(NhaCC model)
+        public bool Create(NhaCCModel model)
         {
             string msgError = "";
             try
@@ -53,7 +53,7 @@ namespace DAL
                 throw ex;
             }
         }
-        public bool Update(NhaCC model)
+        public bool Update(NhaCCModel model)
         {
             string msgError = "";
             try
@@ -68,6 +68,46 @@ namespace DAL
                     throw new Exception(Convert.ToString(result) + msgError);
                 }
                 return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool Delete(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_nhacc_delete",
+                     "@MaNCC", id);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<NhaCCModel> Search(int pageIndex, int pageSize, out long total, string ten_ncc, string dia_chincc)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_nhacc_search",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                    "@ten_ncc", ten_ncc,
+                    "@dia_chincc", dia_chincc);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<NhaCCModel>().ToList();
             }
             catch (Exception ex)
             {

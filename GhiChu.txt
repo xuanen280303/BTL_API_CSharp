@@ -1,0 +1,37 @@
+-----------Thêm và sửa NHÂN VIÊN----------------
+{
+  "maNV": "NV28",
+  "hoTenNV": "Én nè",
+  "ngaySinh": "2003-05-05",
+  "gioiTinh": "nữ",
+  "caLam": "fulltime",
+  "sdtnv": "0987233625",
+  "diachiNV": "Phù Cừ",
+  "email": "enchan2803@gmail.com"
+}
+-------------Tìm kiếm nhân viên------------------
+{
+  "page": "1",
+  "pageSize": "5"
+}
+
+
+-------------Thêm và sửa NHÀ CUNG CẤP----------------
+{
+  "maNCC": "NCC28",
+  "hoTenNCC": "Én chan nè",
+  "sdtncc": "0987233625",
+  "diaChiNCC": "Hưng Yên"
+}
+
+---------------Thêm và sửa MỸ PHẨM--------------------
+{
+  "maMP": "MP30",
+  "tenMP": "Én nè",
+  "maLoaiMP": "L10",
+  "slTon": 28,
+  "moTa": "Son Color Key",
+  "ghiChu": "Son nhẹ, đánh mềm môi"
+}
+
+

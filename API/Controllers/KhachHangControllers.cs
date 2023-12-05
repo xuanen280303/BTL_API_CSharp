@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BLL;
 using BLL.Interfaces;
-using API.Models;
+using DTO;
 
 namespace API.Controllers
 {
@@ -18,14 +18,14 @@ namespace API.Controllers
 
         [Route("get-khachhang-id/{id}")]
         [HttpGet]
-        public KhachHang GetKhachHangbyID(string id)
+        public KhachHangModel GetKhachHangbyID(string id)
         {
             return _khachHangBusiness.GetKhachHangbyID(id);
         }
 
         [Route("create-khachhang")]
         [HttpPost]
-        public KhachHang CreateItem([FromBody] KhachHang model)
+        public KhachHangModel CreateItem([FromBody] KhachHangModel model)
         {
             _khachHangBusiness.Create(model);
             return model;
@@ -33,7 +33,7 @@ namespace API.Controllers
 
         [Route("update-khachhang")]
         [HttpPost]
-        public KhachHang UpdateItem([FromBody] KhachHang model)
+        public KhachHangModel UpdateItem([FromBody] KhachHangModel model)
         {
             _khachHangBusiness.Update(model);
             return model;

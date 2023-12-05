@@ -1,6 +1,6 @@
-﻿using API.Models;
-using DAL.Helper.Interfaces;
+﻿using DAL.Helper.Interfaces;
 using DAL.Interfaces;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public MyPham GetMyPhambyID(string id)
+        public MyPhamModel GetMyPhambyID(string id)
         {
             string msgError = "";
             try
@@ -25,14 +25,14 @@ namespace DAL
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getmyphambyid", "@id", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<MyPham>().FirstOrDefault();
+                return dt.ConvertTo<MyPhamModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public bool Create(MyPham model)
+        public bool Create(MyPhamModel model)
         {
             string msgError = "";
             try
@@ -56,7 +56,7 @@ namespace DAL
             }
         }
 
-        public bool Update(MyPham model)
+        public bool Update(MyPhamModel model)
         {
             string msgError = "";
             try
@@ -73,6 +73,47 @@ namespace DAL
                     throw new Exception(Convert.ToString(result) + msgError);
                 }
                 return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool Delete(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_mypham_delete",
+                     "@MaMP", id);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<MyPhamModel> Search(int pageIndex, int pageSize, out long total, string ten_mp, string mota_mp)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_mypham_search",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                    "@ten_mp", ten_mp,
+                    "@mota_mp", mota_mp);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<MyPhamModel>().ToList();
             }
             catch (Exception ex)
             {

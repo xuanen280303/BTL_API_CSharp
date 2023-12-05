@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using BLL.Interfaces;
 using DAL;
 using DAL.Interfaces;
@@ -18,15 +18,15 @@ namespace BLL
         {
             _loaimypham = loaimypham;
         }
-        public LoaiMyPham GetLoaiMyPhambyID(string id)
+        public LoaiMyPhamModel GetLoaiMyPhambyID(string id)
         {
             return _loaimypham.GetLoaiMyPhambyID(id);
         }
-        public bool Create(LoaiMyPham model)
+        public bool Create(LoaiMyPhamModel model)
         {
             return _loaimypham.Create(model);
         }
-        public bool Update(LoaiMyPham model)
+        public bool Update(LoaiMyPhamModel model)
         {
             return _loaimypham.Update(model);
         }

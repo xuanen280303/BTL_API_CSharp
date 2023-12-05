@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using DAL.Helper.Interfaces;
 using DAL.Interfaces;
 using System;
@@ -16,7 +16,7 @@ namespace DAL.Interfaces
         {
             _dbHelper = dbHelper;
         }
-        public HoaDonNhap GetHoaDonNhapbyID(string id)
+        public HoaDonNhapModel GetHoaDonNhapbyID(string id)
         {
             string msgError = "";
             try
@@ -24,14 +24,14 @@ namespace DAL.Interfaces
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "gethoadonnhapbyid", "@id", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<HoaDonNhap>().FirstOrDefault();
+                return dt.ConvertTo<HoaDonNhapModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public bool Create(HoaDonNhap model)
+        public bool Create(HoaDonNhapModel model)
         {
             string msgError = "";
             try

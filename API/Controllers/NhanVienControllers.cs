@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BLL;
 using BLL.Interfaces;
-using API.Models;
+using DTO;
 
 namespace API.Controllers
 {
@@ -18,14 +18,14 @@ namespace API.Controllers
 
         [Route("get-nhanvien-id/{id}")]
         [HttpGet]
-        public NhanVien GetNhanVienbyID(string id)
+        public NhanVienModel GetNhanVienbyID(string id)
         {
             return _nhanVienBusiness.GetNhanVienbyID(id);
         }
 
         [Route("create-nhanvien")]
         [HttpPost]
-        public NhanVien CreateItem([FromBody] NhanVien model)
+        public NhanVienModel CreateItem([FromBody] NhanVienModel model)
         {
             _nhanVienBusiness.Create(model);
             return model;
@@ -33,10 +33,17 @@ namespace API.Controllers
 
         [Route("update-nhanvien")]
         [HttpPost]
-        public NhanVien UpdateItem([FromBody] NhanVien model)
+        public NhanVienModel UpdateItem([FromBody] NhanVienModel model)
         {
             _nhanVienBusiness.Update(model);
             return model;
+        }
+
+        [Route("delete-nhanvien/{id}")]
+        [HttpDelete]
+        public bool Delete(string id)
+        {
+            return _nhanVienBusiness.Delete(id);
         }
 
         [Route("search")]

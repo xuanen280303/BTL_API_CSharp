@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using DAL.Helper.Interfaces;
 using DAL.Interfaces;
 using System;
@@ -17,7 +17,7 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public KhachHang GetKhachHangbyID(string id)
+        public KhachHangModel GetKhachHangbyID(string id)
         {
             string msgError = "";
             try
@@ -25,14 +25,14 @@ namespace DAL
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getkhachhangbyid", "@id", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<KhachHang>().FirstOrDefault();
+                return dt.ConvertTo<KhachHangModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public bool Create(KhachHang model)
+        public bool Create(KhachHangModel model)
         {
             string msgError = "";
             try
@@ -54,7 +54,7 @@ namespace DAL
             }
         }
 
-        public bool Update(KhachHang model)
+        public bool Update(KhachHangModel model)
         {
             string msgError = "";
             try

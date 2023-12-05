@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using DAL.Helper.Interfaces;
 using DAL.Interfaces;
 using System;
@@ -17,7 +17,7 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public LoaiMyPham GetLoaiMyPhambyID(string id)
+        public LoaiMyPhamModel GetLoaiMyPhambyID(string id)
         {
             string msgError = "";
             try
@@ -25,14 +25,14 @@ namespace DAL
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getloaimyphambyid", "@id", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<LoaiMyPham>().FirstOrDefault();
+                return dt.ConvertTo<LoaiMyPhamModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public bool Create(LoaiMyPham model)
+        public bool Create(LoaiMyPhamModel model)
         {
             string msgError = "";
             try
@@ -53,7 +53,7 @@ namespace DAL
             }
         }
 
-        public bool Update(LoaiMyPham model)
+        public bool Update(LoaiMyPhamModel model)
         {
             string msgError = "";
             try

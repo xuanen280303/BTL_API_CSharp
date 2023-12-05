@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,8 @@ namespace BLL.Interfaces
 {
     public partial interface IKhachHangBusiness
     {
-        KhachHang GetKhachHangbyID(string id);
-        bool Create(KhachHang model);
-        bool Update(KhachHang model);
+        KhachHangModel GetKhachHangbyID(string id);
+        bool Create(KhachHangModel model);
+        bool Update(KhachHangModel model);
     }
 }
