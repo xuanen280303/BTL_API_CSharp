@@ -30,5 +30,13 @@ namespace BLL
         {
             return _khachhang.Update(model);
         }
+        public bool Delete(string id)
+        {
+            return _khachhang.Delete(id);
+        }
+        public List<KhachHangModel> Search(int pageIndex, int pageSize, out long total, string ten_kh, string diachi_kh)
+        {
+            return _khachhang.Search(pageIndex, pageSize, out total, ten_kh, diachi_kh);
+        }
     }
 }

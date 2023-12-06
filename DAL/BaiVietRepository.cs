@@ -9,39 +9,42 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class KhachHangRepository : IKhachHangRepository
+    public class BaiVietRepository : IBaiVietRepository
     {
         private IDatabaseHelper _dbHelper;
-        public KhachHangRepository(IDatabaseHelper dbHelper)
+        public BaiVietRepository(IDatabaseHelper dbHelper)
         {
             _dbHelper = dbHelper;
         }
 
-        public KhachHangModel GetKhachHangbyID(string id)
+        public BaiVietModel GetBaiVietbyID(string id)
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getkhachhangbyid", "@id", id);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getbaivietbyid", "@id", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<KhachHangModel>().FirstOrDefault();
+                return dt.ConvertTo<BaiVietModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public bool Create(KhachHangModel model)
+
+        public bool Create(BaiVietModel model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_khachhang_create",
-                "@IDKH", model.IDKH,
-                "@HoTenKH", model.HoTenKH,
-                "@SDTKH", model.SDTKH,
-                "@DiaChiKH", model.DiaChiKH);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_baiviet_create",
+                "@MaBV", model.MaBV,
+                "@TieuDe", model.TieuDe,
+                "@NguoiDang", model.NguoiDang,
+                "@TGDang", model.TGDang,
+                "@NgayKT", model.NgayKT,
+                "@NoiDung", model.NoiDung);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -54,16 +57,18 @@ namespace DAL
             }
         }
 
-        public bool Update(KhachHangModel model)
+        public bool Update(BaiVietModel model)
         {
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_khachhang_update",
-                "@IDKH", model.IDKH,
-                "@HoTenKH", model.HoTenKH,
-                "@SDTKH", model.SDTKH,
-                "@DiaChiKH", model.DiaChiKH);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_baiviet_update",
+                "@MaBV", model.MaBV,
+                "@TieuDe", model.TieuDe,
+                "@NguoiDang", model.NguoiDang,
+                "@TGDang", model.TGDang,
+                "@NgayKT", model.NgayKT,
+                "@NoiDung", model.NoiDung);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -81,8 +86,8 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_khachhang_delete",
-                     "@IDKH", id);
+                var result = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_baiviet_delete",
+                     "@MaBV", id);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -95,27 +100,27 @@ namespace DAL
             }
         }
 
-        public List<KhachHangModel> Search(int pageIndex, int pageSize, out long total, string ten_kh, string dia_chikh)
+        public List<BaiVietModel> Search(int pageIndex, int pageSize, out long total, string tieu_de, string noi_dung)
         {
             string msgError = "";
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_khachhang_search",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_baiviet_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
-                    "@ten_kh", ten_kh,
-                    "@dia_chikh", dia_chikh);
+                    "@tieu_de", tieu_de,
+                    "@noi_dung", noi_dung);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
-                return dt.ConvertTo<KhachHangModel>().ToList();
+                return dt.ConvertTo<BaiVietModel>().ToList();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-
     }
 }
+

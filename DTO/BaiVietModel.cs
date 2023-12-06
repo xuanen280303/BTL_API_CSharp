@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    internal class BaiVietModel
+    public class BaiVietModel
     {
         public string MaBV { get; set; }
         public string TieuDe { get; set; }

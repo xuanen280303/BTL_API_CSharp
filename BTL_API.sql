@@ -462,8 +462,6 @@ AS
 GO
 
 
-
-
 --------------------------KHÁCH HÀNG--------------------
 -------------------GET BY ID--------------------
 
@@ -500,7 +498,72 @@ AS
     END;
 GO
 
+----------------------------XOÁ---------------------------------
+CREATE PROCEDURE sp_khachhang_delete
+@IDKH Nvarchar(10)
+AS
+	BEGIN
+		DELETE KhachHang WHERE IDKH = @IDKH
+	END;
+GO
 
+SELECT * FROM KhachHang
+
+--------------------------TÌM KIẾM------------------------------
+CREATE PROCEDURE [dbo].[sp_khachhang_search] (@page_index  INT, 
+                                       @page_size   INT,
+									   @ten_kh Nvarchar(30),
+									   @dia_chikh Nvarchar(30)
+									   )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY HoTenKH ASC)) AS RowNumber, 
+                              n.IDKH,
+							  n.HoTenKH,
+							  n.SDTKH,
+							  n.DiaChiKH
+                        INTO #Results1
+                        FROM KhachHang AS n
+					    WHERE  (@ten_kh = '' Or n.HoTenKH like N'%'+@ten_kh+'%') and						
+						(@dia_chikh = '' Or n.DiaChiKH like N'%'+@dia_chikh+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY HoTenKH ASC)) AS RowNumber, 
+                              n.IDKH,
+							  n.HoTenKH,
+							  n.SDTKH,
+							  n.DiaChiKH
+                        INTO #Results2
+                        FROM KhachHang AS n
+					    WHERE  (@ten_kh = '' Or n.HoTenKH like N'%'+@ten_kh+'%') and						
+						(@dia_chikh = '' Or n.DiaChiKH like N'%'+@dia_chikh+'%');                     
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
+GO
+
+SELECT * FROM KhachHang
 -----------------------------NHÀ CUNG CẤP---------------------
 ------------------GET BY ID--------------------
 create PROCEDURE getnhaccbyid(@id Nvarchar(10))

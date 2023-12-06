@@ -39,5 +39,42 @@ namespace API.Controllers
             return model;
         }
 
+
+        [Route("delete-khachhang/{id}")]
+        [HttpDelete]
+        public bool Delete(string id)
+        {
+            return _khachHangBusiness.Delete(id);
+        }
+
+        [Route("search")]
+        [HttpPost]
+        public IActionResult Search([FromBody] Dictionary<string, object> formData)
+        {
+            try
+            {
+                var page = int.Parse(formData["page"].ToString());
+                var pageSize = int.Parse(formData["pageSize"].ToString());
+                string ten_kh = "";
+                if (formData.Keys.Contains("ten_nv") && !string.IsNullOrEmpty(Convert.ToString(formData["ten_kh"]))) { ten_kh = Convert.ToString(formData["ten_kh"]); }
+                string dia_chikh = "";
+                if (formData.Keys.Contains("dia_chikh") && !string.IsNullOrEmpty(Convert.ToString(formData["dia_chikh"]))) { dia_chikh = Convert.ToString(formData["dia_chikh"]); }
+                long total = 0;
+                var data = _khachHangBusiness.Search(page, pageSize, out total, ten_kh, dia_chikh);
+                return Ok(
+                    new
+                    {
+                        TotalItems = total,
+                        Data = data,
+                        Page = page,
+                        PageSize = pageSize
+                    }
+                    );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
