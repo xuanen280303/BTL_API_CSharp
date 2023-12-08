@@ -10,6 +10,7 @@ namespace BLL.Interfaces
     public partial interface IMyPhamBusiness
     {
         MyPhamModel GetMyPhambyID(string id);
+        List<LayMPTheoLoaiMPModel> GetMPTheoLoaiMP();
         bool Create(MyPhamModel model);
         bool Update(MyPhamModel model);
         bool Delete(string id);

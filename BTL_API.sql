@@ -345,6 +345,201 @@ VALUES('HDB01','MP01',N'Kem chống nắng Cetella',10, 350000,3500000),
 	  ('HDB09','MP19',N'Vaseline PX50',2, 250000,500000),
 	  ('HDB10','MP05',N'Sữa rửa mặt SVR',10, 450000,4500000)
 
+
+-------------USER(Tài khoản)---------------------------
+-------------GET BY ID----------------------------------
+create PROCEDURE gettaikhoanbyid(@id INT)
+AS
+BEGIN
+   SELECT*from TaiKhoan Where MaTaiKhoan = @id 
+END;
+
+---------------------CHECK LOGIN----------------------
+CREATE PROCEDURE sp_check_login
+@TenTaiKhoan NVARCHAR(20),
+@MatKhau NVARCHAR(20)
+AS
+BEGIN
+    DECLARE @LoaiTaiKhoan INT
+
+    SELECT @LoaiTaiKhoan = LoaiTaiKhoan
+    FROM TaiKhoan
+    WHERE TenTaiKhoan = @TenTaiKhoan AND MatKhau = @MatKhau
+
+    IF @LoaiTaiKhoan IS NOT NULL
+    BEGIN
+        SELECT @LoaiTaiKhoan AS LoaiTaiKhoan
+    END
+    ELSE
+    BEGIN
+        -- Không tìm thấy tài khoản
+        SELECT -1 AS LoaiTaiKhoan
+    END
+END;
+
+
+----------------------SELECT ALL----------------------
+create PROCEDURE sp_taikhoan_select_all
+AS
+    BEGIN
+      SELECT * FROM TaiKhoan
+    END;
+GO
+
+-----------------THÊM---------------------------
+create PROCEDURE sp_taikhoan_create(
+@LoaiTaiKhoan INT,
+@TenTaiKhoan Nvarchar(20),
+@MatKhau Nvarchar(20),
+@Email Varchar(30)
+)
+AS
+    BEGIN
+       INSERT INTO TaiKhoan(LoaiTaiKhoan, TenTaiKhoan, MatKhau, Email)
+	   VALUES(@LoaiTaiKhoan, @TenTaiKhoan, @MatKhau, @Email);
+    END;
+GO
+
+---------------------SỬA----------------------
+create PROCEDURE sp_taikhoan_update(
+@MaTK int,
+@LoaiTaiKhoan INT,
+@TenTaiKhoan Nvarchar(20),
+@MatKhau Nvarchar(20),
+@Email Varchar(30)
+)
+AS
+    BEGIN
+		Update TaiKhoan
+		Set LoaiTaiKhoan = @LoaiTaiKhoan, TenTaiKhoan = @TenTaiKhoan, MatKhau = @MatKhau, Email = @Email
+		Where MaTaiKhoan = @MaTK
+    End;
+GO
+
+---------------------XOÁ------------------------
+create PROCEDURE sp_taikhoan_delete
+@MaTK int
+AS
+	Begin
+		Delete TaiKhoan where MaTaiKhoan = @MaTK
+	End;
+GO
+
+-------------------------BÀI VIẾT--------------------
+CREATE TABLE BaiViet (
+MaBV Nvarchar(10) CONSTRAINT PK_MaBV PRIMARY KEY,
+TieuDe Nvarchar(100),
+NguoiDang Nvarchar(20),
+TGDang Date,
+NgayKT Date, 
+NoiDung Nvarchar(MAX)
+)
+---------------------GET BY ID-------------------------
+create PROCEDURE getbaivietbyid(@id Nvarchar(10))
+AS
+BEGIN
+SELECT*from BaiViet where MaBV = @id 
+END;
+
+-------------------THÊM-------------------
+create PROCEDURE sp_baiviet_create(
+@MaBV Nvarchar(10),
+@TieuDe Nvarchar(100),
+@NguoiDang Nvarchar(20),
+@TGDang Date,
+@NgayKT Date, 
+@NoiDung Nvarchar(MAX)
+)
+AS
+    BEGIN
+       INSERT INTO BaiViet(MaBV, TieuDe, NguoiDang, TGDang, NgayKT, NoiDung)
+	   VALUES(@MaBV, @TieuDe, @NguoiDang, @TGDang, @NgayKT, @NoiDung);
+    END;
+GO
+
+------------------------------SỬA----------------------
+create PROCEDURE [dbo].[sp_baiviet_update](
+@MaBV Nvarchar(10),
+@TieuDe Nvarchar(100),
+@NguoiDang Nvarchar(20),
+@TGDang Date,
+@NgayKT Date, 
+@NoiDung Nvarchar(MAX)
+)
+AS
+    BEGIN
+		update BaiViet set tieude = @TieuDe, nguoidang = @NguoiDang, tgdang = @TGDang, ngaykt = @NgayKT, noidung = @NoiDung where mabv = @MaBV; 
+    END;
+GO
+
+----------------------------XOÁ---------------------------------
+CREATE PROCEDURE sp_baiviet_delete
+@MaBV Nvarchar(10)
+AS
+	BEGIN
+		DELETE BaiViet WHERE MaBV = @MaBV
+	END;
+GO
+
+--------------------------TÌM KIẾM------------------------------
+CREATE PROCEDURE [dbo].[sp_baiviet_search] (@page_index  INT, 
+                                       @page_size   INT,
+									   @tieu_de Nvarchar(100),
+									   @noi_dung Nvarchar(MAX)
+									   )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY TieuDe ASC)) AS RowNumber, 
+                              n.MaBV,
+							  n.TieuDe,
+							  n.NguoiDang,
+							  n.TGDang,
+							  n.NgayKT,
+							  n.NoiDung
+                        INTO #Results1
+                        FROM BaiViet AS n
+					    WHERE  (@tieu_de = '' Or n.TieuDe like N'%'+@tieu_de+'%') and						
+						(@noi_dung = '' Or n.NoiDung like N'%'+@noi_dung+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+                         SELECT(ROW_NUMBER() OVER(
+                              ORDER BY TieuDe ASC)) AS RowNumber, 
+                              n.MaBV,
+							  n.TieuDe,
+							  n.NguoiDang,
+							  n.TGDang,
+							  n.NgayKT,
+							  n.NoiDung
+                        INTO #Results2
+                       FROM BaiViet AS n
+					    WHERE  (@tieu_de = '' Or n.TieuDe like N'%'+@tieu_de+'%') and						
+						(@noi_dung = '' Or n.NoiDung like N'%'+@noi_dung+'%');                 
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
+GO
+
+
 ----------------------NHÂN VIÊN---------------------
 -------------------GET BY ID-------------------------
 create PROCEDURE getnhanvienbyid(@id Nvarchar(10))
@@ -398,7 +593,8 @@ AS
 GO
 
 SELECT * FROM NhanVien
- exec [sp_nhanvien_search]  @page_index = 1 , @page_size = 5 , @ten_nv = '' , @dia_chinv = ''
+
+exec [sp_nhanvien_search]  @page_index = 1 , @page_size = 5 , @ten_nv = '' , @dia_chinv = ''
 --------------------------TÌM KIẾM------------------------------
 CREATE PROCEDURE [dbo].[sp_nhanvien_search] (@page_index  INT, 
                                        @page_size   INT,
@@ -564,6 +760,7 @@ AS
 GO
 
 SELECT * FROM KhachHang
+
 -----------------------------NHÀ CUNG CẤP---------------------
 ------------------GET BY ID--------------------
 create PROCEDURE getnhaccbyid(@id Nvarchar(10))
@@ -673,6 +870,20 @@ AS
 BEGIN
 SELECT*from MyPham where MaMP = @id 
 END;
+
+-----------LẤY MỸ PHẨM THEO LOẠI MỸ PHẨM----------------
+CREATE PROCEDURE sp_laymptheoloai
+AS
+    BEGIN
+        SELECT lmp.*, 
+        (
+            SELECT mp.*
+            FROM MyPham AS mp
+            WHERE lmp.MaLoaiMP = mp.MaLoaiMP FOR JSON PATH
+        ) AS list_json_loaimypham
+        FROM LoaiMyPham AS lmp
+    END;
+GO
 
 ---------------------THÊM---------------------------
 create PROCEDURE sp_mypham_create(

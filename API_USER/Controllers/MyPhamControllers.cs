@@ -3,17 +3,19 @@ using BLL;
 using BLL.Interfaces;
 using DTO;
 
-namespace API.Controllers
+namespace API_USER.Controllers
 {
-    //[Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
     public class MyPhamControllers : ControllerBase
     {
+
         private IMyPhamBusiness _myPhamBusiness;
-        public MyPhamControllers(IMyPhamBusiness myPhamBusiness)
+        private string _path;
+        private IWebHostEnvironment _env;
+        public MyPhamControllers(IMyPhamBusiness myPhamBusiness, IConfiguration configuration, IWebHostEnvironment env)
         {
             _myPhamBusiness = myPhamBusiness;
+            _path = configuration["AppSettings:PATH"];
+            _env = env;
         }
 
         [Route("get-mypham-id/{id}")]
@@ -28,29 +30,6 @@ namespace API.Controllers
         public List<LayMPTheoLoaiMPModel> GetMPTheoLoaiMP()
         {
             return _myPhamBusiness.GetMPTheoLoaiMP();
-        }
-
-        [Route("create-mypham")]
-        [HttpPost]
-        public MyPhamModel CreateItem([FromBody] MyPhamModel model)
-        {
-            _myPhamBusiness.Create(model);
-            return model;
-        }
-
-        [Route("update-mypham")]
-        [HttpPost]
-        public MyPhamModel UpdateItem([FromBody] MyPhamModel model)
-        {
-            _myPhamBusiness.Update(model);
-            return model;
-        }
-
-        [Route("delete-mypham/{id}")]
-        [HttpDelete]
-        public bool Delete(string id)
-        {
-            return _myPhamBusiness.Delete(id);
         }
 
         [Route("search")]

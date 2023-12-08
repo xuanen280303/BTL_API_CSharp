@@ -36,6 +36,14 @@ builder.Services.AddAuthentication(x =>
     };
 });
 // Add services to the container.
+builder.Services.AddTransient<IKhachHangRepository, KhachHangRepository>();
+builder.Services.AddTransient<IKhachHangBusiness, KhachHangBusiness>();
+builder.Services.AddTransient<IMyPhamRepository, MyPhamRepository>();
+builder.Services.AddTransient<IMyPhamBusiness, MyPhamBusiness>();
+builder.Services.AddTransient<ILoaiMPRepository, LoaiMPRepository>();
+builder.Services.AddTransient<ILoaiMPBusiness, LoaiMPBusiness>();
+builder.Services.AddTransient<IBaiVietRepository, BaiVietRepository>();
+builder.Services.AddTransient<IBaiVietBusiness, BaiVietBusiness>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

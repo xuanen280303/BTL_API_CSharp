@@ -32,6 +32,23 @@ namespace DAL
                 throw ex;
             }
         }
+
+        public List<LayMPTheoLoaiMPModel> GetMPTheoLoaiMP()
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_laymptheoloai");
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<LayMPTheoLoaiMPModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool Create(MyPhamModel model)
         {
             string msgError = "";

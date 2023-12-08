@@ -22,6 +22,10 @@ namespace BLL
         {
             return _mypham.GetMyPhambyID(id);
         }
+        public List<LayMPTheoLoaiMPModel> GetMPTheoLoaiMP()
+        {
+            return _mypham.GetMPTheoLoaiMP();
+        }
         public bool Create(MyPhamModel model)
         {
             return _mypham.Create(model);

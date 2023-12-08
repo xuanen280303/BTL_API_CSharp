@@ -28,6 +28,8 @@ builder.Services.AddTransient<ILoaiMPRepository, LoaiMPRepository>();
 builder.Services.AddTransient<ILoaiMPBusiness, LoaiMPBusiness>();
 builder.Services.AddTransient<IHoaDonBanRepository, HoaDonBanRepository>();
 builder.Services.AddTransient<IHoaDonBanBusiness, HoaDonBanBusiness>();
+builder.Services.AddTransient<IBaiVietRepository, BaiVietRepository>();
+builder.Services.AddTransient<IBaiVietBusiness, BaiVietBusiness>();
 
 // configure strongly typed settings objects
 IConfiguration configuration = builder.Configuration;
