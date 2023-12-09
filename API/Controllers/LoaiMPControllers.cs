@@ -39,7 +39,7 @@ namespace API.Controllers
             return model;
         }
 
-        [Route("delete-mypham/{id}")]
+        [Route("delete-loaimypham/{id}")]
         [HttpDelete]
         public bool Delete(string id)
         {

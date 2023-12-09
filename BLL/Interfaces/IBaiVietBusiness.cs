@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interfaces
+namespace BLL.Interfaces
 {
-    public partial interface IBaiVietRepository
+    public partial interface IBaiVietBusiness
     {
         BaiVietModel GetBaiVietbyID(string id);
         bool Create(BaiVietModel model);
