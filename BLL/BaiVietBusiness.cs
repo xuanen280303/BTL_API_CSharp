@@ -34,6 +34,10 @@ namespace BLL
         {
             return _baiviet.Delete(id);
         }
+        public bool DeleteS(BaiVietModel_deletes model)
+        {
+            return _baiviet.DeleteS(model);
+        }
         public List<BaiVietModel> Search(int pageIndex, int pageSize, out long total, string tieu_de, string noi_dung)
         {
             return _baiviet.Search(pageIndex, pageSize, out total, tieu_de, noi_dung);

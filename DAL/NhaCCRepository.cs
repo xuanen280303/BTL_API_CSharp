@@ -93,6 +93,25 @@ namespace DAL
             }
         }
 
+        public bool DeleteS(NhaCCModel_deletes model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_nhacc_deleteS",
+                "@list_json_mancc", model.list_json_mancc != null ? MessageConvert.SerializeObject(model.list_json_mancc) : null);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<NhaCCModel> Search(int pageIndex, int pageSize, out long total, string ten_ncc, string dia_chincc)
         {
             string msgError = "";

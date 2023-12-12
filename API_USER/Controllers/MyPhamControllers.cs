@@ -31,7 +31,7 @@ namespace API_USER.Controllers
             return _myPhamBusiness.GetMPTheoLoaiMP();
         }
 
-        [Route("search")]
+        [Route("search-mypham")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)
         {

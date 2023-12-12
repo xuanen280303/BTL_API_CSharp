@@ -24,7 +24,7 @@ namespace API_USER.Controllers
             return _loaimyPhamBusiness.GetLoaiMyPhambyID(id);
         }
 
-        [Route("search")]
+        [Route("search-loaimp")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)
         {

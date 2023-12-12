@@ -15,4 +15,13 @@ namespace DTO
         public DateTime NgayKT { get; set; }
         public string NoiDung { get; set; }
     }
+    public class BaiVietModel_deletes
+    {
+        public List<ChiTietBaiVietModel> list_json_mabv { get; set; }
+    }
+    public class ChiTietBaiVietModel
+    {
+        public string MaBV { get; set; }
+        public string GhiChu { get; set; }
+    }
 }

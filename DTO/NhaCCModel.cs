@@ -13,4 +13,13 @@ namespace DTO
         public string SDTNCC { get; set; }
         public string DiaChiNCC { get; set; }
     }
+    public class NhaCCModel_deletes
+    {
+        public List<ChiTietNhaCCModel> list_json_mancc { get; set; }
+    }
+    public class ChiTietNhaCCModel
+    {
+        public string MaNCC { get; set; }
+        public string GhiChu { get; set; }
+    }
 }

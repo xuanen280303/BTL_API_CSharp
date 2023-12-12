@@ -46,6 +46,14 @@ namespace API_ADMIN.Controllers
             return _baiVietBusiness.Delete(id);
         }
 
+        [Route("deleteS-baiviet")]
+        [HttpPost]
+        public BaiVietModel_deletes DeleteS([FromBody] BaiVietModel_deletes model)
+        {
+            _baiVietBusiness.DeleteS(model);
+            return model;
+        }
+
         [Route("search")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)

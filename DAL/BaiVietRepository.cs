@@ -100,6 +100,25 @@ namespace DAL
             }
         }
 
+        public bool DeleteS(BaiVietModel_deletes model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_baiviet_deleteS",
+                "@list_json_mabv", model.list_json_mabv != null ? MessageConvert.SerializeObject(model.list_json_mabv) : null);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<BaiVietModel> Search(int pageIndex, int pageSize, out long total, string tieu_de, string noi_dung)
         {
             string msgError = "";

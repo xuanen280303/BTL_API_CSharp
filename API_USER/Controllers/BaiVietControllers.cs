@@ -24,7 +24,7 @@ namespace API_USER.Controllers
             return _baiVietBusiness.GetBaiVietbyID(id);
         }
 
-        [Route("search")]
+        [Route("search-baiviet")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)
         {

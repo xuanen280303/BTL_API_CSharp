@@ -116,6 +116,25 @@ namespace DAL
             }
         }
 
+        public bool DeleteS(MyPhamModel_deletes model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_mypham_deleteS",
+                "@list_json_mamp", model.list_json_mamp != null ? MessageConvert.SerializeObject(model.list_json_mamp) : null);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<MyPhamModel> Search(int pageIndex, int pageSize, out long total, string ten_mp, string mota_mp)
         {
             string msgError = "";

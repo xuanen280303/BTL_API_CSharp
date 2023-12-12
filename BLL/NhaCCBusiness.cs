@@ -34,6 +34,10 @@ namespace BLL
         {
             return _nhacc.Delete(id);
         }
+        public bool DeleteS(NhaCCModel_deletes model)
+        {
+            return _nhacc.DeleteS(model);
+        }
         public List<NhaCCModel> Search(int pageIndex, int pageSize, out long total, string ten_ncc, string dia_chincc)
         {
             return _nhacc.Search(pageIndex, pageSize, out total, ten_ncc, dia_chincc);

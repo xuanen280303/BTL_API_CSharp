@@ -38,13 +38,18 @@ namespace API.Controllers
             _khachHangBusiness.Update(model);
             return model;
         }
-
-
         [Route("delete-khachhang/{id}")]
         [HttpDelete]
         public bool Delete(string id)
         {
             return _khachHangBusiness.Delete(id);
+        }
+        [Route("deleteS-khachhang")]
+        [HttpPost]
+        public KhachHangModel_deletes DeleteS([FromBody] KhachHangModel_deletes model)
+        {
+            _khachHangBusiness.DeleteS(model);
+            return model;
         }
 
         [Route("search")]

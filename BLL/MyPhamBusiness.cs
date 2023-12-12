@@ -1,7 +1,7 @@
-﻿using DTO;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using DAL;
 using DAL.Interfaces;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +37,10 @@ namespace BLL
         public bool Delete(string id)
         {
             return _mypham.Delete(id);
+        }
+        public bool DeleteS(MyPhamModel_deletes model)
+        {
+            return _mypham.DeleteS(model);
         }
         public List<MyPhamModel> Search(int pageIndex, int pageSize, out long total, string ten_mp, string mota_mp)
         {

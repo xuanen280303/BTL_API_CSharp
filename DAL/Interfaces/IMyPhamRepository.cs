@@ -14,6 +14,7 @@ namespace DAL.Interfaces
         bool Create(MyPhamModel model);
         bool Update(MyPhamModel model);
         bool Delete(string id);
+        bool DeleteS(MyPhamModel_deletes model);
         public List<MyPhamModel> Search(int pageIndex, int pageSize, out long total, string ten_mp, string mota_mp);
     }
 }

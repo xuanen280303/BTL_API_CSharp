@@ -15,4 +15,13 @@ namespace DTO
         public string MoTa { get; set; }
         public string GhiChu { get; set; }
     }
+    public class MyPhamModel_deletes
+    {
+        public List<ChiTietMyPhamModel> list_json_mamp { get; set; }
+    }
+    public class ChiTietMyPhamModel
+    {
+        public string MaMP { get; set; }
+        public string GhiChu { get; set; }
+    }
 }

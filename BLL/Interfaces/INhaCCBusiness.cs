@@ -13,6 +13,7 @@ namespace BLL.Interfaces
         bool Create(NhaCCModel model);
         bool Update(NhaCCModel model);
         bool Delete(string id);
+        bool DeleteS(NhaCCModel_deletes model);
         public List<NhaCCModel> Search(int pageIndex, int pageSize, out long total, string ten_ncc, string dia_chincc);
     }
 }

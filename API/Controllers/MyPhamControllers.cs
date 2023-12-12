@@ -53,6 +53,14 @@ namespace API.Controllers
             return _myPhamBusiness.Delete(id);
         }
 
+        [Route("deleteS-mypham")]
+        [HttpPost]
+        public MyPhamModel_deletes DeleteS([FromBody] MyPhamModel_deletes model)
+        {
+            _myPhamBusiness.DeleteS(model);
+            return model;
+        }
+
         [Route("search")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)

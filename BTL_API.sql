@@ -170,6 +170,8 @@ VALUES('BV01', N'Dùng kem chống nắng như thế nào?', N'Nhân viên', '09
       ('BV02', N'Dùng nước tẩy trang như thế nào?', N'Quản lý', '05-12-2023', '01-01-2024', N'Dùng mỗi ngày'),
 	  ('BV03', N'Dùng toner như thế nào?', N'Nhân viên', '03-08-2023', '05-03-2024', N'Dùng mỗi ngày')
 
+	  SELECT * FROM BaiViet
+
 -- INSERT LoaiMyPham(MaLoaiMP, TenLoaiMP, MoTa)
 INSERT INTO LoaiMyPham(MaLoaiMP, TenLoaiMP, MoTa)
 VALUES('L01',N'Kem chống nắng',N'Các loại mỹ phẩm kem chống nắng'),
@@ -423,6 +425,105 @@ AS
 	Begin
 		Delete TaiKhoan where MaTaiKhoan = @MaTK
 	End;
+GO
+
+---------------------------LOẠI TÀI KHOẢN-----------------------
+-------------GET BY ID----------------------------------
+create PROCEDURE getloaitaikhoanbyid(@id INT)
+AS
+BEGIN
+   SELECT*from LoaiTaiKhoan Where MaLoaiTK = @id 
+END;
+
+CREATE Table LoaiTaiKhoan (
+MaLoaiTK INT IDENTITY(1,1) PRIMARY KEY,
+TenLoaiTK Nvarchar(20),
+MoTa Nvarchar(30)
+)
+-----------------THÊM---------------------------
+create PROCEDURE sp_loaitaikhoan_create(
+@TenLoaiTK Nvarchar(20),
+@MoTa Nvarchar(30)
+)
+AS
+    BEGIN
+       INSERT INTO LoaiTaiKhoan(TenLoaiTK, MoTa)
+	   VALUES(@TenLoaiTK, @MoTa);
+    END;
+GO
+
+---------------------SỬA----------------------
+create PROCEDURE sp_loaitaikhoan_update(
+@MaLoaiTK INT,
+@TenLoaiTK Nvarchar(20),
+@MoTa Nvarchar(30)
+)
+AS
+    BEGIN
+		Update LoaiTaiKhoan
+		set TenLoaiTK = @TenLoaiTK, MoTa = @MoTa where MaLoaiTK = @MaLoaiTK
+    End;
+GO
+
+---------------------XOÁ------------------------
+create PROCEDURE sp_loaitaikhoan_delete
+@MaLoaiTK INT
+AS
+	Begin
+		Delete LoaiTaiKhoan where MaLoaiTK = @MaLoaiTK
+	End;
+GO
+
+-----------------------TÌM KIẾM---------------------------
+CREATE PROCEDURE [dbo].[sp_loaitaikhoan_search] (@page_index  INT, 
+                                       @page_size   INT,
+									   @tenloai_tk Nvarchar(20),
+									   @motaloai_tk Nvarchar(30)
+									   )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY TenLoaiTK ASC)) AS RowNumber, 
+							  n.MaLoaiTK,
+							  n.TenLoaiTK,
+							  n.MoTa				  
+                        INTO #Results1
+                        FROM LoaiTaiKhoan AS n
+					    WHERE  (@tenloai_tk = '' Or n.TenLoaiTK like N'%'+@tenloai_tk+'%') and						
+						(@motaloai_tk = '' Or n.MoTa like N'%'+@motaloai_tk+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+                         SELECT(ROW_NUMBER() OVER(
+                              ORDER BY TenLoaiTK ASC)) AS RowNumber, 
+							  n.MaLoaiTK,
+							  n.TenLoaiTK,
+							  n.MoTa	
+                        INTO #Results2
+                        FROM LoaiTaiKhoan AS n
+					    WHERE  (@tenloai_tk = '' Or n.TenLoaiTK like N'%'+@tenloai_tk+'%') and						
+						(@motaloai_tk = '' Or n.MoTa like N'%'+@motaloai_tk+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
 GO
 
 -------------------------BÀI VIẾT--------------------

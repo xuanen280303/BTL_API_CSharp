@@ -95,6 +95,25 @@ namespace DAL
             }
         }
 
+        public bool DeleteS(KhachHangModel_deletes model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_khachhang_deleteS",
+                "@list_json_idkh", model.list_json_idkh != null ? MessageConvert.SerializeObject(model.list_json_idkh) : null);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<KhachHangModel> Search(int pageIndex, int pageSize, out long total, string ten_kh, string dia_chikh)
         {
             string msgError = "";

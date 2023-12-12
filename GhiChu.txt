@@ -51,5 +51,26 @@
   "noiDung": "Hay "
 }
 
+-------------------XOÁ NHIỀU-----------------------
+{
+  "list_json_mabv": [
+    {
+      "maBV": "BV02",
+      "ghiChu": "Cho phép xoá!"
+    },
+    {
+      "maBV": "BV03",
+      "ghiChu": "Không cho phép xoá!"
+    }
+  ]
+}
+
+-------------------Thêm và sửa KHÁCH HÀNG---------------
+{
+  "idkh": "KH12",
+  "hoTenKH": "Trần Thị Trang thêm",
+  "sdtkh": "0987233625",
+  "diaChiKH": "Phù cừ"
+}
 
 

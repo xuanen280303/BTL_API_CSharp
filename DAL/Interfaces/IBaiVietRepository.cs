@@ -13,6 +13,7 @@ namespace DAL.Interfaces
         bool Create(BaiVietModel model);
         bool Update(BaiVietModel model);
         bool Delete(string id);
+        bool DeleteS(BaiVietModel_deletes model);
         public List<BaiVietModel> Search(int pageIndex, int pageSize, out long total, string tieu_de, string noi_dung);
     }
 }

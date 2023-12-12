@@ -34,6 +34,10 @@ namespace BLL
         {
             return _khachhang.Delete(id);
         }
+        public bool DeleteS(KhachHangModel_deletes model)
+        {
+            return _khachhang.DeleteS(model);
+        }
         public List<KhachHangModel> Search(int pageIndex, int pageSize, out long total, string ten_kh, string diachi_kh)
         {
             return _khachhang.Search(pageIndex, pageSize, out total, ten_kh, diachi_kh);

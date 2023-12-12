@@ -46,6 +46,14 @@ namespace API.Controllers
             return _nhaccBusiness.Delete(id);
         }
 
+        [Route("deleteS-nhacc")]
+        [HttpPost]
+        public NhaCCModel_deletes DeleteS([FromBody] NhaCCModel_deletes model)
+        {
+            _nhaccBusiness.DeleteS(model);
+            return model;
+        }
+
         [Route("search")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)
