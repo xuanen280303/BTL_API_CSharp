@@ -527,14 +527,6 @@ AS
 GO
 
 -------------------------BÀI VIẾT--------------------
-CREATE TABLE BaiViet (
-MaBV Nvarchar(10) CONSTRAINT PK_MaBV PRIMARY KEY,
-TieuDe Nvarchar(100),
-NguoiDang Nvarchar(20),
-TGDang Date,
-NgayKT Date, 
-NoiDung Nvarchar(MAX)
-)
 ---------------------GET BY ID-------------------------
 create PROCEDURE getbaivietbyid(@id Nvarchar(10))
 AS
@@ -581,6 +573,30 @@ AS
 		DELETE BaiViet WHERE MaBV = @MaBV
 	END;
 GO
+
+-----------------------------XOÁ NHIỀU--------------------------------
+CREATE PROCEDURE sp_baiviet_deleteS
+(
+    @list_json_mabv Nvarchar(MAX)
+)
+AS
+BEGIN
+	IF(@list_json_mabv IS NOT NULL) 
+			BEGIN
+				 -- Insert data to temp table 
+			   SELECT
+				  JSON_VALUE(b.value, '$.maBV') as maBV,
+				  JSON_VALUE(b.value, '$.ghiChu') AS ghiChu 
+				  INTO #Results 
+			   FROM OPENJSON(@list_json_mabv) AS b;
+
+    DELETE FROM BaiViet
+    WHERE MaBV IN (SELECT MaBV FROM #Results WHERE #Results.ghiChu = N'Cho phép xoá!');
+    DROP TABLE #Results;
+	END;
+END;
+
+SELECT * FROM BaiViet
 
 --------------------------TÌM KIẾM------------------------------
 CREATE PROCEDURE [dbo].[sp_baiviet_search] (@page_index  INT, 
@@ -804,6 +820,28 @@ AS
 	END;
 GO
 
+-----------------------------XOÁ NHIỀU--------------------------------
+CREATE PROCEDURE sp_khachhang_deleteS
+(
+    @list_json_idkh Nvarchar(MAX)
+)
+AS
+BEGIN
+	IF(@list_json_idkh IS NOT NULL) 
+			BEGIN
+				 -- Insert data to temp table 
+			   SELECT
+				  JSON_VALUE(k.value, '$.idKH') as idKH,
+				  JSON_VALUE(k.value, '$.ghiChu') AS ghiChu 
+				  INTO #Results 
+			   FROM OPENJSON(@list_json_idkh) AS k;
+
+    DELETE FROM KhachHang
+    WHERE IDKH IN (SELECT IDKH FROM #Results WHERE #Results.ghiChu = N'Cho phép xoá!');
+    DROP TABLE #Results;
+	END;
+END;
+
 SELECT * FROM KhachHang
 
 --------------------------TÌM KIẾM------------------------------
@@ -906,6 +944,28 @@ AS
 	END;
 GO
 
+-----------------------------XOÁ NHIỀU--------------------------------
+CREATE PROCEDURE sp_nhacc_deleteS
+(
+    @list_json_mancc Nvarchar(MAX)
+)
+AS
+BEGIN
+	IF(@list_json_mancc IS NOT NULL) 
+			BEGIN
+				 -- Insert data to temp table 
+			   SELECT
+				  JSON_VALUE(n.value, '$.maNCC') as maNCC,
+				  JSON_VALUE(n.value, '$.ghiChu') AS ghiChu 
+				  INTO #Results 
+			   FROM OPENJSON(@list_json_mancc) AS n;
+
+    DELETE FROM NhaCC
+    WHERE MaNCC IN (SELECT MaNCC FROM #Results WHERE #Results.ghiChu = N'Cho phép xoá!');
+    DROP TABLE #Results;
+	END;
+END;
+
 SELECT * FROM NhaCC
 
 
@@ -965,7 +1025,6 @@ GO
 
 --------------Mỹ phẩm----------------------------
 ---------GetByID---------------------
-
 create PROCEDURE getmyphambyid(@id Nvarchar(10))
 AS
 BEGIN
@@ -1026,9 +1085,29 @@ AS
 	END;
 GO
 
+-----------------------------XOÁ NHIỀU--------------------------------
+CREATE PROCEDURE sp_mypham_deleteS
+(
+    @list_json_mamp Nvarchar(MAX)
+)
+AS
+BEGIN
+	IF(@list_json_mamp IS NOT NULL) 
+			BEGIN
+				 -- Insert data to temp table 
+			   SELECT
+				  JSON_VALUE(m.value, '$.maMP') as maMP,
+				  JSON_VALUE(m.value, '$.ghiChu') AS ghiChu 
+				  INTO #Results 
+			   FROM OPENJSON(@list_json_mamp) AS m;
+
+    DELETE FROM MyPham
+    WHERE MaMP IN (SELECT MaMP FROM #Results WHERE #Results.ghiChu = N'Cho phép xoá!');
+    DROP TABLE #Results;
+	END;
+END;
 
 SELECT * FROM MyPham
-
 
 -------------------------Tìm kiếm----------------------------
 CREATE PROCEDURE [dbo].[sp_mypham_search] (@page_index  INT, 
