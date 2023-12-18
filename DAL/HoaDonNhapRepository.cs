@@ -39,10 +39,9 @@ namespace DAL.Interfaces
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoadonnhap_create",
                 "@MaHDN", model.MaHDN,
                 "@NgayNhap", model.NgayNhap,
-                "@MaNV", model.MaNV,
+                "@MaTaiKhoan", model.MaTaiKhoan,
                 "@MaNCC", model.MaNCC,
-                "@HoTenNCC", model.HoTenNCC,
-                "@SDTNCC", model.SDTNCC,
+                "@KieuThanhToan", model.KieuThanhToan,
                 "@TongTien", model.TongTien);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {

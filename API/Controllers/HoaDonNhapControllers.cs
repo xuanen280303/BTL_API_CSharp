@@ -18,7 +18,7 @@ namespace API.Controllers
 
         [Route("get-hoadonnhap-id/{id}")]
         [HttpGet]
-        public HoaDonNhapModel GetHoaDonBanbyID(string id)
+        public HoaDonNhapModel GetHoaDonNhapbyID(string id)
         {
             return _hoadonNhapBusiness.GetHoaDonNhapbyID(id);
         }

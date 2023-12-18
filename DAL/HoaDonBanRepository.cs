@@ -41,7 +41,7 @@ namespace DAL.Interfaces
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoadonban_create",
                 "@MaHDB", model.MaHDB,
                 "@NgayBan", model.NgayBan,
-                "@MaNV", model.MaNV,
+                "@MaTaiKhoan", model.MaTaiKhoan,
                 "@IDKH", model.IDKH,
                 "@HoTenKH", model.HoTenKH,
                 "@TongTien", model.TongTien);

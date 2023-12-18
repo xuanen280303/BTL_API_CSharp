@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTO.Models
+namespace DTO
 {
     //Chứa các thuộc tính cơ bản nhất liên quan đến một tài khoản người dùng 
     public class UserModel
@@ -44,5 +44,16 @@ namespace DTO.Models
         public int LoaiTaiKhoan { get; set; }
         public string TenTaiKhoan { get; set; }
         public string MatKhau { get; set; }
+    }
+
+    public class TaiKhoanModel_deletes
+    {
+        public List<ChiTietTaiKhoan1Model> list_json_mataikhoan { get; set; }
+    }
+    public class ChiTietTaiKhoan1Model
+    {
+        public int MaTaiKhoan { get; set; }
+        public string GhiChu { get; set; }
+
     }
 }

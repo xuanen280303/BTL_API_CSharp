@@ -18,6 +18,8 @@ MatKhau Nvarchar(20),
 Email Varchar(30) CHECK (Email LIKE '%@%')
 )
 
+SElect * from TaiKhoan
+
 --ChiTietTaiKhoan(MaChiTietTaiKhoan, MaTaiKhoan, HoTen, DiaChi, SDT, AnhDaiDien)
 CREATE TABLE ChiTietTaiKhoan (
 MaChitietTaiKhoan INT IDENTITY(1,1) PRIMARY KEY,
@@ -294,61 +296,70 @@ VALUES('KH01',N'Trần Thị Liễu',09875678888,N'Yên Mỹ, Hưng Yên'),
 	  ('KH09',N'Trịnh Thị Duyên', 03535556777,N'Mỹ Hào, Hưng Yên'),
 	  ('KH10',N'Hà Diệp Hoa', 03538312793,N'Vân Đồn, Quảng Ninh')
 
-
---HoaDonBanHang (MaHDB, NgayBan, MaNV, IDKH, HoTenKH, TongTien)
-INSERT INTO HoaDonBan(MaHDB, NgayBan, MaNV, IDKH, HoTenKH, TongTien)
-VALUES('HDB01','2023-04-18','NV02','KH02',N'Nguyễn Văn Quỳnh',500000),
-      ('HDB02','2023-05-20','NV03','KH01',N'Trần Thị Liễu',500000),
-	  ('HDB03','2023-04-20','NV01','KH03',N'Vũ Thị Minh',500000),
-	  ('HDB04','2023-05-07','NV02','KH05',N'Trần Thanh Thuỷ',500000),
-	  ('HDB05','2023-04-24','NV04','KH07',N'Nguyễn Hoa Như',500000),
-	  ('HDB06','2023-04-18','NV05','KH08',N'Đỗ Nhật Dương',500000),
-      ('HDB07','2023-05-20','NV03','KH09',N'Trịnh Thị Duyên',500000),
-	  ('HDB08','2023-04-20','NV01','KH10',N'Hà Diệp Hoa',500000),
-	  ('HDB09','2023-05-07','NV09','KH03',N'Vũ Thị Minh',500000),
-	  ('HDB10','2023-04-24','NV08','KH06',N'Trần Hồng Anh',500000)
-
---HoaDonNhap(MaHDN, NgayNhap, MaNV, MaNCC, HoTenNCC, SDTNCC, TongTien)
-INSERT INTO HoaDonNhap(MaHDN,NgayNhap,MaNV,MaNCC,HoTenNCC,SDTNCC,TongTien)
-VALUES('HDN01','2023-08-10','NV01','NCC04',N'Sỉ lẻ Ngọc Bích',03872336255,500000),
-      ('HDN02','2023-09-26','NV04','NCC02',N'Makeup BigBoon',09872336223,500000),
-	  ('HDN03','2023-08-15','NV05','NCC04',N'Sỉ lẻ Ngọc Bích',03872336253,500000),
-	  ('HDN04','2023-08-01','NV04','NCC03',N'Cocoon Group',09892336252,500000),
-	  ('HDN05','2022-07-28','NV01','NCC05',N'Thanh Hằng Mỹ phẩm',03572336251,500000),
-	  ('HDN06','2023-05-10','NV06','NCC07',N'Makeup Beuty',0997233622,500000),
-      ('HDN07','2023-11-26','NV08','NCC08',N'Tiệm làm đẹp',0929233625,500000),
-	  ('HDN08','2023-12-15','NV07','NCC09',N'Sỉ lẻ Nhật Linh',0337233625,500000),
-	  ('HDN09','2023-08-01','NV09','NCC10',N'Tuyết Ngân Mỹ phẩm',0357233625,500000),
-	  ('HDN10','2022-04-28','NV10','NCC06',N'VietNam KAO',0977233625,500000)
+--HoaDonNhap(MaHDN,NgayNhap,MaTaiKhoan,MaNCC,KieuThanhToan,TongTien)
+INSERT INTO HoaDonNhap(MaHDN,NgayNhap,MaTaiKhoan,MaNCC,KieuThanhToan,TongTien)
+VALUES('HDN01','2023-08-10',9,'NCC04',N'Trả trước',500000),
+      ('HDN02','2023-09-26',10,'NCC02',N'Trả sau',500000),
+	  ('HDN03','2023-08-15',10,'NCC04',N'Trả trước',500000),
+	  ('HDN04','2023-08-01',9,'NCC03',N'Trả sau',500000),
+	  ('HDN05','2022-07-28',9,'NCC05',N'Trả trước',500000),
+	  ('HDN06','2023-05-10',10,'NCC07',N'Trả trước',500000),
+      ('HDN07','2023-11-26',9,'NCC08',N'Trả sau',500000),
+	  ('HDN08','2023-12-15',10,'NCC09',N'Trả trước',500000),
+	  ('HDN09','2023-08-01',9,'NCC10',N'Trả sau', 500000),
+	  ('HDN10','2022-04-28',10,'NCC06',N'Trả trước',500000)
 
 --ChiTietHoaDonNhap(MaMP, TenMP, SLNhap, DGNhap, TrietKhau, ThanhTien)
-INSERT INTO ChiTietHoaDonNhap(MaHDN, MaMP, TenMP, SLNhap, DGNhap, TrietKhau, ThanhTien)
-VALUES('HDN01','MP01',N'Kem chống nắng Cetella',20, 250000,0,4500000),
-      ('HDN02','MP03',N'Kem dưỡng ẩm Klieh',10, 300000,5,2700000),
-	  ('HDN03','MP06',N'Sữa rửa mặt Cerave',10, 400000,5,3800000),
-	  ('HDN04','MP09',N'Mask Whitening',20, 20000,5,380000),
-	  ('HDN05','MP15',N'Tinh dầu bưởi Cococoon',30, 150000,15,3825000),
-	  ('HDN06','MP22',N'Eyeliner maybeline',10, 150000,0,1500000),
-      ('HDN07','MP25',N'Body mist Victoria ',20, 300000,0,6000000),
-	  ('HDN08','MP26',N'Sữa tắm Terosi',2, 200000,0,400000),
-	  ('HDN09','MP19',N'Vaseline PX50',2, 200000,0,400000),
-	  ('HDN10','MP05',N'Sữa rửa mặt SVR',10, 400000,0,4000000)
+INSERT INTO ChiTietHoaDonNhap(MaCTHDN, MaHDN, MaMP, TenMP, SLNhap, DGNhap, ThanhTien)
+VALUES('CTHDN01','HDN01','MP01',N'Kem chống nắng Cetella',20, 250000,4500000),
+      ('CTHDN02','HDN02','MP03',N'Kem dưỡng ẩm Klieh',10, 300000,2700000),
+	  ('CTHDN03','HDN03','MP06',N'Sữa rửa mặt Cerave',10, 400000,3800000),
+	  ('CTHDN04','HDN04','MP09',N'Mask Whitening',20, 20000,380000),
+	  ('CTHDN05','HDN05','MP15',N'Tinh dầu bưởi Cococoon',30, 150000,3825000),
+	  ('CTHDN06','HDN06','MP22',N'Eyeliner maybeline',10, 150000,1500000),
+      ('CTHDN07','HDN07','MP25',N'Body mist Victoria ',20, 300000,6000000),
+	  ('CTHDN08','HDN08','MP26',N'Sữa tắm Terosi',2, 200000,400000),
+	  ('CTHDN09','HDN09','MP19',N'Vaseline PX50',2, 200000,400000),
+	  ('CTHDN10','HDN10','MP05',N'Sữa rửa mặt SVR',10, 400000,4000000)
+
+--HoaDonBan(MaHDB, NgayBan, MaTaiKhoan, IDKH, HoTenKH, TongTien)
+INSERT INTO HoaDonBan(MaHDB, NgayBan, MaTaiKhoan, IDKH, HoTenKH, TongTien)
+VALUES('HDB01','2023-04-18',9,'KH02',N'Nguyễn Văn Quỳnh',500000),
+      ('HDB02','2023-05-20',9,'KH01',N'Trần Thị Liễu',500000),
+	  ('HDB03','2023-04-20',9,'KH03',N'Vũ Thị Minh',500000),
+	  ('HDB04','2023-05-07',9,'KH05',N'Trần Thanh Thuỷ',500000),
+	  ('HDB05','2023-04-24',10,'KH07',N'Nguyễn Hoa Như',500000),
+	  ('HDB06','2023-04-18',10,'KH08',N'Đỗ Nhật Dương',500000),
+      ('HDB07','2023-05-20',10,'KH09',N'Trịnh Thị Duyên',500000),
+	  ('HDB08','2023-04-20',9,'KH10',N'Hà Diệp Hoa',500000),
+	  ('HDB09','2023-05-07',10,'KH03',N'Vũ Thị Minh',500000),
+	  ('HDB10','2023-04-24',9,'KH06',N'Trần Hồng Anh',500000)
 
 --ChiTietHoaDonBan(MaMP, TenMP, SLBan, DGBan, GiamGia, ThanhTien)
-INSERT INTO ChiTietHoaDonBan(MaHDB, MaMP, TenMP, SLBan, DGBan, ThanhTien)
-VALUES('HDB01','MP01',N'Kem chống nắng Cetella',10, 350000,3500000),
-      ('HDB02','MP03',N'Kem dưỡng ẩm Klieh',10, 400000,4000000),
-	  ('HDB03','MP06',N'Sữa rửa mặt Cerave',10, 450000,4500000),
-	  ('HDB04','MP09',N'Mask Whitening',20, 25000,450000),
-	  ('HDB05','MP15',N'Tinh dầu bưởi Cococoon',30, 250000,7500000),
-	  ('HDB06','MP22',N'Eyeliner maybeline',10, 200000,2000000),
-      ('HDB07','MP25',N'Body mist Victoria ',20, 400000,8000000),
-	  ('HDB08','MP26',N'Sữa tắm Terosi',20, 250000,5000000),
-	  ('HDB09','MP19',N'Vaseline PX50',2, 250000,500000),
-	  ('HDB10','MP05',N'Sữa rửa mặt SVR',10, 450000,4500000)
+INSERT INTO ChiTietHoaDonBan(MaCTHDB, MaHDB, MaMP, TenMP, SLBan, DGBan, ThanhTien)
+VALUES('CTHDB01','HDB01','MP01',N'Kem chống nắng Cetella',10, 350000,3500000),
+      ('CTHDB02','HDB02','MP03',N'Kem dưỡng ẩm Klieh',10, 400000,4000000),
+	  ('CTHDB03','HDB03','MP06',N'Sữa rửa mặt Cerave',10, 450000,4500000),
+	  ('CTHDB04','HDB04','MP09',N'Mask Whitening',20, 25000,450000),
+	  ('CTHDB05','HDB05','MP15',N'Tinh dầu bưởi Cococoon',30, 250000,7500000),
+	  ('CTHDB06','HDB06','MP22',N'Eyeliner maybeline',10, 200000,2000000),
+      ('CTHDB07','HDB07','MP25',N'Body mist Victoria ',20, 400000,8000000),
+	  ('CTHDB08','HDB08','MP26',N'Sữa tắm Terosi',20, 250000,5000000),
+	  ('CTHDB09','HDB09','MP19',N'Vaseline PX50',2, 250000,500000),
+	  ('CTHDB10','HDB10','MP05',N'Sữa rửa mặt SVR',10, 450000,4500000)
 
 
 -------------USER(Tài khoản)---------------------------
+----------------------LOGIN---------------------
+CREATE PROCEDURE sp_login(@taikhoan nvarchar(20), @matkhau nvarchar(20))
+AS
+    BEGIN
+      SELECT  *
+      FROM TaiKhoan
+      where TenTaiKhoan= @taikhoan and MatKhau = @matkhau;
+    END;
+GO
+
 -------------GET BY ID----------------------------------
 create PROCEDURE gettaikhoanbyid(@id INT)
 AS
@@ -418,6 +429,7 @@ AS
     End;
 GO
 
+
 ---------------------XOÁ------------------------
 create PROCEDURE sp_taikhoan_delete
 @MaTK int
@@ -425,6 +437,91 @@ AS
 	Begin
 		Delete TaiKhoan where MaTaiKhoan = @MaTK
 	End;
+GO
+
+-----------------------------XOÁ NHIỀU--------------------------------
+CREATE PROCEDURE sp_taikhoan_deleteS
+(
+    @list_json_mataikhoan Nvarchar(MAX)
+)
+AS
+BEGIN
+	IF(@list_json_mataikhoan IS NOT NULL) 
+			BEGIN
+				 -- Insert data to temp table 
+			   SELECT
+				  JSON_VALUE(t.value, '$.maTaiKhoan') as maTaiKhoan,
+				  JSON_VALUE(t.value, '$.ghiChu') AS ghiChu 
+				  INTO #Results 
+			   FROM OPENJSON(@list_json_mataikhoan) AS t;
+
+    DELETE FROM TaiKhoan
+    WHERE MaTaiKhoan IN (SELECT MaTaiKhoan FROM #Results WHERE #Results.ghiChu = N'Cho phép xoá!');
+    DROP TABLE #Results;
+	END;
+END;
+
+-----------------------TÌM KIẾM---------------------------
+create PROCEDURE sp_taikhoan_search (@page_index INT, 
+                                  @page_size INT,
+								  @maloaitk INT,
+								  @ten_tk Nvarchar(20),
+								  @email Nvarchar(30)
+								  )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY MaTaiKhoan ASC)) AS RowNumber, 
+                              tk.MaTaiKhoan,
+							  tk.LoaiTaiKhoan,
+							  ltk.TenLoaiTK,
+							  tk.TenTaiKhoan,
+							  tk.MatKhau,
+							  tk.Email
+                        INTO #Results1
+                        FROM TaiKhoan AS tk
+						inner join LoaiTaiKhoan ltk on ltk.MaLoaiTK = tk.LoaiTaiKhoan
+					    WHERE (@maloaitk = 0 OR tk.LoaiTaiKhoan = @maloaitk) and 
+						(@ten_tk = '' Or tk.TenTaiKhoan like N'%'+@ten_tk+'%') and
+						(@email = '' Or tk.Email like N'%'+@email+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+						SELECT(ROW_NUMBER() OVER(
+                              ORDER BY MaTaiKhoan ASC)) AS RowNumber, 
+                              tk.MaTaiKhoan,
+							  tk.LoaiTaiKhoan,
+							  ltk.TenLoaiTK,
+							  tk.TenTaiKhoan,
+							  tk.MatKhau,
+							  tk.Email
+                        INTO #Results2
+                        FROM TaiKhoan AS tk
+						inner join LoaiTaiKhoan ltk on ltk.MaLoaiTK = tk.LoaiTaiKhoan
+					    WHERE (@maloaitk = 0 OR tk.LoaiTaiKhoan = @maloaitk) and 
+						(@ten_tk = '' Or tk.TenTaiKhoan like N'%'+@ten_tk+'%') and
+						(@email = '' Or tk.Email like N'%'+@email+'%');                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
 GO
 
 ---------------------------LOẠI TÀI KHOẢN-----------------------
@@ -1279,15 +1376,15 @@ END;
 create PROCEDURE sp_hoadonban_create(
 @MaHDB Nvarchar(10),
 @NgayBan Date ,
-@MaNV Nvarchar(10),
+@MaTaiKhoan INT,
 @IDKH Nvarchar(10),
 @HoTenKH Nvarchar(30),
 @TongTien float
 )
 AS
     BEGIN
-       insert into HoaDonBan(MaHDB,NgayBan, MaNV, IDKH, HoTenKH, TongTien)
-	   values(@MaHDB, @NgayBan, @MaNV, @IDKH, @HoTenKH, @TongTien);
+       insert into HoaDonBan(MaHDB,NgayBan, MaTaiKhoan, IDKH, HoTenKH, TongTien)
+	   values(@MaHDB, @NgayBan, @MaTaiKhoan, @IDKH, @HoTenKH, @TongTien);
     END;
 GO
 
@@ -1303,18 +1400,18 @@ END;
 create PROCEDURE sp_hoadonnhap_create(
 @MaHDN Nvarchar(10),
 @NgayNhap Date,
-@MaNV Nvarchar(10),
+@MaTaiKhoan INT,
 @MaNCC Nvarchar(10),
-@HoTenNCC Nvarchar(30),
-@SDTNCC Varchar(11),
+@KieuThanhToan Nvarchar(20),
 @TongTien float
 )
 AS
     BEGIN
-       insert into HoaDonNhap(MaHDN, NgayNhap, MaNV, MaNCC, HoTenNCC, SDTNCC, TongTien)
-	   values(@MaHDN, @NgayNhap, @MaNV, @MaNCC, @HoTenNCC, @SDTNCC, @TongTien);
+       insert into HoaDonNhap(MaHDN, NgayNhap, MaTaiKhoan, MaNCC, KieuThanhToan, TongTien)
+	   values(@MaHDN, @NgayNhap, @MaTaiKhoan, @MaNCC, @KieuThanhToan, @TongTien);
     END;
 GO
+
 
 
 
