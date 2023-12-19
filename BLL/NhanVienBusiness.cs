@@ -34,6 +34,10 @@ namespace BLL
         {
             return _nhanvien.Delete(id);
         }
+        public bool DeleteS(NhanVienModel_deletes model)
+        {
+            return _nhanvien.DeleteS(model);
+        }
         public List<NhanVienModel> Search(int pageIndex, int pageSize, out long total, string ten_nv, string dia_chinv)
         {
             return _nhanvien.Search(pageIndex, pageSize, out total, ten_nv, dia_chinv);

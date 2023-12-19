@@ -13,6 +13,7 @@ namespace BLL.Interfaces
         bool Create(NhanVienModel model);
         bool Update(NhanVienModel model);
         bool Delete(string id);
+        bool DeleteS(NhanVienModel_deletes model);
         public List<NhanVienModel> Search(int pageIndex, int pageSize, out long total, string ten_nv, string dia_chinv);
     }
 }

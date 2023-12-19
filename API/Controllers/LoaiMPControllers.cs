@@ -46,6 +46,14 @@ namespace API.Controllers
             return _loaimyPhamBusiness.Delete(id);
         }
 
+        [Route("deleteS-loaimypham")]
+        [HttpPost]
+        public LoaiMyPhamModel_deletes DeleteS([FromBody] LoaiMyPhamModel_deletes model)
+        {
+            _loaimyPhamBusiness.DeleteS(model);
+            return model;
+        }
+
         [Route("search")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)

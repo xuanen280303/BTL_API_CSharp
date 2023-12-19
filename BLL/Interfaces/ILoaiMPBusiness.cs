@@ -13,6 +13,7 @@ namespace BLL.Interfaces
         bool Create(LoaiMyPhamModel model);
         bool Update(LoaiMyPhamModel model);
         bool Delete(string id);
+        bool DeleteS(LoaiMyPhamModel_deletes model);
         public List<LoaiMyPhamModel> Search(int pageIndex, int pageSize, out long total, string tenloai_mp, string motaloai_mp);
     }
 }

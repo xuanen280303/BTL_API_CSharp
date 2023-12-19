@@ -46,6 +46,14 @@ namespace API.Controllers
             return _nhanVienBusiness.Delete(id);
         }
 
+        [Route("deleteS-nhanvien")]
+        [HttpPost]
+        public NhanVienModel_deletes DeleteS([FromBody] NhanVienModel_deletes model)
+        {
+            _nhanVienBusiness.DeleteS(model);
+            return model;
+        }
+
         [Route("search")]
         [HttpPost]
         public IActionResult Search([FromBody] Dictionary<string, object> formData)

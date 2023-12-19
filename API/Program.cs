@@ -31,10 +31,14 @@ builder.Services.AddTransient<IHoaDonBanRepository, HoaDonBanRepository>();
 builder.Services.AddTransient<IHoaDonBanBusiness, HoaDonBanBusiness>();
 builder.Services.AddTransient<IHoaDonNhapRepository, HoaDonNhapRepository>();
 builder.Services.AddTransient<IHoaDonNhapBusiness, HoaDonNhapBusiness>();
+builder.Services.AddTransient<ICTHDNRepository, CTHDNRepository>();
+builder.Services.AddTransient<ICTHDNBusiness, CTHDNBusiness>();
 builder.Services.AddTransient<IBaiVietRepository, BaiVietRepository>();
 builder.Services.AddTransient<IBaiVietBusiness, BaiVietBusiness>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserBusiness, UserBusiness>();
+builder.Services.AddTransient<ILoaiTaiKhoanRepository, LoaiTaiKhoanRepository>();
+builder.Services.AddTransient<ILoaiTaiKhoanBusiness, LoaiTaiKhoanBusiness>();
 
 
 // configure strongly typed settings objects

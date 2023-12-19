@@ -104,6 +104,25 @@ namespace DAL
             }
         }
 
+        public bool DeleteS(NhanVienModel_deletes model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_nhanvien_deleteS",
+                "@list_json_manv", model.list_json_manv != null ? MessageConvert.SerializeObject(model.list_json_manv) : null);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<NhanVienModel> Search(int pageIndex, int pageSize, out long total, string ten_nv, string dia_chinv)
         {
             string msgError = "";

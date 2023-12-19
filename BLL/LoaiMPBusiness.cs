@@ -34,6 +34,10 @@ namespace BLL
         {
             return _loaimypham.Delete(id);
         }
+        public bool DeleteS(LoaiMyPhamModel_deletes model)
+        {
+            return _loaimypham.DeleteS(model);
+        }
         public List<LoaiMyPhamModel> Search(int pageIndex, int pageSize, out long total, string tenloai_mp, string motaloai_mp)
         {
             return _loaimypham.Search(pageIndex, pageSize, out total, tenloai_mp, motaloai_mp);

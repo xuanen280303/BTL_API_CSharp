@@ -806,9 +806,32 @@ AS
 	END;
 GO
 
-SELECT * FROM NhanVien
+
+-----------------------------XOÁ NHIỀU--------------------------------
+CREATE PROCEDURE sp_nhanvien_deleteS
+(
+    @list_json_manv Nvarchar(MAX)
+)
+AS
+BEGIN
+	IF(@list_json_manv IS NOT NULL) 
+			BEGIN
+				 -- Insert data to temp table 
+			   SELECT
+				  JSON_VALUE(n.value, '$.maNV') as maNV,
+				  JSON_VALUE(n.value, '$.ghiChu') AS ghiChu 
+				  INTO #Results 
+			   FROM OPENJSON(@list_json_manv) AS n;
+
+    DELETE FROM NhanVien
+    WHERE MaNV IN (SELECT MaNV FROM #Results WHERE #Results.ghiChu = N'Cho phép xoá!');
+    DROP TABLE #Results;
+	END;
+END;
+
 
 exec [sp_nhanvien_search]  @page_index = 1 , @page_size = 5 , @ten_nv = '' , @dia_chinv = ''
+
 --------------------------TÌM KIẾM------------------------------
 CREATE PROCEDURE [dbo].[sp_nhanvien_search] (@page_index  INT, 
                                        @page_size   INT,
@@ -916,7 +939,7 @@ AS
 		DELETE KhachHang WHERE IDKH = @IDKH
 	END;
 GO
-
+H
 -----------------------------XOÁ NHIỀU--------------------------------
 CREATE PROCEDURE sp_khachhang_deleteS
 (
@@ -928,7 +951,7 @@ BEGIN
 			BEGIN
 				 -- Insert data to temp table 
 			   SELECT
-				  JSON_VALUE(k.value, '$.idKH') as idKH,
+				  JSON_VALUE(k.value, '$.idkh') as idkh,
 				  JSON_VALUE(k.value, '$.ghiChu') AS ghiChu 
 				  INTO #Results 
 			   FROM OPENJSON(@list_json_idkh) AS k;
@@ -1309,6 +1332,28 @@ AS
 	END;
 GO
 
+-----------------------------XOÁ NHIỀU--------------------------------
+CREATE PROCEDURE sp_loaimypham_deleteS
+(
+    @list_json_maloaimp Nvarchar(MAX)
+)
+AS
+BEGIN
+	IF(@list_json_maloaimp IS NOT NULL) 
+			BEGIN
+				 -- Insert data to temp table 
+			   SELECT
+				  JSON_VALUE(l.value, '$.maLoaiMP') as maLoaiMP,
+				  JSON_VALUE(l.value, '$.ghiChu') AS ghiChu 
+				  INTO #Results 
+			   FROM OPENJSON(@list_json_maloaimp) AS l;
+
+    DELETE FROM LoaiMyPham
+    WHERE MaLoaiMP IN (SELECT MaLoaiMP FROM #Results WHERE #Results.ghiChu = N'Cho phép xoá!');
+    DROP TABLE #Results;
+	END;
+END;
+
 SELECT * FROM LoaiMyPham
 
 -------------------------Tìm kiếm----------------------------
@@ -1411,6 +1456,79 @@ AS
 	   values(@MaHDN, @NgayNhap, @MaTaiKhoan, @MaNCC, @KieuThanhToan, @TongTien);
     END;
 GO
+
+----------------Hoá đơn nhập------------------------
+---------------------GET BY ID------------------
+create PROCEDURE getcthdnbyid(@id Nvarchar(10)) 
+AS
+BEGIN
+SELECT*from ChiTietHoaDonNhap where MaCTHDN = @id 
+END;
+
+SELECT * FROM ChiTietHoaDonNhap
+
+-------------------------Tìm kiếm----------------------------
+create PROCEDURE sp_cthdn_search (@page_index INT, 
+                                  @page_size INT,
+								  @ma_hd Nvarchar(10),
+								  @ma_mp Nvarchar(10)
+								  )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY MaCTHDN ASC)) AS RowNumber, 
+							  cthdn.MaCTHDN,
+                              cthdn.MaHDN,
+							  cthdn.MaMP,
+							  cthdn.TenMP,
+							  cthdn.SLNhap,
+							  cthdn.DGNhap,
+							  cthdn.ThanhTien
+                        INTO #Results1
+                        FROM ChiTietHoaDonNhap AS cthdn
+						inner join MyPham mp on mp.MaMP = cthdn.MaMP
+					    WHERE (@ma_hd = 0 OR cthdn.MaHDN = @ma_hd) and 
+						(@ma_mp = 0 OR cthdn.MaMP= @ma_mp)         
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+						SELECT(ROW_NUMBER() OVER(
+                              ORDER BY MaCTHDN ASC)) AS RowNumber, 
+							  cthdn.MaCTHDN,
+                              cthdn.MaHDN,
+							  cthdn.MaMP,
+							  cthdn.TenMP,
+							  cthdn.SLNhap,
+							  cthdn.DGNhap,
+							  cthdn.ThanhTien
+                        INTO #Results2
+                        FROM ChiTietHoaDonNhap AS cthdn
+						inner join MyPham mp on mp.MaMP = cthdn.MaMP
+					    WHERE (@ma_hd = 0 OR cthdn.MaHDN = @ma_hd) and 
+						(@ma_mp = 0 OR cthdn.MaMP= @ma_mp)                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
+GO
+
 
 
 

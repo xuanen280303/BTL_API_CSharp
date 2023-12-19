@@ -16,6 +16,14 @@ namespace DTO
         public string SDTNV { get; set; }
         public string DiachiNV { get; set; }
         public string Email { get; set; }
-
+    }
+    public class NhanVienModel_deletes
+    {
+        public List<ChiTietNhanVienModel> list_json_manv { get; set; }
+    }
+    public class ChiTietNhanVienModel
+    {
+        public string MaNV { get; set; }
+        public string GhiChu { get; set; }
     }
 }

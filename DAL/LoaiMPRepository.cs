@@ -93,6 +93,25 @@ namespace DAL
             }
         }
 
+        public bool DeleteS(LoaiMyPhamModel_deletes model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_loaimypham_deleteS",
+                "@list_json_maloaimp", model.list_json_maloaimp != null ? MessageConvert.SerializeObject(model.list_json_maloaimp) : null);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<LoaiMyPhamModel> Search(int pageIndex, int pageSize, out long total, string tenloai_mp, string motaloai_mp)
         {
             string msgError = "";
