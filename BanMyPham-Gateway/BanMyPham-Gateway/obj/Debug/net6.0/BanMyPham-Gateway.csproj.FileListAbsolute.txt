@@ -1,0 +1,7 @@
+D:\BanMyPham-Gateway\BanMyPham-Gateway\obj\Debug\net6.0\BanMyPham-Gateway.csproj.AssemblyReference.cache
+D:\BanMyPham-Gateway\BanMyPham-Gateway\obj\Debug\net6.0\BanMyPham-Gateway.GeneratedMSBuildEditorConfig.editorconfig
+D:\BanMyPham-Gateway\BanMyPham-Gateway\obj\Debug\net6.0\BanMyPham-Gateway.AssemblyInfoInputs.cache
+D:\BanMyPham-Gateway\BanMyPham-Gateway\obj\Debug\net6.0\BanMyPham-Gateway.AssemblyInfo.cs
+D:\BanMyPham-Gateway\BanMyPham-Gateway\obj\Debug\net6.0\BanMyPham-Gateway.csproj.CoreCompileInputs.cache
+D:\BanMyPham-Gateway\BanMyPham-Gateway\obj\Debug\net6.0\BanMyPham-Gateway.MvcApplicationPartsAssemblyInfo.cs
+D:\BanMyPham-Gateway\BanMyPham-Gateway\obj\Debug\net6.0\BanMyPham-Gateway.MvcApplicationPartsAssemblyInfo.cache
