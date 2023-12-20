@@ -68,7 +68,7 @@ MaNCC Nvarchar(10) CONSTRAINT FK_NhaCC_MaNCC FOREIGN KEY REFERENCES NhaCC(MaNCC)
 MoTa Nvarchar(MAX),
 ChiTiet Nvarchar(MAX)
 )
-
+SELECT * FROM BaiViet
 
 --NhanVien(MaNV, HoTenNV, NgaySinh, GioiTinh, CaLam, SDTNV, DiaChiNV, Email)
 CREATE TABLE NhanVien
