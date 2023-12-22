@@ -1165,6 +1165,55 @@ AS
     END;
 GO
 
+-------------------Lấy Theo chức năng----------------
+exec sp_LayMyPhamTheoChucNang @ChucNang = 1
+GO
+CREATE PROCEDURE sp_LayMyPhamTheoChucNang 
+    @ChucNang int
+AS
+BEGIN
+    IF @ChucNang = 1
+    BEGIN
+        -- Lấy mỹ phẩm bán chạy nhất
+        WITH Top3MyPhamBanChay AS (
+        SELECT 
+		 CTHDB.MaMP, MyPham.TenMP,
+        SUM(CTHDB.SLBan) AS TongSLBan,
+        COUNT(DISTINCT HDB.MaHDB) AS SoDonDatHang,
+        ROW_NUMBER() OVER (ORDER BY SUM(CTHDB.SLBan) DESC) AS RowNum
+        FROM ChiTietHoaDonBan CTHDB JOIN MyPham ON CTHDB.MaMP = MyPham.MaMP JOIN HoaDonBan HDB ON CTHDB.MaHDB = HDB.MaHDB
+        GROUP BY CTHDB.MaMP, MyPham.TenMP)
+		SELECT MaMP,TenMP,TongSLBan,SoDonDatHang
+        FROM Top3MyPhamBanChay WHERE RowNum <= 3;
+
+    END
+    ELSE IF @ChucNang = 2
+    BEGIN
+        -- Lấy mỹ phẩm có giá thấp nhất
+        SELECT TOP 1 MyPham.MaMP,MyPham.TenMP,ChiTietHoaDonBan.DGBan AS GiaBanThapNhat
+        FROM MyPham
+        JOIN ChiTietHoaDonBan ON MyPham.MaMP = ChiTietHoaDonBan.MaMP
+        WHERE ChiTietHoaDonBan.DGBan = (SELECT MIN(DGBan) FROM ChiTietHoaDonBan WHERE DGBan IS NOT NULL)
+        ORDER BY MyPham.MaMP;
+    END
+
+	ELSE IF @ChucNang = 3
+    BEGIN
+        -- Lấy 3 mỹ phẩm có nhiều sl tồn nhất
+        SELECT TOP 3 MaMP,TenMP,SLTon
+        FROM MyPham
+        ORDER BY SLTon DESC;
+    END
+    ELSE
+    BEGIN
+        PRINT 'Chức năng không hợp lệ!';
+    END
+END
+
+SELECT * FROM MyPham
+select * from HoaDonNhap
+select * from ChiTietHoaDonBan
+
 ---------------------THÊM---------------------------
 create PROCEDURE sp_mypham_create(
 @MaMP Nvarchar(10),
@@ -1417,6 +1466,22 @@ BEGIN
 SELECT*from HoaDonBan where MaHDB = @id 
 END;
 
+------------------GETALL-------------------
+exec sp_hoadonban_get_all
+drop proc sp_hoadonban_get_all
+
+CREATE PROC sp_hoadonban_get_all
+AS
+Begin
+	SELECT h.*, 
+        (
+            SELECT c.*
+            FROM ChiTietHoaDonBan AS c
+            WHERE h.MaHDB = c.MaHDB FOR JSON PATH
+        ) AS list_json_chitiethoadonban
+        FROM HoaDonBan AS h
+End;
+
 ---------------------THÊM---------------------------
 create PROCEDURE sp_hoadonban_create(
 @MaHDB Nvarchar(10),
@@ -1441,6 +1506,22 @@ BEGIN
 SELECT*from HoaDonNhap where MaHDN = @id 
 END;
 
+------------------GETALL-------------------
+exec sp_hoadonnhap_get_all
+drop proc sp_hoadonnhap_get_all
+
+CREATE PROC sp_hoadonnhap_get_all
+AS
+Begin
+	SELECT h.*, 
+        (
+            SELECT c.*
+            FROM ChiTietHoaDonNhap AS c
+            WHERE h.MaHDN = c.MaHDN FOR JSON PATH
+        ) AS list_json_chitiethoadonnhap
+        FROM HoaDonNhap AS h
+End;
+
 ---------------------THÊM---------------------------
 create PROCEDURE sp_hoadonnhap_create(
 @MaHDN Nvarchar(10),
@@ -1457,7 +1538,7 @@ AS
     END;
 GO
 
-----------------Hoá đơn nhập------------------------
+----------------CT Hoá đơn nhập------------------------
 ---------------------GET BY ID------------------
 create PROCEDURE getcthdnbyid(@id Nvarchar(10)) 
 AS

@@ -22,6 +22,10 @@ namespace BLL
         {
             return _hdn.GetHoaDonNhapbyID(id);
         }
+        public List<HoaDonNhapModel> GetAll()
+        {
+            return _hdn.GetAll();
+        }
         public bool Create(HoaDonNhapModel model)
         {
             return _hdn.Create(model);

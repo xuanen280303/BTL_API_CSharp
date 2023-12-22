@@ -22,6 +22,10 @@ namespace BLL
         {
             return _hdb.GetHoaDonBanbyID(id);
         }
+        public List<HoaDonBanModel> GetAll()
+        {
+            return _hdb.GetAll();
+        }
         public bool Create(HoaDonBanModel model)
         {
             return _hdb.Create(model);

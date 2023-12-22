@@ -23,6 +23,13 @@ namespace API.Controllers
             return _hoadonNhapBusiness.GetHoaDonNhapbyID(id);
         }
 
+        [Route("Select-all-hoadonnhap")]
+        [HttpGet]
+        public List<HoaDonNhapModel> GetAll()
+        {
+            return _hoadonNhapBusiness.GetAll();
+        }
+
         [Route("create-hoadonnhap")]
         [HttpPost]
         public HoaDonNhapModel CreateItem([FromBody] HoaDonNhapModel model)

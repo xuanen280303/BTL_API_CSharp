@@ -14,5 +14,16 @@ namespace DTO
         public string IDKH { get; set; }
         public string HoTenKH { get; set; }
         public double TongTien { get; set; }
+        public List<ChiTietHDBModel> list_json_chitiethoadonban { get; set; }
+    }
+    public class ChiTietHDBModel
+    {
+        public string MaHDB { get; set; }
+        public string MaMP { get; set; }
+        public string TenMP { get; set; }
+        public double SLBan { get; set; }
+        public double DGBan { get; set; }
+        public double GiamGia { get; set; }
+        public double ThanhTien { get; set; }
     }
 }

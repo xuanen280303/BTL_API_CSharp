@@ -10,6 +10,7 @@ namespace DAL.Interfaces
     public partial interface IHoaDonNhapRepository
     {
         HoaDonNhapModel GetHoaDonNhapbyID(string id);
+        List<HoaDonNhapModel> GetAll();
         bool Create(HoaDonNhapModel model);
     }
 }

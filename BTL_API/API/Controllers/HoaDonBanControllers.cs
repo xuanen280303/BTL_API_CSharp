@@ -22,6 +22,12 @@ namespace API.Controllers
         {
             return _hoadonBanBusiness.GetHoaDonBanbyID(id);
         }
+        [Route("Select-all-hoadonban")]
+        [HttpGet]
+        public List<HoaDonBanModel> GetAll()
+        {
+            return _hoadonBanBusiness.GetAll();
+        }
 
         [Route("create-hoadonban")]
         [HttpPost]

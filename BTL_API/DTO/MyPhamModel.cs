@@ -24,4 +24,13 @@ namespace DTO
         public string MaMP { get; set; }
         public string GhiChu { get; set; }
     }
+    public class MyPhamTheoChucNang
+    {
+        public int ChucNang;
+        public string MaMP { get; set; }
+        public string TenMP { get; set; }
+        public int SLTon { get; set; }
+        public int TongSLBan { get; set; }
+        public int SoDonDatHang { get; set; }
+    }
 }

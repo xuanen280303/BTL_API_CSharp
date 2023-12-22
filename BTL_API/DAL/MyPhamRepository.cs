@@ -49,6 +49,23 @@ namespace DAL
             }
         }
 
+        public List<MyPhamTheoChucNang> MyPhamTheoChucNang(int id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_LayMyPhamTheoChucNang",
+                     "@ChucNang", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<MyPhamTheoChucNang>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool Create(MyPhamModel model)
         {
             string msgError = "";

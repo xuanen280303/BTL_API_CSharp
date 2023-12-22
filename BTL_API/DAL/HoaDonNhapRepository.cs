@@ -31,6 +31,21 @@ namespace DAL.Interfaces
                 throw ex;
             }
         }
+        public List<HoaDonNhapModel> GetAll()
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_hoadonnhap_get_all");
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<HoaDonNhapModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public bool Create(HoaDonNhapModel model)
         {
             string msgError = "";

@@ -22,6 +22,10 @@ namespace BLL
         {
             return _mypham.GetMyPhambyID(id);
         }
+        public List<MyPhamTheoChucNang> MyPhamTheoChucNang(int id)
+        {
+            return _mypham.MyPhamTheoChucNang(id);
+        }
         public List<LayMPTheoLoaiMPModel> GetMPTheoLoaiMP()
         {
             return _mypham.GetMPTheoLoaiMP();

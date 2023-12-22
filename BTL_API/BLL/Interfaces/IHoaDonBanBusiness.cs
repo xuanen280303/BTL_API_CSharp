@@ -10,6 +10,7 @@ namespace BLL.Interfaces
     public partial interface IHoaDonBanBusiness
     {
         HoaDonBanModel GetHoaDonBanbyID(string id);
+        List<HoaDonBanModel> GetAll();
         bool Create(HoaDonBanModel model);
     }
 }
