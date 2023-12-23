@@ -8,12 +8,12 @@ namespace DTO
 {
     public class CTHDBModel
     {
+        public string MaCTHDB { get; set; }
         public string MaHDB { get; set; }
         public string MaMP { get; set; }
         public string TenMP { get; set; } 
         public double SLBan { get; set; }
         public double DGBan { get; set; }
-        public double GiamGia { get; set; }
         public double ThanhTien { get; set; }
     }
 }

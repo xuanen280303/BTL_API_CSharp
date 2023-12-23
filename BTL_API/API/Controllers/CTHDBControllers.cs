@@ -8,19 +8,19 @@ namespace API_ADMIN.Controllers
     //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CTHDNControllers : ControllerBase
+    public class CTHDBControllers : ControllerBase
     {
-        private ICTHDNBusiness _cthdnBusiness;
-        public CTHDNControllers(ICTHDNBusiness cthdnBusiness)
+        private ICTHDBBusiness _cthdbBusiness;
+        public CTHDBControllers(ICTHDBBusiness cthdbBusiness)
         {
-            _cthdnBusiness = cthdnBusiness;
+            _cthdbBusiness = cthdbBusiness;
         }
         //[AllowAnonymous]
         [Route("get-by-id/{id}")]
         [HttpGet]
-        public CTHDNModel GetCTHDNbyID(string id)
+        public CTHDBModel GetCTHDBbyID(string id)
         {
-            return _cthdnBusiness.GetCTHDNbyID(id);
+            return _cthdbBusiness.GetCTHDBbyID(id);
         }
         [Route("search")]
         [HttpPost]
@@ -35,7 +35,7 @@ namespace API_ADMIN.Controllers
                 int ma_mp = 0;
                 if (formData.Keys.Contains("ma_mp")) { ma_mp = int.Parse(formData["ma_mp"].ToString()); }
                 long total = 0;
-                var data = _cthdnBusiness.Search(page, pageSize, out total, ma_hd, ma_mp);
+                var data = _cthdbBusiness.Search(page, pageSize, out total, ma_hd, ma_mp);
                 return Ok(
                     new
                     {

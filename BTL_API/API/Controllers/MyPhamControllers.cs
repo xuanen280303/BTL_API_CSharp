@@ -23,6 +23,13 @@ namespace API.Controllers
             return _myPhamBusiness.GetMyPhambyID(id);
         }
 
+        [Route("Select-myphamtheochucnang/{id}")]
+        [HttpGet]
+        public List<MyPhamTheoChucNang> MyPhamTheoChucNang(int id)
+        {
+            return _myPhamBusiness.MyPhamTheoChucNang(id);
+        }
+
         [Route("GetMPTheoLoaiMP")]
         [HttpGet]
         public List<LayMPTheoLoaiMPModel> GetMPTheoLoaiMP()

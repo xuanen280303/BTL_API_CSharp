@@ -1610,6 +1610,78 @@ AS
     END;
 GO
 
+----------------CT Hoá đơn bán------------------------
+---------------------GET BY ID------------------
+create PROCEDURE getcthdbbyid(@id Nvarchar(10)) 
+AS
+BEGIN
+SELECT*from ChiTietHoaDonBan where MaCTHDB = @id 
+END;
+
+SELECT * FROM ChiTietHoaDonNhap
+
+-------------------------Tìm kiếm----------------------------
+create PROCEDURE sp_cthdb_search (@page_index INT, 
+                                  @page_size INT,
+								  @ma_hd Nvarchar(10),
+								  @ma_mp Nvarchar(10)
+								  )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY MaCTHDB ASC)) AS RowNumber, 
+							  cthdb.MaCTHDB,
+							  cthdb.MaHDB,
+							  cthdb.MaMP,
+							  cthdb.TenMP,
+							  cthdb.SLBan,
+							  cthdb.DGBan,
+							  cthdb.ThanhTien                         
+                        INTO #Results1
+                        FROM ChiTietHoaDonBan AS cthdb
+						inner join MyPham mp on mp.MaMP = cthdb.MaMP
+					    WHERE (@ma_hd = 0 OR cthdb.MaHDB = @ma_hd) and 
+						(@ma_mp = 0 OR cthdb.MaMP= @ma_mp)         
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+						SELECT(ROW_NUMBER() OVER(
+                               ORDER BY MaCTHDB ASC)) AS RowNumber, 
+							  cthdb.MaCTHDB,
+							  cthdb.MaHDB,
+							  cthdb.MaMP,
+							  cthdb.TenMP,
+							  cthdb.SLBan,
+							  cthdb.DGBan,
+							  cthdb.ThanhTien     
+                        INTO #Results2
+                       FROM ChiTietHoaDonBan AS cthdb
+						inner join MyPham mp on mp.MaMP = cthdb.MaMP
+					    WHERE (@ma_hd = 0 OR cthdb.MaHDB = @ma_hd) and 
+						(@ma_mp = 0 OR cthdb.MaMP= @ma_mp)                   
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
+GO
+SELECT * FROM ChiTietHoaDonBan
 
 
 

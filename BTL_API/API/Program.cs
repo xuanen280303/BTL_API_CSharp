@@ -32,6 +32,8 @@ builder.Services.AddTransient<IHoaDonNhapRepository, HoaDonNhapRepository>();
 builder.Services.AddTransient<IHoaDonNhapBusiness, HoaDonNhapBusiness>();
 builder.Services.AddTransient<ICTHDNRepository, CTHDNRepository>();
 builder.Services.AddTransient<ICTHDNBusiness, CTHDNBusiness>();
+builder.Services.AddTransient<ICTHDBRepository, CTHDBRepository>();
+builder.Services.AddTransient<ICTHDBBusiness, CTHDBBusiness>();
 builder.Services.AddTransient<IBaiVietRepository, BaiVietRepository>();
 builder.Services.AddTransient<IBaiVietBusiness, BaiVietBusiness>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
