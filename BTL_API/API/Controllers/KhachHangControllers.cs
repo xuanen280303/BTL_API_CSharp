@@ -61,7 +61,7 @@ namespace API.Controllers
                 var page = int.Parse(formData["page"].ToString());
                 var pageSize = int.Parse(formData["pageSize"].ToString());
                 string ten_kh = "";
-                if (formData.Keys.Contains("ten_nv") && !string.IsNullOrEmpty(Convert.ToString(formData["ten_kh"]))) { ten_kh = Convert.ToString(formData["ten_kh"]); }
+                if (formData.Keys.Contains("ten_kh") && !string.IsNullOrEmpty(Convert.ToString(formData["ten_kh"]))) { ten_kh = Convert.ToString(formData["ten_kh"]); }
                 string dia_chikh = "";
                 if (formData.Keys.Contains("dia_chikh") && !string.IsNullOrEmpty(Convert.ToString(formData["dia_chikh"]))) { dia_chikh = Convert.ToString(formData["dia_chikh"]); }
                 long total = 0;

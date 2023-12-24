@@ -76,12 +76,14 @@ CREATE TABLE NhanVien
 MaNV Nvarchar(10) PRIMARY KEY,
 HoTenNV Nvarchar(30),
 NgaySinh DATE CHECK (YEAR(NgaySinh)<2005),
-GioiTinh Nvarchar(3) CHECK (GioiTinh IN ('Nam',N'Nữ')),
-CaLam Nvarchar(8) Check( CaLam IN('Fulltime','Parttime')),
+GioiTinh Nvarchar(3),
+CaLam Nvarchar(8),
 SDTNV Varchar(11) DEFAULT N'Không có',
 DiachiNV Nvarchar(30),
-Email Varchar(30) CHECK (Email LIKE '%@%')
+Email Varchar(30)
 )
+
+DROP TABLE NhanVien
 
 
 --KhachHang (IDKH, HoTenKH, SDTKH, DiaChiKH)
@@ -246,16 +248,15 @@ VALUES ('MaCT01', 'MP01', 'NCC01', null, null),
 --NhanVien(MaNV, HoTenNV,NgaySinh,GioiTinh, CaLam, Email, SDTNV, DiaChiNV)
 INSERT INTO NhanVien(MaNV, HoTenNV,NgaySinh,GioiTinh, CaLam, Email, SDTNV, DiaChiNV)
 VALUES('NV01',N'Mai Thị Hoa','09-09-1999',N'Nữ','FullTime',N'HoaMH09@gmail.com',0981890898,N'Mỹ Hào, Hưng Yên'),
-      ('NV02',N'Trần Tuấn Lập','09-01-1985',N'Nam','PartTime',N'LapTT@gmail.com',0904898998,N'Yên Mỹ, Hưng Yên'),
-      ('NV03',N'Nguyễn Văn An','05-05-2000',N'Nam','FullTime',N'Annguyen09@gmail.com',0996890777,N'Ba Vì, Hà Nội'),
-      ('NV04',N'Vũ Thị Liên','09-09-1999',N'Nữ',N'FullTime', 'Mailien05@gmail.com',0984890005,N'Vũ Thư, Thái Bình'),
-      ('NV05',N'Cao Thị Thu','05-07-1989',N'Nữ','PartTime','ThuCao89@gmail.com',0976890123,N'Quế Võ,Bắc Ninh'),
-	  ('NV06',N'Nguyễn Duy Luân','02-04-1992',N'Nam','FullTime',N'Luan10hn@gmail.com',0981890898,N'Đống Đa, Hà Nội'),
-      ('NV07',N'Bùi Đăng Hậu','08-02-1995',N'Nam','PartTime',N'Haubui@gmail.com',0904898998,N'Bà Rịa, Vũng Tàu'),
-      ('NV08',N'Trần Đăng Lâm','06-03-2003',N'Nam','FullTime',N'Lamper03@gmail.com',0386890777,N'Vân Đồn, Quảng Ninh'),
-      ('NV09',N'Cao Bá Hưng','02-01-1998',N'Nam',N'FullTime', 'Hungcao12@gmail.com',0384890005,N'Nam Sách, Hải Dương'),
-      ('NV10',N'Lê Mai Anh','07-06-1999',N'Nữ','PartTime','Anhanh99@gmail.com',0946890123,N'Hải Hậu, Nam Định')
-
+      ('NV02',N'Trần Tuấn','09-01-1985',N'Nam','PartTime',N'LapTT@gmail.com',0904898998,N' Hưng Yên'),
+      ('NV03',N'Nguyễn An','05-05-2000',N'Nam','FullTime',N'Anng09@gmail.com',0996890777,N'Hà Nội'),
+      ('NV04',N'Vũ Thị Liên','09-09-1999',N'Nữ',N'FullTime', 'Mailien05@gmail.com',0984890005,N'Thái Bình'),
+      ('NV05',N'Cao Thị Thu','05-07-1989',N'Nữ','PartTime','Thu89@gmail.com',0976890123,N'Bắc Ninh'),
+	  ('NV06',N'Nguyễn Duy ','02-04-1992',N'Nam','FullTime',N'Luan10hn@gmail.com',0981890898,N'Hà Nội'),
+      ('NV07',N'Bùi Hậu','08-02-1995',N'Nam','PartTime',N'Haubui@gmail.com',0904898998,N'Vũng Tàu'),
+      ('NV08',N'Trần Lâm','06-03-2003',N'Nam','FullTime',N'Lamper03@gmail.com',0386890777,N' Quảng Ninh'),
+      ('NV09',N'Cao Bá Hưng','02-01-1998',N'Nam',N'FullTime', 'Hung12@gmail.com',0384890005,N' Hải Dương'),
+      ('NV10',N'Lê Mai Anh','07-06-1999',N'Nữ','PartTime','Anh99@gmail.com',0946890123,N'Nam Định')
 
 ----KhachHang(IDKH, HoTenKH,LoaiKhachHang, SDTKH, DiaChiKH)
 INSERT INTO KhachHang(IDKH, HoTenKH, SDTKH, DiaChiKH)
@@ -695,6 +696,8 @@ END;
 
 SELECT * FROM BaiViet
 
+
+exec [sp_baiviet_search]  @page_index = 1 , @page_size = 1 , @tieu_de = N'Dùng son' , @noi_dung = N'Dùng mỗi ngày'
 --------------------------TÌM KIẾM------------------------------
 CREATE PROCEDURE [dbo].[sp_baiviet_search] (@page_index  INT, 
                                        @page_size   INT,
@@ -828,9 +831,9 @@ BEGIN
     DROP TABLE #Results;
 	END;
 END;
+SELECT * FROM NhanVien
 
 
-exec [sp_nhanvien_search]  @page_index = 1 , @page_size = 5 , @ten_nv = '' , @dia_chinv = ''
 
 --------------------------TÌM KIẾM------------------------------
 CREATE PROCEDURE [dbo].[sp_nhanvien_search] (@page_index  INT, 
@@ -964,6 +967,7 @@ END;
 
 SELECT * FROM KhachHang
 
+exec [sp_khachhang_search]  @page_index = 1 , @page_size = 5 , @ten_kh = N'Nguyễn Văn Quỳnh' , @dia_chikh = N'Mê Linh, Hà Nội'
 --------------------------TÌM KIẾM------------------------------
 CREATE PROCEDURE [dbo].[sp_khachhang_search] (@page_index  INT, 
                                        @page_size   INT,
@@ -1088,7 +1092,7 @@ END;
 
 SELECT * FROM NhaCC
 
-
+exec [sp_nhacc_search]  @page_index = 1 , @page_size = 5 , @ten_ncc = N'Cosmetic Hoa Lê' , @dia_chincc = N'Bà Rịa, Vũng Tàu'
 -------------------------Tìm kiếm----------------------------
 CREATE PROCEDURE [dbo].[sp_nhacc_search] (@page_index  INT, 
                                        @page_size   INT,
@@ -1276,8 +1280,9 @@ BEGIN
 	END;
 END;
 
-SELECT * FROM MyPham
+SELECT * FROM TaiKhoan
 
+exec [sp_mypham_search]  @page_index = 1 , @page_size = 1 , @ten_mp = N'Kem chống nắng Cetella' , @mota_mp = N'Kem chống nắng Cetella'
 -------------------------Tìm kiếm----------------------------
 CREATE PROCEDURE [dbo].[sp_mypham_search] (@page_index  INT, 
                                        @page_size   INT,

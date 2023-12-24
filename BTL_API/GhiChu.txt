@@ -33,6 +33,14 @@
   "moTa": "Son Color Key",
   "ghiChu": "Son nhẹ, đánh mềm môi"
 }
+--------------Tìm kiếm MỸ PHẨM-----------------------
+{
+  "page": 1,
+  "pageSize": 1,
+  "ten_mp": "Kem chống nắng Cetella",
+  "mota_mp": "Kem chống nắng Cetella"
+}
+
 
 --------------Thêm và sửa LOẠI MỸ PHẨM------------------
 {
@@ -49,6 +57,14 @@
   "tgDang": "2023-02-09",
   "ngayKT": "2023-03-09",
   "noiDung": "Hay "
+}
+
+-----------------------tìm kiếm BÀI VIẾT---------------
+{
+  "page": 1,
+  "pageSize": 5,
+  "tieu_de": "Dùng son",
+  "noi_dung": "Dùng mỗi ngày"
 }
 
 -------------------XOÁ NHIỀU-----------------------
@@ -72,5 +88,14 @@
   "sdtkh": "0987233625",
   "diaChiKH": "Phù cừ"
 }
+
+-----------------------Tìm kiếm khách hàng---------------
+{
+  "page": 1,
+  "pageSize": 5,
+  "ten_kh": "Nguyễn Văn Quỳnh",
+  "dia_chikh": "Mê Linh, Hà Nội"
+}
+
 
 
