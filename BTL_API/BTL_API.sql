@@ -9,6 +9,7 @@ TenLoaiTK Nvarchar(20),
 MoTa Nvarchar(30)
 )
 
+SELECT * FROM TaiKhoan
 --TaiKhoan(MaTaiKhoan, LoaiTaiKhoan, TenTaiKhoan, MatKhau, Email)
 CREATE TABLE TaiKhoan (
 MaTaiKhoan INT IDENTITY(1,1) PRIMARY KEY,
