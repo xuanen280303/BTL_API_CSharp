@@ -38,9 +38,9 @@ namespace BLL
         {
             return _loaimypham.DeleteS(model);
         }
-        public List<LoaiMyPhamModel> Search(int pageIndex, int pageSize, out long total, string tenloai_mp, string motaloai_mp)
+        public List<LoaiMyPhamModel> Search(int pageIndex, int pageSize, out long total, string tenloai_mp, string anh_dai_dien, string motaloai_mp)
         {
-            return _loaimypham.Search(pageIndex, pageSize, out total, tenloai_mp, motaloai_mp);
+            return _loaimypham.Search(pageIndex, pageSize, out total, tenloai_mp, anh_dai_dien, motaloai_mp);
         }
     }
 }

@@ -24,8 +24,7 @@ namespace API_ADMIN.Controllers
             if (user == null)
                 return BadRequest(new { message = "Tài khoản hoặc mật khẩu không đúng!" });
             return Ok(new { taikhoan = user.TenTaiKhoan, email = user.Email, token = user.token });
-        }
-        
+        }       
         [Route("get-taikhoan-id/{id}")]
         [HttpGet]
         public UserModel GetTaiKhoanbyID(string id)

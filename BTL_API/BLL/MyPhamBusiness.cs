@@ -50,5 +50,9 @@ namespace BLL
         {
             return _mypham.Search(pageIndex, pageSize, out total, ten_mp, mota_mp);
         }
+        public List<MyPhamModel2> Searchlmp(int pageIndex, int pageSize, out long total, string maloai_mp)
+        {
+            return _mypham.Searchlmp(pageIndex, pageSize, out total, maloai_mp);
+        }
     }
 }

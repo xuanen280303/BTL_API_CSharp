@@ -173,7 +173,6 @@ namespace DAL
                 throw ex;
             }
         }
-
         public UserModel2 Login(string taikhoan, string matkhau)
         {
             string msgError = "";
@@ -191,7 +190,6 @@ namespace DAL
             {
                 throw ex;
             }
-        }
-        
+        }    
     }
 }

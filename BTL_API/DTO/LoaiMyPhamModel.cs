@@ -10,6 +10,7 @@ namespace DTO
     {
         public string MaLoaiMP { get; set; } 
         public string TenLoaiMP { get; set; } 
+        public string AnhDaiDien { get; set; }
         public string MoTa { get; set; }
     }
     public class LoaiMyPhamModel_deletes

@@ -75,6 +75,9 @@ namespace DAL
                 "@MaMP", model.MaMP,
                 "@TenMP", model.TenMP,
                 "@MaLoaiMP", model.MaLoaiMP,
+                "@GiaMoi", model.GiaMoi,
+                "@GiaCu", model.GiaCu,
+                "@DanhGia", model.DanhGia,
                 "@SLTon", model.SLTon,
                 "@MoTa", model.MoTa,
                 "@GhiChu", model.GhiChu);
@@ -99,6 +102,9 @@ namespace DAL
                 "@MaMP", model.MaMP,
                 "@TenMP", model.TenMP,
                 "@MaLoaiMP", model.MaLoaiMP,
+                "@GiaMoi",model.GiaMoi,
+                "@GiaCu", model.GiaCu,
+                "@DanhGia", model.DanhGia,
                 "@SLTon", model.SLTon,
                 "@MoTa", model.MoTa,
                 "@GhiChu", model.GhiChu);
@@ -167,6 +173,26 @@ namespace DAL
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
                 return dt.ConvertTo<MyPhamModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<MyPhamModel2> Searchlmp(int pageIndex, int pageSize, out long total, string maloai_mp)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_mypham_searchlmp",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                    "@maloai_mp", maloai_mp);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<MyPhamModel2>().ToList();
             }
             catch (Exception ex)
             {

@@ -5,6 +5,10 @@ using DTO;
 
 namespace API_USER.Controllers
 {
+
+    //[Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
     public class KhachHangControllers : ControllerBase
     {
         private IKhachHangBusiness _khachHangBusiness;

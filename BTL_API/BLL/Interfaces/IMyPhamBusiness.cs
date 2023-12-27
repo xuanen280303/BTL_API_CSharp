@@ -16,6 +16,7 @@ namespace BLL.Interfaces
         bool Update(MyPhamModel model);
         bool Delete(string id);
         bool DeleteS(MyPhamModel_deletes model);
-         List<MyPhamModel> Search(int pageIndex, int pageSize, out long total, string ten_mp, string mota_mp);
+        List<MyPhamModel> Search(int pageIndex, int pageSize, out long total, string ten_mp, string mota_mp);
+        List<MyPhamModel2> Searchlmp(int pageIndex, int pageSize, out long total, string tmaloai_mp);
     }
 }

@@ -40,6 +40,7 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_loaimypham_create",
                 "@MaLoaiMP", model.MaLoaiMP,
                 "@TenLoaiMP", model.TenLoaiMP,
+                "@AnhDaiDien", model.AnhDaiDien,
                 "@MoTa", model.MoTa);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
@@ -61,6 +62,7 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_loaimypham_update",
                 "@MaLoaiMP", model.MaLoaiMP,
                 "@TenLoaiMP", model.TenLoaiMP,
+                "@AnhDaiDien", model.AnhDaiDien,
                 "@MoTa", model.MoTa);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
@@ -112,7 +114,7 @@ namespace DAL
             }
         }
 
-        public List<LoaiMyPhamModel> Search(int pageIndex, int pageSize, out long total, string tenloai_mp, string motaloai_mp)
+        public List<LoaiMyPhamModel> Search(int pageIndex, int pageSize, out long total, string tenloai_mp, string anh_dai_dien, string motaloai_mp)
         {
             string msgError = "";
             total = 0;
@@ -122,6 +124,7 @@ namespace DAL
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
                     "@tenloai_mp", tenloai_mp,
+                    "@anh_dai_dien", anh_dai_dien,
                     "@motaloai_mp", motaloai_mp);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);

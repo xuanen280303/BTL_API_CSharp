@@ -5,6 +5,10 @@ using DTO;
 
 namespace API_USER.Controllers
 {
+
+    //[Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
     public class HoaDonBanControllers : ControllerBase
     {
         private IHoaDonBanBusiness _hoadonBanBusiness;
