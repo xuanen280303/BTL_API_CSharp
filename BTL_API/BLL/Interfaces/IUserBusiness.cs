@@ -18,5 +18,6 @@ namespace BLL.Interfaces
         bool Delete(string Id);
         bool DeleteS(TaiKhoanModel_deletes model);
         public List<UserModel1> Search(int pageIndex, int pageSize, out long total, int maloaitk, string ten_tk, string email);
+        public string CreatePathFile(string RelativePathFileName);
     }
 }

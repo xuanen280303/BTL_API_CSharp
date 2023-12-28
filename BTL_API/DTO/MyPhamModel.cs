@@ -13,7 +13,6 @@ namespace DTO
         public string MaLoaiMP { get; set; }
         public Decimal GiaMoi { get; set; }
         public Decimal GiaCu { get; set; }
-        public int DanhGia { get; set; }
         public int SLTon { get; set; }
         public string AnhDaiDien { get; set; }
         public string MoTa { get; set; }
@@ -27,7 +26,6 @@ namespace DTO
         public string MaLoaiMP { get; set; }
         public Decimal GiaMoi { get; set; }
         public Decimal GiaCu { get; set; }
-        public int DanhGia { get; set; }
         public int SLTon { get; set; }
         public string AnhDaiDien { get; set; }
         public string MoTa { get; set; }

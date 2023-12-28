@@ -37,6 +37,34 @@ namespace API_USER.Controllers
         {
             return _userBusiness.GetAll();
         }
+
+        [Route("Upload")]
+        [HttpPost]
+        public async Task<IActionResult> Upload(IFormFile file)
+        {
+            try
+            {
+                if (file.Length > 0)
+                {
+                    string filePath = $"upload/{file.FileName.Replace("-", "_").Replace("%", "")}";
+                    var fullPath = _userBusiness.CreatePathFile(filePath);
+                    using (var fileStream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    return Ok(new { filePath });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Không thể upload tệp");
+            }
+        }
+
         [Route("create-taikhoan")]
         [HttpPost]
         public UserModel CreateItem([FromBody] UserModel model)

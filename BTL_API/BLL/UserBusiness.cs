@@ -83,5 +83,9 @@ namespace BLL
         {
             return _taikhoan.Search(pageIndex, pageSize, out total, maloaitk, ten_tk, email);
         }
+        public string CreatePathFile(string RelativePathFileName)
+        {
+            return _taikhoan.CreatePathFile(RelativePathFileName);
+        }
     }
 }

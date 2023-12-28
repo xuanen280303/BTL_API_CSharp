@@ -77,8 +77,8 @@ namespace DAL
                 "@MaLoaiMP", model.MaLoaiMP,
                 "@GiaMoi", model.GiaMoi,
                 "@GiaCu", model.GiaCu,
-                "@DanhGia", model.DanhGia,
                 "@SLTon", model.SLTon,
+                "@AnhDaiDien", model.AnhDaiDien,
                 "@MoTa", model.MoTa,
                 "@GhiChu", model.GhiChu);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
@@ -104,7 +104,7 @@ namespace DAL
                 "@MaLoaiMP", model.MaLoaiMP,
                 "@GiaMoi",model.GiaMoi,
                 "@GiaCu", model.GiaCu,
-                "@DanhGia", model.DanhGia,
+                "@AnhDaiDien", model.AnhDaiDien,                               
                 "@SLTon", model.SLTon,
                 "@MoTa", model.MoTa,
                 "@GhiChu", model.GhiChu);

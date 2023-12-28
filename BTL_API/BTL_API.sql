@@ -60,12 +60,12 @@ MaLoaiMP Nvarchar(10) CONSTRAINT FK_MP_MaLoaiMP FOREIGN KEY REFERENCES LoaiMyPha
 ON DELETE CASCADE ON UPDATE CASCADE,
 GiaMoi Decimal(18, 0),
 GiaCu Decimal(18, 0),
-DanhGia INT not null,
 SLTon int check (SLTon>=0),
 AnhDaiDien nvarchar(500),
 MoTa Nvarchar(MAX),
 GhiChu Nvarchar(30)
 )
+
 
 --ChiTietMyPham(MaChiTietMP, MaMP, MaNCC, MoTa, ChiTiet)
 CREATE TABLE ChiTietMyPham (
@@ -208,50 +208,50 @@ VALUES('L01',N'Dưỡng Mượt Tóc',N'/Images/danhmuc1.jpg', N'Các loại m�
 
 
 --MyPham(MaMP, TenMP, MaLoaiMP,GiaMoi, GiaCu, DanhGia, SLTon, MoTa, GhiChu)
-INSERT INTO MyPham(MaMP, TenMP, MaLoaiMP, GiaMoi, GiaCu, DanhGia, SLTon, AnhDaiDien, MoTa, GhiChu)
-VALUES('MP01',N'Dầu LOreal Tinh Dầu Hoa Tự Nhiên','L01',CAST(250000 AS Decimal(18, 0)),CAST(300000 AS Decimal(18, 0)),5,5, N'/Images/sp4.png', N'Dầu LOreal Tinh Dầu Hoa Tự Nhiên',N'Phù hợp với da dầu'),
-      ('MP02',N'Nước Xịt Dưỡng Tóc Double Rich','L01',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),5,100, N'/Images/sp5.jpg',N'Kem chống nắng Laroche Posay',N'Phù hợp với da nhạy cảm'),
-	  ('MP03',N'Tinh Dầu Dưỡng Tóc Raip Bóng Mượt','L01',CAST(350000 AS Decimal(18, 0)),CAST(500000 AS Decimal(18, 0)),4,80,N'/Images/sp2.png',N'Tinh Dầu Dưỡng Tóc Raip Bóng Mượt',N'Phù hợp với mọi loại da'),
-	  ('MP04',N'Dưỡng Tóc Tinh Dầu Bưởi Pomelo Shampoo','L01',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),4,100,N'/Images/sp3.jpg',N'Kem dưỡng ẩm VitaminE',N'Phù hợp với mọi loại da'),
+INSERT INTO MyPham(MaMP, TenMP, MaLoaiMP, GiaMoi, GiaCu, SLTon, AnhDaiDien, MoTa, GhiChu)
+VALUES('MP01',N'Dầu LOreal Tinh Dầu Hoa Tự Nhiên','L01',CAST(250000 AS Decimal(18, 0)),CAST(300000 AS Decimal(18, 0)),5, N'/Images/sp4.png', N'Dầu LOreal Tinh Dầu Hoa Tự Nhiên',N'Phù hợp với da dầu'),
+      ('MP02',N'Nước Xịt Dưỡng Tóc Double Rich','L01',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),100, N'/Images/sp5.jpg',N'Kem chống nắng Laroche Posay',N'Phù hợp với da nhạy cảm'),
+	  ('MP03',N'Tinh Dầu Dưỡng Tóc Raip Bóng Mượt','L01',CAST(350000 AS Decimal(18, 0)),CAST(500000 AS Decimal(18, 0)),80,N'/Images/sp2.png',N'Tinh Dầu Dưỡng Tóc Raip Bóng Mượt',N'Phù hợp với mọi loại da'),
+	  ('MP04',N'Dưỡng Tóc Tinh Dầu Bưởi Pomelo Shampoo','L01',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),100,N'/Images/sp3.jpg',N'Kem dưỡng ẩm VitaminE',N'Phù hợp với mọi loại da'),
 
-	  ('MP05',N'Dầu Gội Tsubaki Phục Hồi','L02',CAST(450000 AS Decimal(18, 0)),CAST(500000 AS Decimal(18, 0)),5,50,N'/Images/daugoi1.jpg',N'Ngăn rụng tóc',N'Mượt tóc'),
-	  ('MP06',N'Bộ Gội Xả TRESemmé Keratin Vào Nếp','L02',CAST(300000 AS Decimal(18, 0)),CAST(370000 AS Decimal(18, 0)),5,150,N'/Images/daugoi2.jpg',N'Ngăn rụng tóc',N'Mượt tóc'),
-	  ('MP07',N'Dầu Gội OGX Biotin & Collagen','L02',CAST(250000 AS Decimal(18, 0)),CAST(270000 AS Decimal(18, 0)),5,100,N'/Images/daugoi3.jpg',N'Dầu Gội OGX Biotin & Collagen',N'Mượt tóc'),
-	  ('MP08',N'Dầu Gội LOreal Paris Dưỡng Tóc','L02',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),5,280,N'/Images/daugoi4.jpg',N'Dầu Gội LOreal Paris',N'Mượt tóc'),
+	  ('MP05',N'Dầu Gội Tsubaki Phục Hồi','L02',CAST(450000 AS Decimal(18, 0)),CAST(500000 AS Decimal(18, 0)),50,N'/Images/daugoi1.jpg',N'Ngăn rụng tóc',N'Mượt tóc'),
+	  ('MP06',N'Bộ Gội Xả TRESemmé Keratin Vào Nếp','L02',CAST(300000 AS Decimal(18, 0)),CAST(370000 AS Decimal(18, 0)),150,N'/Images/daugoi2.jpg',N'Ngăn rụng tóc',N'Mượt tóc'),
+	  ('MP07',N'Dầu Gội OGX Biotin & Collagen','L02',CAST(250000 AS Decimal(18, 0)),CAST(270000 AS Decimal(18, 0)),100,N'/Images/daugoi3.jpg',N'Dầu Gội OGX Biotin & Collagen',N'Mượt tóc'),
+	  ('MP08',N'Dầu Gội LOreal Paris Dưỡng Tóc','L02',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),280,N'/Images/daugoi4.jpg',N'Dầu Gội LOreal Paris',N'Mượt tóc'),
 
-	  ('MP09',N'Serum Dưỡng Thể Vaseline Chống Nắng','L03',CAST(120000 AS Decimal(18, 0)),CAST(150000 AS Decimal(18, 0)),5, 500,N'/Images/dt1.png',N'Serum Dưỡng Thể Vaseline Chống Nắng',N'Phù hợp với mọi loại da'),
-	  ('MP10',N'Sữa Dưỡng Thể Nivea Sáng Da','L03',CAST(80000 AS Decimal(18, 0)),CAST(120000 AS Decimal(18, 0)),5, 500,N'/Images/dt2.png',N'Sữa Dưỡng Thể Nivea Sáng Da',N'Phù hợp với mọi loại da'),
-	  ('MP11',N'Sữa Dưỡng Thể Vaseline Dịu Mát','L03',CAST(100000 AS Decimal(18, 0)),CAST(160000 AS Decimal(18, 0)),5, 200,N'/Images/dt3.png',N'Sữa Dưỡng Thể Vaseline Dịu Mát',N'Phù hợp với da dầu'),
-	  ('MP12',N'Dầu Chăm Sóc Da Bio-Oil ','L03',CAST(300000 AS Decimal(18, 0)),CAST(350000 AS Decimal(18, 0)),5, 100,N'/Images/dt4.jpg',N'Dầu Chăm Sóc Da Bio-Oil ',N'Phù hợp với da khô'),
+	  ('MP09',N'Serum Dưỡng Thể Vaseline Chống Nắng','L03',CAST(120000 AS Decimal(18, 0)),CAST(150000 AS Decimal(18, 0)), 500,N'/Images/dt1.png',N'Serum Dưỡng Thể Vaseline Chống Nắng',N'Phù hợp với mọi loại da'),
+	  ('MP10',N'Sữa Dưỡng Thể Nivea Sáng Da','L03',CAST(80000 AS Decimal(18, 0)),CAST(120000 AS Decimal(18, 0)), 500,N'/Images/dt2.png',N'Sữa Dưỡng Thể Nivea Sáng Da',N'Phù hợp với mọi loại da'),
+	  ('MP11',N'Sữa Dưỡng Thể Vaseline Dịu Mát','L03',CAST(100000 AS Decimal(18, 0)),CAST(160000 AS Decimal(18, 0)), 200,N'/Images/dt3.png',N'Sữa Dưỡng Thể Vaseline Dịu Mát',N'Phù hợp với da dầu'),
+	  ('MP12',N'Dầu Chăm Sóc Da Bio-Oil ','L03',CAST(300000 AS Decimal(18, 0)),CAST(350000 AS Decimal(18, 0)), 100,N'/Images/dt4.jpg',N'Dầu Chăm Sóc Da Bio-Oil ',N'Phù hợp với da khô'),
 
-	  ('MP13',N'Toner hoa cúc','L04',CAST(220000 AS Decimal(18, 0)),CAST(250000 AS Decimal(18, 0)),5, 50,N'/Images/t1.png',N'Toner hoa cúc',N'Phù hợp với da khô'),
-	  ('MP14',N'Toner Kiel','L04',CAST(320000 AS Decimal(18, 0)),CAST(400000 AS Decimal(18, 0)),5, 50,N'/Images/t2.png',N'Toner Kiel',N'Phù hợp với mọi loại da'),
-	  ('MP15',N'Toner Laroche Posay','L04',CAST(250000 AS Decimal(18, 0)),CAST(300000 AS Decimal(18, 0)),5, 100,N'/Images/t3.png',N'Toner Laroche Posay',N'Phù hợp với người trên 12 tuổi'),
-	  ('MP16',N'Nước hoa hồng Klair','L04',CAST(400000 AS Decimal(18, 0)),CAST(450000 AS Decimal(18, 0)),5, 30,N'/Images/t4.jpg',N'Nước hoa hồng Klair',N'Phù hợp với người trên 12 tuổi'),
+	  ('MP13',N'Toner hoa cúc','L04',CAST(220000 AS Decimal(18, 0)),CAST(250000 AS Decimal(18, 0)), 50,N'/Images/t1.png',N'Toner hoa cúc',N'Phù hợp với da khô'),
+	  ('MP14',N'Toner Kiel','L04',CAST(320000 AS Decimal(18, 0)),CAST(400000 AS Decimal(18, 0)), 50,N'/Images/t2.png',N'Toner Kiel',N'Phù hợp với mọi loại da'),
+	  ('MP15',N'Toner Laroche Posay','L04',CAST(250000 AS Decimal(18, 0)),CAST(300000 AS Decimal(18, 0)), 100,N'/Images/t3.png',N'Toner Laroche Posay',N'Phù hợp với người trên 12 tuổi'),
+	  ('MP16',N'Nước hoa hồng Klair','L04',CAST(400000 AS Decimal(18, 0)),CAST(450000 AS Decimal(18, 0)), 30,N'/Images/t4.jpg',N'Nước hoa hồng Klair',N'Phù hợp với người trên 12 tuổi'),
 
-	  ('MP17',N'Nước hoa nữ MAC Jacob','L05',CAST(700000 AS Decimal(18, 0)),CAST(750000 AS Decimal(18, 0)),5, 100,N'/Images/nh1.jpg',N'Nước hoa nữ MAC Jacob',N'Hương nữ'),
-	  ('MP18',N'Nước hoa nữ Caloria','L05',CAST(620000 AS Decimal(18, 0)),CAST(8500000 AS Decimal(18, 0)),5, 50,N'/Images/nh2.png',N'Nước hoa nữ Caloria',N'Hương nữ'),
-	  ('MP19',N'Nước hoa nữ Caloria','L05',CAST(820000 AS Decimal(18, 0)),CAST(900000 AS Decimal(18, 0)),5, 100,N'/Images/nh3.jpg',N'Nước hoa nữ Caloria',N'Hương nữ'),
-	  ('MP20',N'Nước hoa nam Paco','L05',CAST(900000 AS Decimal(18, 0)),CAST(990000 AS Decimal(18, 0)),5, 50,N'/Images/nh4.jpg',N'Nước hoa nam Paco',N'Hương nam'),
+	  ('MP17',N'Nước hoa nữ MAC Jacob','L05',CAST(700000 AS Decimal(18, 0)),CAST(750000 AS Decimal(18, 0)), 100,N'/Images/nh1.jpg',N'Nước hoa nữ MAC Jacob',N'Hương nữ'),
+	  ('MP18',N'Nước hoa nữ Caloria','L05',CAST(620000 AS Decimal(18, 0)),CAST(8500000 AS Decimal(18, 0)), 50,N'/Images/nh2.png',N'Nước hoa nữ Caloria',N'Hương nữ'),
+	  ('MP19',N'Nước hoa nữ Caloria','L05',CAST(820000 AS Decimal(18, 0)),CAST(900000 AS Decimal(18, 0)), 100,N'/Images/nh3.jpg',N'Nước hoa nữ Caloria',N'Hương nữ'),
+	  ('MP20',N'Nước hoa nam Paco','L05',CAST(900000 AS Decimal(18, 0)),CAST(990000 AS Decimal(18, 0)), 50,N'/Images/nh4.jpg',N'Nước hoa nam Paco',N'Hương nam'),
 
-	  ('MP21',N'Son Background A12','L06',CAST(220000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)),5, 250,N'/Images/sm1.jpg',N'Son Background A12',N'Thơm và mềm môi'),
-	  ('MP22',N'Son Kem lì 3CE','L06',CAST(320000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)),5, 100,N'/Images/sm2.jpg',N'Son Kem lì 3CE',N'Thơm và mềm môi'),
-	  ('MP23',N'Son Bóng Mac','L06',CAST(220000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)),5, 50,N'/Images/sm3.png',N'Son Bóng Mac',N'Thơm và mềm môi'),
-	  ('MP24',N'Son Bóng Maybeline','L06',CAST(350000 AS Decimal(18, 0)),CAST(4500000 AS Decimal(18, 0)),5,50,N'/Images/sm4.jpg',N'Son Bóng Maybeline',N'Thơm và mềm môi'),
+	  ('MP21',N'Son Background A12','L06',CAST(220000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 250,N'/Images/sm1.jpg',N'Son Background A12',N'Thơm và mềm môi'),
+	  ('MP22',N'Son Kem lì 3CE','L06',CAST(320000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)), 100,N'/Images/sm2.jpg',N'Son Kem lì 3CE',N'Thơm và mềm môi'),
+	  ('MP23',N'Son Bóng Mac','L06',CAST(220000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 50,N'/Images/sm3.png',N'Son Bóng Mac',N'Thơm và mềm môi'),
+	  ('MP24',N'Son Bóng Maybeline','L06',CAST(350000 AS Decimal(18, 0)),CAST(4500000 AS Decimal(18, 0)),50,N'/Images/sm4.jpg',N'Son Bóng Maybeline',N'Thơm và mềm môi'),
 
-	  ('MP25',N'Phấn Nước Lanegie Căng','L07',CAST(520000 AS Decimal(18, 0)),CAST(600000 AS Decimal(18, 0)),5, 100,N'/Images/m1.png',N'Phấn Nước Lanegie Căng',N'Phù hợp với mọi loại da'),
-	  ('MP26',N'Phấn Nước Lanegie Mịn','L07',CAST(550000 AS Decimal(18, 0)),CAST(6500000 AS Decimal(18, 0)),5, 30,N'/Images/m2.png',N'Phấn Nước Lanegie Mịn',N'Phù hợp với mọi loại da'),
-	  ('MP27',N'Kem Nền Maybeline','L07',CAST(160000 AS Decimal(18, 0)),CAST(2000000 AS Decimal(18, 0)),5, 100,N'/Images/m3.jpg',N'Kem Nền Maybeline',N'Phù hợp với mọi loại da'),
-	  ('MP28',N'Phấn Nước Kiềm Dầu Gar','L07',CAST(330000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)),5, 50,N'/Images/m4.png',N'Phấn Nước Kiềm Dầu Gar',N'Phù hợp với mọi loại da'),
+	  ('MP25',N'Phấn Nước Lanegie Căng','L07',CAST(520000 AS Decimal(18, 0)),CAST(600000 AS Decimal(18, 0)), 100,N'/Images/m1.png',N'Phấn Nước Lanegie Căng',N'Phù hợp với mọi loại da'),
+	  ('MP26',N'Phấn Nước Lanegie Mịn','L07',CAST(550000 AS Decimal(18, 0)),CAST(6500000 AS Decimal(18, 0)), 30,N'/Images/m2.png',N'Phấn Nước Lanegie Mịn',N'Phù hợp với mọi loại da'),
+	  ('MP27',N'Kem Nền Maybeline','L07',CAST(160000 AS Decimal(18, 0)),CAST(2000000 AS Decimal(18, 0)), 100,N'/Images/m3.jpg',N'Kem Nền Maybeline',N'Phù hợp với mọi loại da'),
+	  ('MP28',N'Phấn Nước Kiềm Dầu Gar','L07',CAST(330000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)), 50,N'/Images/m4.png',N'Phấn Nước Kiềm Dầu Gar',N'Phù hợp với mọi loại da'),
 
-	  ('MP29',N'Kem Chống Nắng Laroche Posay','L08',CAST(320000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)),5, 100,N'/Images/kcn1.png',N'Kem Chống Nắng Laroche Posay',N'Phù hợp với da khô'),
-	  ('MP30',N'Kem Chống Nắng Centella 1004','L08',CAST(190000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)),5, 50,N'/Images/kcn2.png',N'Kem Chống Nắng Centella 1004',N'Phù hợp với da dầu'),
+	  ('MP29',N'Kem Chống Nắng Laroche Posay','L08',CAST(320000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)), 100,N'/Images/kcn1.png',N'Kem Chống Nắng Laroche Posay',N'Phù hợp với da khô'),
+	  ('MP30',N'Kem Chống Nắng Centella 1004','L08',CAST(190000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 50,N'/Images/kcn2.png',N'Kem Chống Nắng Centella 1004',N'Phù hợp với da dầu'),
 	   
-	  ('MP31',N'Sữa Rửa Mặt SVR','L09',CAST(350000 AS Decimal(18, 0)),CAST(4200000 AS Decimal(18, 0)),5, 100,N'/Images/s1.png',N'Sữa Rửa Mặt SVR',N'Phù hợp với da khô'),
-	  ('MP32',N'Sữa Rửa Mặt Bí Đao Cocoon','L09',CAST(160000 AS Decimal(18, 0)),CAST(2000000 AS Decimal(18, 0)),5, 50,N'/Images/s2.png',N'Sữa Rửa Mặt Bí Đao Cocoon',N'Phù hợp với da dầu'),
+	  ('MP31',N'Sữa Rửa Mặt SVR','L09',CAST(350000 AS Decimal(18, 0)),CAST(4200000 AS Decimal(18, 0)), 100,N'/Images/s1.png',N'Sữa Rửa Mặt SVR',N'Phù hợp với da khô'),
+	  ('MP32',N'Sữa Rửa Mặt Bí Đao Cocoon','L09',CAST(160000 AS Decimal(18, 0)),CAST(2000000 AS Decimal(18, 0)), 50,N'/Images/s2.png',N'Sữa Rửa Mặt Bí Đao Cocoon',N'Phù hợp với da dầu'),
 
-	  ('MP33',N'Tẩy Trang Biodema','L10',CAST(370000 AS Decimal(18, 0)),CAST(4500000 AS Decimal(18, 0)),5, 100,N'/Images/tt1.jpg',N'Tẩy Trang Biodema',N'Phù hợp với mọi loại dai'),
-	  ('MP34',N'Tẩy Trang Garnie','L10',CAST(130000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)),5, 50,N'/Images/tt2.png',N'Tẩy Trang Garnie',N'Phù hợp với mọi loại da')
+	  ('MP33',N'Tẩy Trang Biodema','L10',CAST(370000 AS Decimal(18, 0)),CAST(4500000 AS Decimal(18, 0)), 100,N'/Images/tt1.jpg',N'Tẩy Trang Biodema',N'Phù hợp với mọi loại dai'),
+	  ('MP34',N'Tẩy Trang Garnie','L10',CAST(130000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 50,N'/Images/tt2.png',N'Tẩy Trang Garnie',N'Phù hợp với mọi loại da')
 
 
 --ChiTietMyPham(MaChiTietMP, MaMP, MaNCC, MoTa, ChiTiet)
@@ -1249,43 +1249,41 @@ END
 SELECT * FROM MyPham
 select * from HoaDonNhap
 select * from ChiTietHoaDonBan
-GiaMoi Decimal(18, 0),
-GiaCu Decimal(18, 0),
-DanhGia INT not null,
+
 ---------------------THÊM---------------------------
-create PROCEDURE sp_mypham_create(
+alter PROCEDURE sp_mypham_create(
 @MaMP Nvarchar(10),
 @TenMP Nvarchar(50),
 @MaLoaiMP Nvarchar(10),
 @GiaMoi Decimal(18, 0),
 @GiaCu Decimal(18, 0),
-@DanhGia INT,
 @SLTon int,
 @MoTa Nvarchar(MAX),
+@AnhDaiDien Nvarchar(MAX),
 @GhiChu Nvarchar(30)
 )
 AS
     BEGIN
-       insert into MyPham(MaMP, TenMP, MaLoaiMP, GiaMoi, GiaCu, DanhGia, SLTon, MoTa, GhiChu)
-	   values(@MaMP, @TenMP, @MaLoaiMP, @GiaMoi, @GiaCu, @DanhGia, @SLTon, @MoTa, @GhiChu);
+       insert into MyPham(MaMP, TenMP, MaLoaiMP, GiaMoi, GiaCu, SLTon, MoTa, GhiChu,AnhDaiDien)
+	   values(@MaMP, @TenMP, @MaLoaiMP, @GiaMoi, @GiaCu,  @SLTon, @MoTa, @GhiChu,@AnhDaiDien);
     END;
 GO
 
 ------------------------------SỬA----------------------
-create PROCEDURE [dbo].[sp_mypham_update](
+alter PROCEDURE [dbo].[sp_mypham_update](
 @MaMP Nvarchar(10),
 @TenMP Nvarchar(50),
 @MaLoaiMP Nvarchar(10),
 @GiaMoi Decimal(18, 0),
 @GiaCu Decimal(18, 0),
-@DanhGia INT,
 @SLTon int,
 @MoTa Nvarchar(MAX),
+@AnhDaiDien Nvarchar(MAX),
 @GhiChu Nvarchar(30)
 )
 AS
     BEGIN
-		update MyPham set tenmp = @TenMP, maloaimp = @MaLoaiMP, giamoi = @GiaMoi, giacu = @GiaCu, danhgia = @DanhGia, mota = @MoTa, ghichu = @GhiChu where mamp = @MaMP; 
+		update MyPham set tenmp = @TenMP, maloaimp = @MaLoaiMP,AnhDaiDien=@AnhDaiDien, giamoi = @GiaMoi, giacu = @GiaCu, mota = @MoTa, ghichu = @GhiChu where mamp = @MaMP; 
     END;
 GO
 
@@ -1320,7 +1318,8 @@ BEGIN
 	END;
 END;
 
-SELECT * FROM TaiKhoan
+SELECT * FROM MyPham
+
 
 exec [sp_mypham_search]  @page_index = 1 , @page_size = 1 , @ten_mp = N'Kem chống nắng Cetella' , @mota_mp = N'Kem chống nắng Cetella'
 -------------------------Tìm kiếm----------------------------
@@ -1342,7 +1341,6 @@ AS
 							  n.MaLoaiMP,
 							  n.GiaMoi,
 							  n.GiaCu,
-							  n.DanhGia,
 							  n.SLTon,
 							  n.AnhDaiDien,
 							  n.MoTa,
@@ -1370,7 +1368,6 @@ AS
 							  n.MaLoaiMP,
 							  n.GiaMoi,
 							  n.GiaCu,
-							  n.DanhGia,
 							  n.SLTon,
 							  n.AnhDaiDien,
 							  n.MoTa,
@@ -1389,7 +1386,7 @@ AS
     END;
 GO
 
-DROP PROCEDURE [dbo].[sp_mypham_search]
+DROP PROCEDURE [dbo].[sp_mypham_searchlmp]
 
 exec [sp_mypham_searchlmp]  @page_index = 1 , @page_size = 1 , @maloai_mp = N'L01' 
 -------------------------Tìm kiếm theo mã loại cho user----------------------------
@@ -1411,7 +1408,6 @@ AS
 							  n.MaLoaiMP,
 							  n.GiaMoi,
 							  n.GiaCu,
-							  n.DanhGia,
 							  n.SLTon,
 							  n.AnhDaiDien,
 							  n.MoTa,
@@ -1440,7 +1436,6 @@ AS
 							  n.MaLoaiMP,
 							  n.GiaMoi,
 							  n.GiaCu,
-							  n.DanhGia,
 							  n.SLTon,
 							  n.AnhDaiDien,
 							  n.MoTa,
