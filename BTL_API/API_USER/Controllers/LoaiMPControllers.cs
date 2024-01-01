@@ -11,13 +11,11 @@ namespace API_USER.Controllers
     public class LoaiMPControllers : ControllerBase
     {
         private ILoaiMPBusiness _loaimyPhamBusiness;
-        private string _path;
-        private IWebHostEnvironment _env;
-        public LoaiMPControllers(ILoaiMPBusiness loaimyPhamBusiness, IConfiguration configuration, IWebHostEnvironment env)
+ 
+        public LoaiMPControllers(ILoaiMPBusiness loaimyPhamBusiness)
         {
             _loaimyPhamBusiness = loaimyPhamBusiness;
-            _path = configuration["AppSettings:PATH"];
-            _env = env;
+
         }
 
         [Route("get-loaimypham-id/{id}")]

@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BLL;
-using DTO;
 using BLL.Interfaces;
+using DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_ADMIN.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BaiVietControllers : ControllerBase

@@ -6,29 +6,26 @@ using DTO;
 namespace API_USER.Controllers
 {
 
-    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class HoaDonBanControllers : ControllerBase
     {
         private IHoaDonBanBusiness _hoadonBanBusiness;
-        private string _path;
-        private IWebHostEnvironment _env;
-        public HoaDonBanControllers(IHoaDonBanBusiness hoadonBanBusiness, IConfiguration configuration, IWebHostEnvironment env)
+
+        public HoaDonBanControllers(IHoaDonBanBusiness hoadonBanBusiness)
         {
             _hoadonBanBusiness = hoadonBanBusiness;
-            _path = configuration["AppSettings:PATH"];
-            _env = env;
+
         }
 
         [Route("get-hoadonban-id/{id}")]
         [HttpGet]
-        public HoaDonBanModel GetHoaDonBanbyID(string id)
+        public getbyidHoaDonBanModel GetHoaDonBanbyID(int id)
         {
             return _hoadonBanBusiness.GetHoaDonBanbyID(id);
         }
 
-        [Route("create-hoadonban")]
+        [Route("create-hoadon")]
         [HttpPost]
         public HoaDonBanModel CreateItem([FromBody] HoaDonBanModel model)
         {

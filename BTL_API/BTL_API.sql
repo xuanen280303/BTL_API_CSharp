@@ -55,7 +55,7 @@ MoTa Nvarchar(MAX)
 CREATE TABLE MyPham
 (
 MaMP Nvarchar(10) CONSTRAINT PK_MaMP PRIMARY KEY,
-TenMP Nvarchar(50) not null, 
+TenMP Nvarchar(50),
 MaLoaiMP Nvarchar(10) CONSTRAINT FK_MP_MaLoaiMP FOREIGN KEY REFERENCES LoaiMyPham(MaLoaiMP) 
 ON DELETE CASCADE ON UPDATE CASCADE,
 GiaMoi Decimal(18, 0),
@@ -65,7 +65,6 @@ AnhDaiDien nvarchar(500),
 MoTa Nvarchar(MAX),
 GhiChu Nvarchar(30)
 )
-
 
 --ChiTietMyPham(MaChiTietMP, MaMP, MaNCC, MoTa, ChiTiet)
 CREATE TABLE ChiTietMyPham (
@@ -123,6 +122,7 @@ TongTien float check(TongTien>=0)
 )
 
 
+
 --ChiTietHoaDonNhap(MaHDN, MaMP, TenMP, SoLuong, DonGia, TrietKhau, ThanhTien)
 CREATE TABLE ChiTietHoaDonNhap
 (
@@ -135,29 +135,30 @@ DGNhap float check (DGNhap>0),
 ThanhTien float check (ThanhTien>=0)
 )
 
---HoaDonBan (MaHDB, NgayBan, MaNV, IDKH, HoTenKH, LoaiKhachHang, TongTien)
+--HoaDonBan (MaHDB,MaTaiKhoan, IDKH, HoTenKH, SDTKH, DiaChiKH, TrangThai, NgayTao, NgayDuyet, TongTien, TGGiaoHang)
 CREATE TABLE HoaDonBan
 (
-MaHDB Nvarchar(10) PRIMARY KEY,
-NgayBan Date ,
-MaTaiKhoan INT CONSTRAINT HDB_MaTK_FK FOREIGN KEY (MaTaiKhoan) REFERENCES TaiKhoan(MaTaiKhoan),
-IDKH Nvarchar(10) CONSTRAINT FK_HoaDonBan_IDKH FOREIGN KEY REFERENCES KhachHang(IDKH),
+MaHDB INT IDENTITY(1,1)  PRIMARY KEY,
 HoTenKH Nvarchar(30),
-TongTien float check(TongTien>=0)
+SDTKH Varchar(10) DEFAULT N'Không có',
+DiaChiKH nvarchar(30),
+TrangThai bit,
+NgayTao datetime,
+NgayDuyet datetime,
+TongTien decimal(18, 0),
+TGGiaoHang datetime
 )
 
---ChiTietHoaDonBan(MaCTHDB, MaHDB, MaSP, SoLuong, DonGia)
+--ChiTietHoaDonBan(MaCTHDB, MaHDB, MaMP, SLBan, TongTien)
 CREATE TABLE ChiTietHoaDonBan
 (
-MaCTHDB Nvarchar(10) PRIMARY KEY,
-MaHDB Nvarchar(10) CONSTRAINT FK_ChiTietHoaDonNhap_HDB FOREIGN KEY REFERENCES HoaDonBan(MaHDB),
+MaCTHDB INT IDENTITY(1,1)  PRIMARY KEY,
+MaHDB INT CONSTRAINT FK_ChiTietHoaDonBan_HDB FOREIGN KEY REFERENCES HoaDonBan(MaHDB),
 MaMP Nvarchar(10) CONSTRAINT FK_ChiTietHoaDonBan_MyPham FOREIGN KEY REFERENCES MyPham(MaMP),
-TenMP Nvarchar(50) not null,
 SLBan INT CHECK (SLBan>0),
-DGBan FLOAT CHECK (DGBan>0),
-ThanhTien  FLOAT CHECK(ThanhTien>0)
+TongTien decimal(18, 0)
 )
- 
+
 ------------------------------------INSERT THÔNG TIN VÀO CÁC BẢNG---------------------------------------------
 --INSERT LoaiTaiKhoan(TenLoaiTK, MoTa)
 INSERT INTO LoaiTaiKhoan(TenLoaiTK, MoTa)
@@ -206,53 +207,54 @@ VALUES('L01',N'Dưỡng Mượt Tóc',N'/Images/danhmuc1.jpg', N'Các loại m�
 	  ('L19',N'Vitamin',N'/Images',N' Các loại mỹ phẩm Vitamin'),
 	  ('L20',N'Tẩy da chết',N'/Images',N' Các loại mỹ phẩm tẩy da chết')
 
-
 --MyPham(MaMP, TenMP, MaLoaiMP,GiaMoi, GiaCu, DanhGia, SLTon, MoTa, GhiChu)
 INSERT INTO MyPham(MaMP, TenMP, MaLoaiMP, GiaMoi, GiaCu, SLTon, AnhDaiDien, MoTa, GhiChu)
-VALUES('MP01',N'Dầu LOreal Tinh Dầu Hoa Tự Nhiên','L01',CAST(250000 AS Decimal(18, 0)),CAST(300000 AS Decimal(18, 0)),5, N'/Images/sp4.png', N'Dầu LOreal Tinh Dầu Hoa Tự Nhiên',N'Phù hợp với da dầu'),
-      ('MP02',N'Nước Xịt Dưỡng Tóc Double Rich','L01',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),100, N'/Images/sp5.jpg',N'Kem chống nắng Laroche Posay',N'Phù hợp với da nhạy cảm'),
-	  ('MP03',N'Tinh Dầu Dưỡng Tóc Raip Bóng Mượt','L01',CAST(350000 AS Decimal(18, 0)),CAST(500000 AS Decimal(18, 0)),80,N'/Images/sp2.png',N'Tinh Dầu Dưỡng Tóc Raip Bóng Mượt',N'Phù hợp với mọi loại da'),
-	  ('MP04',N'Dưỡng Tóc Tinh Dầu Bưởi Pomelo Shampoo','L01',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),100,N'/Images/sp3.jpg',N'Kem dưỡng ẩm VitaminE',N'Phù hợp với mọi loại da'),
+VALUES('MP01',N'Dầu LOreal Tinh Dầu Hoa Tự Nhiên','L01',CAST(250000 AS Decimal(18, 0)),CAST(300000 AS Decimal(18, 0)),5, N'Upload/sp4.png', N'Dầu LOreal Tinh Dầu Hoa Tự Nhiên',N'Phù hợp với da dầu'),
+      ('MP02',N'Nước Xịt Dưỡng Tóc Double Rich','L01',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),100, N'Upload/sp5.jpg',N'Kem chống nắng Laroche Posay',N'Phù hợp với da nhạy cảm'),
+	  ('MP03',N'Tinh Dầu Dưỡng Tóc Raip Bóng Mượt','L01',CAST(350000 AS Decimal(18, 0)),CAST(500000 AS Decimal(18, 0)),80,N'Upload/sp2.png',N'Tinh Dầu Dưỡng Tóc Raip Bóng Mượt',N'Phù hợp với mọi loại da'),
+	  ('MP04',N'Dưỡng Tóc Tinh Dầu Bưởi Pomelo Shampoo','L01',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),100,N'Upload/sp3.jpg',N'Kem dưỡng ẩm VitaminE',N'Phù hợp với mọi loại da'),
 
-	  ('MP05',N'Dầu Gội Tsubaki Phục Hồi','L02',CAST(450000 AS Decimal(18, 0)),CAST(500000 AS Decimal(18, 0)),50,N'/Images/daugoi1.jpg',N'Ngăn rụng tóc',N'Mượt tóc'),
-	  ('MP06',N'Bộ Gội Xả TRESemmé Keratin Vào Nếp','L02',CAST(300000 AS Decimal(18, 0)),CAST(370000 AS Decimal(18, 0)),150,N'/Images/daugoi2.jpg',N'Ngăn rụng tóc',N'Mượt tóc'),
-	  ('MP07',N'Dầu Gội OGX Biotin & Collagen','L02',CAST(250000 AS Decimal(18, 0)),CAST(270000 AS Decimal(18, 0)),100,N'/Images/daugoi3.jpg',N'Dầu Gội OGX Biotin & Collagen',N'Mượt tóc'),
-	  ('MP08',N'Dầu Gội LOreal Paris Dưỡng Tóc','L02',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),280,N'/Images/daugoi4.jpg',N'Dầu Gội LOreal Paris',N'Mượt tóc'),
+	  ('MP05',N'Dầu Gội Tsubaki Phục Hồi','L02',CAST(450000 AS Decimal(18, 0)),CAST(500000 AS Decimal(18, 0)),50,N'Upload/daugoi1.jpg',N'Ngăn rụng tóc',N'Mượt tóc'),
+	  ('MP06',N'Bộ Gội Xả TRESemmé Keratin Vào Nếp','L02',CAST(300000 AS Decimal(18, 0)),CAST(370000 AS Decimal(18, 0)),150,N'Upload/daugoi2.jpg',N'Ngăn rụng tóc',N'Mượt tóc'),
+	  ('MP07',N'Dầu Gội OGX Biotin & Collagen','L02',CAST(250000 AS Decimal(18, 0)),CAST(270000 AS Decimal(18, 0)),100,N'Upload/daugoi3.jpg',N'Dầu Gội OGX Biotin & Collagen',N'Mượt tóc'),
+	  ('MP08',N'Dầu Gội LOreal Paris Dưỡng Tóc','L02',CAST(150000 AS Decimal(18, 0)),CAST(200000 AS Decimal(18, 0)),280,N'Upload/daugoi4.jpg',N'Dầu Gội LOreal Paris',N'Mượt tóc'),
 
-	  ('MP09',N'Serum Dưỡng Thể Vaseline Chống Nắng','L03',CAST(120000 AS Decimal(18, 0)),CAST(150000 AS Decimal(18, 0)), 500,N'/Images/dt1.png',N'Serum Dưỡng Thể Vaseline Chống Nắng',N'Phù hợp với mọi loại da'),
-	  ('MP10',N'Sữa Dưỡng Thể Nivea Sáng Da','L03',CAST(80000 AS Decimal(18, 0)),CAST(120000 AS Decimal(18, 0)), 500,N'/Images/dt2.png',N'Sữa Dưỡng Thể Nivea Sáng Da',N'Phù hợp với mọi loại da'),
-	  ('MP11',N'Sữa Dưỡng Thể Vaseline Dịu Mát','L03',CAST(100000 AS Decimal(18, 0)),CAST(160000 AS Decimal(18, 0)), 200,N'/Images/dt3.png',N'Sữa Dưỡng Thể Vaseline Dịu Mát',N'Phù hợp với da dầu'),
-	  ('MP12',N'Dầu Chăm Sóc Da Bio-Oil ','L03',CAST(300000 AS Decimal(18, 0)),CAST(350000 AS Decimal(18, 0)), 100,N'/Images/dt4.jpg',N'Dầu Chăm Sóc Da Bio-Oil ',N'Phù hợp với da khô'),
+	  ('MP09',N'Serum Dưỡng Thể Vaseline Chống Nắng','L03',CAST(120000 AS Decimal(18, 0)),CAST(150000 AS Decimal(18, 0)), 500,N'Upload/dt1.png',N'Serum Dưỡng Thể Vaseline Chống Nắng',N'Phù hợp với mọi loại da'),
+	  ('MP10',N'Sữa Dưỡng Thể Nivea Sáng Da','L03',CAST(80000 AS Decimal(18, 0)),CAST(120000 AS Decimal(18, 0)), 500,N'Upload/dt2.png',N'Sữa Dưỡng Thể Nivea Sáng Da',N'Phù hợp với mọi loại da'),
+	  ('MP11',N'Sữa Dưỡng Thể Vaseline Dịu Mát','L03',CAST(100000 AS Decimal(18, 0)),CAST(160000 AS Decimal(18, 0)), 200,N'Upload/dt3.png',N'Sữa Dưỡng Thể Vaseline Dịu Mát',N'Phù hợp với da dầu'),
+	  ('MP12',N'Dầu Chăm Sóc Da Bio-Oil ','L03',CAST(300000 AS Decimal(18, 0)),CAST(350000 AS Decimal(18, 0)), 100,N'Upload/dt4.jpg',N'Dầu Chăm Sóc Da Bio-Oil ',N'Phù hợp với da khô'),
 
-	  ('MP13',N'Toner hoa cúc','L04',CAST(220000 AS Decimal(18, 0)),CAST(250000 AS Decimal(18, 0)), 50,N'/Images/t1.png',N'Toner hoa cúc',N'Phù hợp với da khô'),
-	  ('MP14',N'Toner Kiel','L04',CAST(320000 AS Decimal(18, 0)),CAST(400000 AS Decimal(18, 0)), 50,N'/Images/t2.png',N'Toner Kiel',N'Phù hợp với mọi loại da'),
-	  ('MP15',N'Toner Laroche Posay','L04',CAST(250000 AS Decimal(18, 0)),CAST(300000 AS Decimal(18, 0)), 100,N'/Images/t3.png',N'Toner Laroche Posay',N'Phù hợp với người trên 12 tuổi'),
-	  ('MP16',N'Nước hoa hồng Klair','L04',CAST(400000 AS Decimal(18, 0)),CAST(450000 AS Decimal(18, 0)), 30,N'/Images/t4.jpg',N'Nước hoa hồng Klair',N'Phù hợp với người trên 12 tuổi'),
+	  ('MP13',N'Toner hoa cúc','L04',CAST(220000 AS Decimal(18, 0)),CAST(250000 AS Decimal(18, 0)), 50,N'Upload/t1.png',N'Toner hoa cúc',N'Phù hợp với da khô'),
+	  ('MP14',N'Toner Kiel','L04',CAST(320000 AS Decimal(18, 0)),CAST(400000 AS Decimal(18, 0)), 50,N'Upload/t2.png',N'Toner Kiel',N'Phù hợp với mọi loại da'),
+	  ('MP15',N'Toner Laroche Posay','L04',CAST(250000 AS Decimal(18, 0)),CAST(300000 AS Decimal(18, 0)), 100,N'Upload/t3.png',N'Toner Laroche Posay',N'Phù hợp với người trên 12 tuổi'),
+	  ('MP16',N'Nước hoa hồng Klair','L04',CAST(400000 AS Decimal(18, 0)),CAST(450000 AS Decimal(18, 0)), 30,N'Upload/t4.jpg',N'Nước hoa hồng Klair',N'Phù hợp với người trên 12 tuổi'),
 
-	  ('MP17',N'Nước hoa nữ MAC Jacob','L05',CAST(700000 AS Decimal(18, 0)),CAST(750000 AS Decimal(18, 0)), 100,N'/Images/nh1.jpg',N'Nước hoa nữ MAC Jacob',N'Hương nữ'),
-	  ('MP18',N'Nước hoa nữ Caloria','L05',CAST(620000 AS Decimal(18, 0)),CAST(8500000 AS Decimal(18, 0)), 50,N'/Images/nh2.png',N'Nước hoa nữ Caloria',N'Hương nữ'),
-	  ('MP19',N'Nước hoa nữ Caloria','L05',CAST(820000 AS Decimal(18, 0)),CAST(900000 AS Decimal(18, 0)), 100,N'/Images/nh3.jpg',N'Nước hoa nữ Caloria',N'Hương nữ'),
-	  ('MP20',N'Nước hoa nam Paco','L05',CAST(900000 AS Decimal(18, 0)),CAST(990000 AS Decimal(18, 0)), 50,N'/Images/nh4.jpg',N'Nước hoa nam Paco',N'Hương nam'),
+	  ('MP17',N'Nước hoa nữ MAC Jacob','L05',CAST(700000 AS Decimal(18, 0)),CAST(750000 AS Decimal(18, 0)), 100,N'Upload/nh1.jpg',N'Nước hoa nữ MAC Jacob',N'Hương nữ'),
+	  ('MP18',N'Nước hoa nữ Caloria','L05',CAST(620000 AS Decimal(18, 0)),CAST(8500000 AS Decimal(18, 0)), 50,N'Upload/nh2.png',N'Nước hoa nữ Caloria',N'Hương nữ'),
+	  ('MP19',N'Nước hoa nữ Caloria','L05',CAST(820000 AS Decimal(18, 0)),CAST(900000 AS Decimal(18, 0)), 100,N'Upload/nh3.jpg',N'Nước hoa nữ Caloria',N'Hương nữ'),
+	  ('MP20',N'Nước hoa nam Paco','L05',CAST(900000 AS Decimal(18, 0)),CAST(990000 AS Decimal(18, 0)), 50,N'Upload/nh4.jpg',N'Nước hoa nam Paco',N'Hương nam'),
 
-	  ('MP21',N'Son Background A12','L06',CAST(220000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 250,N'/Images/sm1.jpg',N'Son Background A12',N'Thơm và mềm môi'),
-	  ('MP22',N'Son Kem lì 3CE','L06',CAST(320000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)), 100,N'/Images/sm2.jpg',N'Son Kem lì 3CE',N'Thơm và mềm môi'),
-	  ('MP23',N'Son Bóng Mac','L06',CAST(220000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 50,N'/Images/sm3.png',N'Son Bóng Mac',N'Thơm và mềm môi'),
-	  ('MP24',N'Son Bóng Maybeline','L06',CAST(350000 AS Decimal(18, 0)),CAST(4500000 AS Decimal(18, 0)),50,N'/Images/sm4.jpg',N'Son Bóng Maybeline',N'Thơm và mềm môi'),
+	  ('MP21',N'Son Background A12','L06',CAST(220000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 250,N'Upload/sm1.jpg',N'Son Background A12',N'Thơm và mềm môi'),
+	  ('MP22',N'Son Kem lì 3CE','L06',CAST(320000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)), 100,N'Upload/sm2.jpg',N'Son Kem lì 3CE',N'Thơm và mềm môi'),
+	  ('MP23',N'Son Bóng Mac','L06',CAST(220000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 50,N'Upload/sm3.png',N'Son Bóng Mac',N'Thơm và mềm môi'),
+	  ('MP24',N'Son Bóng Maybeline','L06',CAST(350000 AS Decimal(18, 0)),CAST(4500000 AS Decimal(18, 0)),50,N'Upload/sm4.jpg',N'Son Bóng Maybeline',N'Thơm và mềm môi'),
 
-	  ('MP25',N'Phấn Nước Lanegie Căng','L07',CAST(520000 AS Decimal(18, 0)),CAST(600000 AS Decimal(18, 0)), 100,N'/Images/m1.png',N'Phấn Nước Lanegie Căng',N'Phù hợp với mọi loại da'),
-	  ('MP26',N'Phấn Nước Lanegie Mịn','L07',CAST(550000 AS Decimal(18, 0)),CAST(6500000 AS Decimal(18, 0)), 30,N'/Images/m2.png',N'Phấn Nước Lanegie Mịn',N'Phù hợp với mọi loại da'),
-	  ('MP27',N'Kem Nền Maybeline','L07',CAST(160000 AS Decimal(18, 0)),CAST(2000000 AS Decimal(18, 0)), 100,N'/Images/m3.jpg',N'Kem Nền Maybeline',N'Phù hợp với mọi loại da'),
-	  ('MP28',N'Phấn Nước Kiềm Dầu Gar','L07',CAST(330000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)), 50,N'/Images/m4.png',N'Phấn Nước Kiềm Dầu Gar',N'Phù hợp với mọi loại da'),
+	  ('MP25',N'Phấn Nước Lanegie Căng','L07',CAST(520000 AS Decimal(18, 0)),CAST(600000 AS Decimal(18, 0)), 100,N'Upload/m1.png',N'Phấn Nước Lanegie Căng',N'Phù hợp với mọi loại da'),
+	  ('MP26',N'Phấn Nước Lanegie Mịn','L07',CAST(550000 AS Decimal(18, 0)),CAST(6500000 AS Decimal(18, 0)), 30,N'Upload/m2.png',N'Phấn Nước Lanegie Mịn',N'Phù hợp với mọi loại da'),
+	  ('MP27',N'Kem Nền Maybeline','L07',CAST(160000 AS Decimal(18, 0)),CAST(2000000 AS Decimal(18, 0)), 100,N'Upload/m3.jpg',N'Kem Nền Maybeline',N'Phù hợp với mọi loại da'),
+	  ('MP28',N'Phấn Nước Kiềm Dầu Gar','L07',CAST(330000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)), 50,N'Upload/m4.png',N'Phấn Nước Kiềm Dầu Gar',N'Phù hợp với mọi loại da'),
 
-	  ('MP29',N'Kem Chống Nắng Laroche Posay','L08',CAST(320000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)), 100,N'/Images/kcn1.png',N'Kem Chống Nắng Laroche Posay',N'Phù hợp với da khô'),
-	  ('MP30',N'Kem Chống Nắng Centella 1004','L08',CAST(190000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 50,N'/Images/kcn2.png',N'Kem Chống Nắng Centella 1004',N'Phù hợp với da dầu'),
+	  ('MP29',N'Kem Chống Nắng Laroche Posay','L08',CAST(320000 AS Decimal(18, 0)),CAST(3500000 AS Decimal(18, 0)), 100,N'Upload/kcn1.png',N'Kem Chống Nắng Laroche Posay',N'Phù hợp với da khô'),
+	  ('MP30',N'Kem Chống Nắng Centella 1004','L08',CAST(190000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 50,N'Upload/kcn2.png',N'Kem Chống Nắng Centella 1004',N'Phù hợp với da dầu'),
 	   
-	  ('MP31',N'Sữa Rửa Mặt SVR','L09',CAST(350000 AS Decimal(18, 0)),CAST(4200000 AS Decimal(18, 0)), 100,N'/Images/s1.png',N'Sữa Rửa Mặt SVR',N'Phù hợp với da khô'),
-	  ('MP32',N'Sữa Rửa Mặt Bí Đao Cocoon','L09',CAST(160000 AS Decimal(18, 0)),CAST(2000000 AS Decimal(18, 0)), 50,N'/Images/s2.png',N'Sữa Rửa Mặt Bí Đao Cocoon',N'Phù hợp với da dầu'),
+	  ('MP31',N'Sữa Rửa Mặt SVR','L09',CAST(350000 AS Decimal(18, 0)),CAST(4200000 AS Decimal(18, 0)), 100,N'Upload/s1.png',N'Sữa Rửa Mặt SVR',N'Phù hợp với da khô'),
+	  ('MP32',N'Sữa Rửa Mặt Bí Đao Cocoon','L09',CAST(160000 AS Decimal(18, 0)),CAST(2000000 AS Decimal(18, 0)), 50,N'Upload/s2.png',N'Sữa Rửa Mặt Bí Đao Cocoon',N'Phù hợp với da dầu'),
 
-	  ('MP33',N'Tẩy Trang Biodema','L10',CAST(370000 AS Decimal(18, 0)),CAST(4500000 AS Decimal(18, 0)), 100,N'/Images/tt1.jpg',N'Tẩy Trang Biodema',N'Phù hợp với mọi loại dai'),
-	  ('MP34',N'Tẩy Trang Garnie','L10',CAST(130000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 50,N'/Images/tt2.png',N'Tẩy Trang Garnie',N'Phù hợp với mọi loại da')
-
+	  ('MP33',N'Tẩy Trang Biodema','L10',CAST(370000 AS Decimal(18, 0)),CAST(4500000 AS Decimal(18, 0)), 100,N'Upload/tt1.jpg',N'Tẩy Trang Biodema',N'Phù hợp với mọi loại dai'),
+	  ('MP34',N'Tẩy Trang Garnie','L10',CAST(130000 AS Decimal(18, 0)),CAST(2500000 AS Decimal(18, 0)), 50,N'Upload/tt2.png',N'Tẩy Trang Garnie',N'Phù hợp với mọi loại da')
+SELECT * FROM MyPham
+SELECT * FROM HoaDonBan
+SELECT * FROM ChiTietHoaDonBan
 
 --ChiTietMyPham(MaChiTietMP, MaMP, MaNCC, MoTa, ChiTiet)
 INSERT INTO ChiTietMyPham(MaChiTietMyPham, MaMP, MaNCC, MoTa, ChiTiet)
@@ -345,33 +347,34 @@ VALUES('CTHDN01','HDN01','MP01',N'Kem chống nắng Cetella',20, 250000,4500000
 	  ('CTHDN09','HDN09','MP19',N'Vaseline PX50',2, 200000,400000),
 	  ('CTHDN10','HDN10','MP05',N'Sữa rửa mặt SVR',10, 400000,4000000)
 
---HoaDonBan(MaHDB, NgayBan, MaTaiKhoan, IDKH, HoTenKH, TongTien)
-INSERT INTO HoaDonBan(MaHDB, NgayBan, MaTaiKhoan, IDKH, HoTenKH, TongTien)
-VALUES('HDB01','2023-04-18',9,'KH02',N'Nguyễn Văn Quỳnh',500000),
-      ('HDB02','2023-05-20',9,'KH01',N'Trần Thị Liễu',500000),
-	  ('HDB03','2023-04-20',9,'KH03',N'Vũ Thị Minh',500000),
-	  ('HDB04','2023-05-07',9,'KH05',N'Trần Thanh Thuỷ',500000),
-	  ('HDB05','2023-04-24',10,'KH07',N'Nguyễn Hoa Như',500000),
-	  ('HDB06','2023-04-18',10,'KH08',N'Đỗ Nhật Dương',500000),
-      ('HDB07','2023-05-20',10,'KH09',N'Trịnh Thị Duyên',500000),
-	  ('HDB08','2023-04-20',9,'KH10',N'Hà Diệp Hoa',500000),
-	  ('HDB09','2023-05-07',10,'KH03',N'Vũ Thị Minh',500000),
-	  ('HDB10','2023-04-24',9,'KH06',N'Trần Hồng Anh',500000)
+--HoaDonBan(MaHDB, HoTenKH, SDTKH, DiaChiKH, TrangThai, NgayTao, NgayDuyet, TongTien, TGGiaoHang)
+INSERT INTO HoaDonBan(HoTenKH, SDTKH, DiaChiKH, TrangThai, NgayTao, NgayDuyet, TongTien, TGGiaoHang)
+VALUES(N'Nguyễn Văn Quỳnh','0988563869',N'Mê Linh, Hà Nội',1,'2023-04-18','2023-04-20', 500000, '2023-04-22'),
+      (N'Trần Thị Liễu','0987567888',N'Yên Mỹ, Hưng Yên',2,'2023-05-20','2023-05-21', 600000,'2023-05-22'),
+	  (N'Vũ Thị Minh','0945567123',N'Cẩm Giàng, Hải Dương',1,'2023-04-21','2023-04-23',700000,'2023-04-25'),
+	  (N'Trần Thanh Thuỷ','0353831279',N'Phù Cừ, Hưng Yên',1,'2023-05-07','2023-05-08',800000,'2023-05-09'),
+	  (N'Nguyễn Hoa Như','0958563869',N'Mê Linh, Hà Nội',2,'2023-06-24','2023-06-25',200000,'2023-06-26'),
+	  (N'Đỗ Nhật Dương','0965567123',N'Nam Sách, Hải Dương',1,'2023-07-18','2023-07-19',300000,'2023-07-20'),
+      (N'Trịnh Thị Duyên','0353555677',N'Kim Động, Hưng Yên',2,'2023-05-20','2023-05-21',500000,'2023-05-22'),
+	  (N'Hà Diệp Hoa','0353831279',N'Vân Đồn, Quảng Ninh',1,'2023-06-20','2023-06-22',900000,'2023-06-24'),
+	  (N'Vũ Thị Minh','0945567123',N'Cẩm Giàng, Hải Dương',2,'2023-05-07','2023-05-08',1000000,'2023-05-08'),
+	  (N'Trần Hồng Anh','0387567888',N'Đống Đa, Hà Nội',1,'2023-08-15','2023-08-15',500000,'2023-08-16')
 
---ChiTietHoaDonBan(MaMP, TenMP, SLBan, DGBan, GiamGia, ThanhTien)
-INSERT INTO ChiTietHoaDonBan(MaCTHDB, MaHDB, MaMP, TenMP, SLBan, DGBan, ThanhTien)
-VALUES('CTHDB01','HDB01','MP01',N'Kem chống nắng Cetella',10, 350000,3500000),
-      ('CTHDB02','HDB02','MP03',N'Kem dưỡng ẩm Klieh',10, 400000,4000000),
-	  ('CTHDB03','HDB03','MP06',N'Sữa rửa mặt Cerave',10, 450000,4500000),
-	  ('CTHDB04','HDB04','MP09',N'Mask Whitening',20, 25000,450000),
-	  ('CTHDB05','HDB05','MP15',N'Tinh dầu bưởi Cococoon',30, 250000,7500000),
-	  ('CTHDB06','HDB06','MP22',N'Eyeliner maybeline',10, 200000,2000000),
-      ('CTHDB07','HDB07','MP25',N'Body mist Victoria ',20, 400000,8000000),
-	  ('CTHDB08','HDB08','MP26',N'Sữa tắm Terosi',20, 250000,5000000),
-	  ('CTHDB09','HDB09','MP19',N'Vaseline PX50',2, 250000,500000),
-	  ('CTHDB10','HDB10','MP05',N'Sữa rửa mặt SVR',10, 450000,4500000)
 
-SELECT * FRom MyPham
+--ChiTietHoaDonBan(MaMP, SLBan, DGBan, GiamGia, ThanhTien)
+INSERT INTO ChiTietHoaDonBan(MaHDB, MaMP, SLBan, TongTien)
+VALUES(1,'MP01',10,500000),
+      (2,'MP03',10,6000000),
+	  (3,'MP06',10,700000),
+	  (4,'MP09',20,800000),
+	  (5,'MP15',30,200000),
+	  (6,'MP22',20,300000),
+      (7,'MP25',50,500000),
+	  (8,'MP26',20,900000),
+	  (9,'MP19',5,1000000),
+	  (10,'MP05',10,500000)
+
+SELECT * FRom ChiTietHoaDonBan
 -------------USER(Tài khoản)---------------------------
 ----------------------LOGIN---------------------
 CREATE PROCEDURE sp_login(@taikhoan nvarchar(20), @matkhau nvarchar(20))
@@ -1055,6 +1058,7 @@ GO
 SELECT * FROM KhachHang
 
 -----------------------------NHÀ CUNG CẤP---------------------
+EXEC getnhaccbyid 'NCC01'
 ------------------GET BY ID--------------------
 create PROCEDURE getnhaccbyid(@id Nvarchar(10))
 AS
@@ -1320,8 +1324,7 @@ END;
 
 SELECT * FROM MyPham
 
-
-exec [sp_mypham_search]  @page_index = 1 , @page_size = 1 , @ten_mp = N'Kem chống nắng Cetella' , @mota_mp = N'Kem chống nắng Cetella'
+exec [sp_mypham_search]  @page_index = 1 , @page_size = 1 , @ten_mp = N'Dầu LOreal Tinh Dầu Hoa Tự Nhiên' , @mota_mp = N'Dầu LOreal Tinh Dầu Hoa Tự Nhiên'
 -------------------------Tìm kiếm----------------------------
 CREATE PROCEDURE [dbo].[sp_mypham_search] (@page_index  INT, 
                                        @page_size   INT,
@@ -1568,7 +1571,7 @@ AS
 							  n.MoTa	
                         INTO #Results2
                         FROM LoaiMyPham AS n
-					     WHERE  (@tenloai_mp = '' Or n.TenLoaiMP like N'%'+@tenloai_mp+'%') and	
+					    WHERE  (@tenloai_mp = '' Or n.TenLoaiMP like N'%'+@tenloai_mp+'%') and	
 						(@anh_dai_dien = '' Or n.AnhDaiDien like N'%'+@anh_dai_dien+'%') and						
 						(@motaloai_mp = '' Or n.MoTa like N'%'+@motaloai_mp+'%');                  
                         SELECT @RecordCount = COUNT(*)
@@ -1582,45 +1585,7 @@ AS
 GO
 
 
-----------------Hoá đơn bán------------------------
----------------------GET BY ID------------------
-create PROCEDURE gethoadonbanbyid(@id Nvarchar(10))
-AS
-BEGIN
-SELECT*from HoaDonBan where MaHDB = @id 
-END;
 
-------------------GETALL-------------------
-exec sp_hoadonban_get_all
-drop proc sp_hoadonban_get_all
-
-CREATE PROC sp_hoadonban_get_all
-AS
-Begin
-	SELECT h.*, 
-        (
-            SELECT c.*
-            FROM ChiTietHoaDonBan AS c
-            WHERE h.MaHDB = c.MaHDB FOR JSON PATH --chuyển đổi kết quả thành định dạng JSON
-        ) AS list_json_chitiethoadonban --Trả về json giúp dễ dàng tích hợp với các ứng dụng như website
-        FROM HoaDonBan AS h
-End;
-
----------------------THÊM---------------------------
-create PROCEDURE sp_hoadonban_create(
-@MaHDB Nvarchar(10),
-@NgayBan Date ,
-@MaTaiKhoan INT,
-@IDKH Nvarchar(10),
-@HoTenKH Nvarchar(30),
-@TongTien float
-)
-AS
-    BEGIN
-       insert into HoaDonBan(MaHDB,NgayBan, MaTaiKhoan, IDKH, HoTenKH, TongTien)
-	   values(@MaHDB, @NgayBan, @MaTaiKhoan, @IDKH, @HoTenKH, @TongTien);
-    END;
-GO
 
 ----------------Hoá đơn nhập------------------------
 ---------------------GET BY ID------------------
@@ -1734,22 +1699,211 @@ AS
     END;
 GO
 
-----------------CT Hoá đơn bán------------------------
+
+SELECT * FROM HoaDonBan
+----------------Hoá đơn bán------------------------
+EXEC gethoadonbanbyid 54
 ---------------------GET BY ID------------------
-create PROCEDURE getcthdbbyid(@id Nvarchar(10)) 
+create PROCEDURE gethoadonbanbyid(@id INT)
+AS
+    BEGIN
+        SELECT h.*, 
+        (
+            SELECT c.*
+            FROM ChiTietHoaDonBan AS c
+            WHERE h.MaHDB = c.MaHDB FOR JSON PATH
+        ) AS list_json_chitiethoadonban
+        FROM HoaDonBan AS h
+        WHERE  h.MaHDB = @id;
+    END;
+GO
+
+------------------GETALL-------------------
+exec sp_hoadonban_get_all 
+
+CREATE PROC sp_hoadonban_get_all
+AS
+Begin
+	SELECT h.*, 
+        (
+            SELECT c.*
+            FROM ChiTietHoaDonBan AS c
+            WHERE h.MaHDB = c.MaHDB FOR JSON PATH --chuyển đổi kết quả thành định dạng JSON
+        ) AS list_json_chitiethoadonban --Trả về json giúp dễ dàng tích hợp với các ứng dụng như website
+        FROM HoaDonBan AS h
+End;
+SELECT * FROM MyPham
+SELECT * FROM HoaDonBan
+SELECT * FROM ChiTietHoaDonBan
+DROP PROCEDURE [dbo].[sp_hoadon_create]
+-------------- thêm hóa đơn bán ------------------------
+EXEC sp_hoadon_create
+     @HoTenKH = N'khách mới 6',
+     @SDTKH = N'0123456789',
+     @DiaChiKH = N'HY',
+     @TrangThai = 1,
+     @list_json_chitiethoadon = N'[{"maMP": "MP03", "sLBan": 4, "tongTien": 150000, "ghiChu": 1}, {"maMP": "MP04", "sLBan": 5, "tongTien": 250000, "ghiChu": 1}]';
+
+drop proc sp_hoadonban_create
+select * from HoaDonBan
+select * from ChiTietHoaDonBan
+
+GO
+create PROCEDURE [dbo].[sp_hoadonban_create]
+(	@HoTenKH              NVARCHAR(50), 
+    @SDTKH                NVARCHAR(10),
+    @DiaChiKH             NVARCHAR(250), 
+    @TrangThai          BIT,
+    @list_json_chitiethoadon NVARCHAR(MAX)
+)
+AS
+    BEGIN
+		DECLARE @MaHDB INT;
+        INSERT INTO HoaDonBan(HoTenKH, SDTKH, DiaChiKH, TrangThai, NgayTao, NgayDuyet, TongTien, TGGiaoHang)
+		VALUES(@HoTenKH, @SDTKH, @DiaChiKH, @TrangThai, GETDATE(), NULL, NULL, NULL);
+
+				SET @MaHDB = (SELECT SCOPE_IDENTITY());
+                IF(@list_json_chitiethoadon IS NOT NULL) 
+		BEGIN
+			 -- Insert data to temp table 
+		   SELECT
+			  JSON_VALUE(p.value, '$.maCTHDB') as maCTHDB,
+			  JSON_VALUE(p.value, '$.maHDB') as maHDB,
+			  JSON_VALUE(p.value, '$.maMP') as maMP,
+			  JSON_VALUE(p.value, '$.sLBan') as sLBan,
+			  JSON_VALUE(p.value, '$.tongTien') as tongTien,
+			  JSON_VALUE(p.value, '$.ghiChu') AS ghiChu 
+			  INTO #Results 
+		   FROM OPENJSON(@list_json_chitiethoadon) AS p;
+
+    -- Thực hiện thêm, sửa và xóa chi tiết hóa đơn dựa trên status
+    -- Thêm chi tiết hóa đơn (Status = 1)
+    INSERT INTO ChiTietHoaDonBan(MaHDB, MaMP, SLBan, TongTien)
+    SELECT
+        @MaHDB,
+        #Results.maMP,
+        #Results.sLBan,
+        #Results.tongTien
+    FROM #Results
+    WHERE #Results.ghiChu = 1;
+
+		-- Cập nhật tổng tiền vào hóa đơn
+        UPDATE HoaDonBan
+         SET TongTien = (SELECT SUM(TongTien) FROM ChiTietHoaDonBan WHERE MaHDB = @MaHDB)
+         WHERE MaHDB = @MaHDB;
+    END;
+ END;
+
+
+-- PROC sửa thông tin hóa đơn tích hợp thêm sửa xóa chi tiết hóa đơn
+EXEC sp_hoadonban_update
+	@MaHDB = 55,
+     @HoTenKH = N'khách mới 6',
+     @SDTKH = N'0123456789',
+     @DiaChiKH = N'HY',
+     @TrangThai = 1,
+     @list_json_chitiethoadonban = N'[{"maMP": "MP06", "slBan": 5, "tongTien": 140000, "ghiChu": 1}, 
+									{"maCTHDB": "23", "slBan": 5, "tongTien": 250000, "ghiChu": 2},
+									{"maCTHDB": "24", "slBan": 10, "tongTien": 100000, "ghiChu": 2}]';
+
+select * from HoaDonBan
+select * from ChiTietHoaDonBan
+drop proc sp_hoadonban_update
+CREATE PROCEDURE sp_hoadonban_update
+(
+    @MaHDB              INT,
+    @HoTenKH            NVARCHAR(30), 
+    @SDTKH              NCHAR(10),
+    @DiaChiKH           NVARCHAR(30),
+    @TrangThai          BIT,
+    @list_json_chitiethoadonban NVARCHAR(MAX)
+)
 AS
 BEGIN
-SELECT*from ChiTietHoaDonBan where MaCTHDB = @id 
+	UPDATE HoaDonBan
+	SET HoTenKH  = @HoTenKH ,
+		SDTKH = @SDTKH,
+		DiaChiKH = @DiaChiKH,
+		TrangThai = @TrangThai
+	WHERE MaHDB = @MaHDB;
+    IF (@list_json_chitiethoadonban IS NOT NULL) 
+    BEGIN
+        -- Insert data to temp table 
+        SELECT
+            JSON_VALUE(p.value, '$.maCTHDB') as maCTHDB,
+            JSON_VALUE(p.value, '$.maHDB') as maHDB,
+            JSON_VALUE(p.value, '$.maMP') as maMP,
+            JSON_VALUE(p.value, '$.slBan') as slBan,
+            JSON_VALUE(p.value, '$.tongTien') as tongTien,
+            JSON_VALUE(p.value, '$.ghiChu') AS ghiChu 
+        INTO #Results 
+        FROM OPENJSON(@list_json_chitiethoadonban) AS p;
+
+        -- Thực hiện thêm, sửa và xóa chi tiết hóa đơn dựa trên status
+        -- Thêm chi tiết hóa đơn (Status = 1)
+        INSERT INTO ChiTietHoaDonBan (MaHDB, MaMP, SLBan, TongTien)
+        SELECT @MaHDB, #Results.MaMP, #Results.SLBan, #Results.TongTien
+        FROM #Results WHERE ghiChu = 1;
+
+        -- Sửa chi tiết hóa đơn (Status = 2)
+        UPDATE ChiTietHoaDonBan
+        SET
+            SLBan = #Results.SLBan,
+            TongTien = #Results.TongTien
+        FROM #Results
+        WHERE ChiTietHoaDonBan.MaCTHDB = #Results.MaCTHDB
+            AND #Results.ghiChu = 2;
+
+        -- Xóa chi tiết hóa đơn (Status = 3)
+        DELETE FROM ChiTietHoaDonBan
+        WHERE MaCTHDB IN (SELECT MaCTHDB FROM #Results WHERE #Results.ghiChu = 3);
+
+        -- Cập nhật thông tin hóa đơn
+        UPDATE HoaDonBan
+        SET
+            HoTenKH = @HoTenKH,
+            DiaChiKH = @DiaChiKH,
+            SDTKH = @SDTKH,
+            TrangThai = @TrangThai,
+            TongTien = (SELECT SUM(TongTien) FROM ChiTietHoaDonBan WHERE MaHDB = @MaHDB)
+        WHERE MaHDB = @MaHDB;
+        DROP TABLE #Results;
+    END;
 END;
 
-SELECT * FROM ChiTietHoaDonNhap
+EXEC sp_hoadonban_delete @MaHDB = 'HDB01';
+-- PROC xóa hóa đơn và chi tiết hóa đơn-------------------------
+CREATE PROCEDURE sp_hoadonban_delete
+    @MaHDB Nvarchar(10)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
 
--------------------------Tìm kiếm----------------------------
-create PROCEDURE sp_cthdb_search (@page_index INT, 
-                                  @page_size INT,
-								  @ma_hd Nvarchar(10),
-								  @ma_mp Nvarchar(10)
-								  )
+        DELETE FROM ChiTietHoaDonBan WHERE MaHDB = @MaHDB;
+        DELETE FROM HoaDonBan WHERE MaHDB = @MaHDB;
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK;
+        PRINT ERROR_MESSAGE();
+    END CATCH;
+END;
+
+SELECT * FROM HoaDonBan
+
+--------------- proc tìm kiếm hóa đơn bán---------------------
+select * from HoaDonBan
+exec sp_hoadonban_search 1, 10, 44, N''
+exec sp_hoadonban_search 1, 10, 0, N'Nguyễn'
+drop proc sp_hoadonban_search
+create PROCEDURE sp_hoadonban_search (@page_index  INT, 
+                                      @page_size   INT,
+								      @ma_hdb int,
+								      @ten_kh nvarchar(30)
+								      )
 AS
     BEGIN
         DECLARE @RecordCount BIGINT;
@@ -1757,19 +1911,25 @@ AS
             BEGIN
 						SET NOCOUNT ON;
                         SELECT(ROW_NUMBER() OVER(
-                              ORDER BY MaCTHDB ASC)) AS RowNumber, 
-							  cthdb.MaCTHDB,
-							  cthdb.MaHDB,
-							  cthdb.MaMP,
-							  cthdb.TenMP,
-							  cthdb.SLBan,
-							  cthdb.DGBan,
-							  cthdb.ThanhTien                         
+                              ORDER BY MaHDB ASC)) AS RowNumber,
+							  hdb.*,
+							   (
+									SELECT 
+  				                        cthdb.*,
+										mp.MaLoaiMP,
+										mp.TenMP as Tenmp,
+										mp.AnhDaiDien,
+										mp.GiaMoi,
+										mp.GiaCu
+									FROM ChiTietHoaDonBan AS cthdb
+									INNER JOIN MyPham AS mp ON mp.MaMP = cthdb.MaMP
+									WHERE cthdb.MaHDB = hdb.MaHDB and cthdb.MaMP = mp.MaMP
+									FOR JSON PATH
+								) AS list_json_chitiethoadonban
                         INTO #Results1
-                        FROM ChiTietHoaDonBan AS cthdb
-						inner join MyPham mp on mp.MaMP = cthdb.MaMP
-					    WHERE (@ma_hd = 0 OR cthdb.MaHDB = @ma_hd) and 
-						(@ma_mp = 0 OR cthdb.MaMP= @ma_mp)         
+                        FROM HoaDonBan AS hdb
+						WHERE (@ma_hdb = 0 OR hdb.MaHDB = @ma_hdb) and
+						(@ten_kh = '' Or hdb.HoTenKH like N'%'+@ten_kh+'%')         
                         SELECT @RecordCount = COUNT(*)
                         FROM #Results1;
                         SELECT *, 
@@ -1783,19 +1943,25 @@ AS
             BEGIN
 						SET NOCOUNT ON;
 						SELECT(ROW_NUMBER() OVER(
-                               ORDER BY MaCTHDB ASC)) AS RowNumber, 
-							  cthdb.MaCTHDB,
-							  cthdb.MaHDB,
-							  cthdb.MaMP,
-							  cthdb.TenMP,
-							  cthdb.SLBan,
-							  cthdb.DGBan,
-							  cthdb.ThanhTien     
+                              ORDER BY MaHDB ASC)) AS RowNumber,
+							   hdb.*,
+							   (
+									SELECT 
+  				                        cthdb.*,
+										mp.MaLoaiMP,
+										mp.TenMP AS TenMyPham,
+										mp.AnhDaiDien,
+										mp.GiaMoi,
+										mp.GiaCu
+									FROM ChiTietHoaDonBan AS cthdb
+									INNER JOIN MyPham AS mp ON mp.MaMP = cthdb.MaMP
+									WHERE cthdb.MaHDB = hdb.MaHDB and cthdb.MaMP = mp.MaMP
+									FOR JSON PATH
+								) AS list_json_chitiethoadonban
                         INTO #Results2
-                       FROM ChiTietHoaDonBan AS cthdb
-						inner join MyPham mp on mp.MaMP = cthdb.MaMP
-					    WHERE (@ma_hd = 0 OR cthdb.MaHDB = @ma_hd) and 
-						(@ma_mp = 0 OR cthdb.MaMP= @ma_mp)                   
+						FROM HoaDonBan AS hdb
+						WHERE (@ma_hdb = 0 OR hdb.MaHDB = @ma_hdb) and
+						(@ten_kh = '' Or hdb.HoTenKH like N'%'+@ten_kh+'%') 
                         SELECT @RecordCount = COUNT(*)
                         FROM #Results2;
                         SELECT *, 
@@ -1805,7 +1971,83 @@ AS
         END;
     END;
 GO
-SELECT * FROM ChiTietHoaDonBan
+
+----------------CT Hoá đơn bán------------------------
+---------------------GET BY ID------------------
+create PROCEDURE getcthdbbyid(@id int) 
+AS
+BEGIN
+SELECT*from ChiTietHoaDonBan where MaCTHDB = @id 
+END;
+
+
+DROP PROCEDURE sp_cthdb_search
+--ChiTietHoaDonBan(MaCTHDB, MaHDB, MaMP, TenMP, SLBan, TongTien)
+-------------------------Tìm kiếm----------------------------
+create PROCEDURE sp_cthdb_search (@page_index  INT, 
+                                  @page_size   INT,
+								  @ma_hdb INT,
+								  @ma_mp Nvarchar(10)
+								  )
+AS
+    BEGIN
+        DECLARE @RecordCount BIGINT;
+        IF(@page_size <> 0)
+            BEGIN
+						SET NOCOUNT ON;
+                        SELECT(ROW_NUMBER() OVER(
+                              ORDER BY MaCTHDB ASC)) AS RowNumber, 
+							  cthdn.MaCTHDN,
+                              cthdn.MaHoaDon,
+							  cthdn.MaSanPham,
+							  sp.TenSanPham,
+							  sp.AnhDaiDien,
+							  cthdn.SoLuong,
+							  cthdn.DonViTinh,
+							  cthdn.GiaNhap,
+							  cthdn.TongTien
+                        INTO #Results1
+                        FROM ChiTietHoaDonBan AS cthdn
+						inner join SanPham sp on sp.MaSanPham = cthdn.MaSanPham
+					    WHERE (@ma_hd = 0 OR cthdn.MaHoaDon = @ma_hd) and 
+						(@ma_sp = 0 OR cthdn.MaSanPham = @ma_sp)         
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results1;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results1
+                        WHERE ROWNUMBER BETWEEN(@page_index - 1) * @page_size + 1 AND(((@page_index - 1) * @page_size + 1) + @page_size) - 1
+                              OR @page_index = -1;
+                        DROP TABLE #Results1; 
+            END;
+            ELSE
+            BEGIN
+						SET NOCOUNT ON;
+						SELECT(ROW_NUMBER() OVER(
+                              ORDER BY MaCTHDN ASC)) AS RowNumber, 
+							  cthdn.MaCTHDN,
+                              cthdn.MaHoaDon,
+							  cthdn.MaSanPham,
+							  sp.TenSanPham,
+							  sp.AnhDaiDien,
+							  cthdn.SoLuong,
+							  cthdn.DonViTinh,
+							  cthdn.GiaNhap,
+							  cthdn.TongTien
+                        INTO #Results2
+                        FROM ChiTietHoaDonNhap AS cthdn
+						inner join SanPham sp on sp.MaSanPham = cthdn.MaSanPham
+					    WHERE (@ma_hd = 0 OR cthdn.MaHoaDon = @ma_hd) and 
+						(@ma_sp = 0 OR cthdn.MaSanPham = @ma_sp)                     
+                        SELECT @RecordCount = COUNT(*)
+                        FROM #Results2;
+                        SELECT *, 
+                               @RecordCount AS RecordCount
+                        FROM #Results2;                        
+                        DROP TABLE #Results1; 
+        END;
+    END;
+GO
 
 
 

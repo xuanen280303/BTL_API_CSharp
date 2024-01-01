@@ -18,7 +18,7 @@ namespace BLL
         {
             _hdb = hdb;
         }
-        public HoaDonBanModel GetHoaDonBanbyID(string id)
+        public getbyidHoaDonBanModel GetHoaDonBanbyID(int id)
         {
             return _hdb.GetHoaDonBanbyID(id);
         }
@@ -29,6 +29,18 @@ namespace BLL
         public bool Create(HoaDonBanModel model)
         {
             return _hdb.Create(model);
+        }
+        public bool Update(HoaDonBanModel model)
+        {
+            return _hdb.Update(model);
+        }
+        public bool Delete(string id)
+        {
+            return _hdb.Delete(id);
+        }
+        public List<HoaDonBanModel> SearchHDB(int pageIndex, int pageSize, out long total, int ma_hdb, string ten_kh)
+        {
+            return _hdb.SearchHDB(pageIndex, pageSize, out total, ma_hdb, ten_kh);
         }
     }
 }

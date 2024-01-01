@@ -12,13 +12,11 @@ namespace API_USER.Controllers
     public class KhachHangControllers : ControllerBase
     {
         private IKhachHangBusiness _khachHangBusiness;
-        private string _path;
-        private IWebHostEnvironment _env;
-        public KhachHangControllers(IKhachHangBusiness khachHangBusiness, IConfiguration configuration, IWebHostEnvironment env)
+
+        public KhachHangControllers(IKhachHangBusiness khachHangBusiness)
         {
             _khachHangBusiness = khachHangBusiness;
-            _path = configuration["AppSettings:PATH"];
-            _env = env;
+
         }
 
         [Route("get-khachhang-id/{id}")]

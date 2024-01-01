@@ -5,16 +5,16 @@ using DTO;
 
 namespace API_USER.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class BaiVietControllers : ControllerBase
     {
         private IBaiVietBusiness _baiVietBusiness;
-        private string _path;
-        private IWebHostEnvironment _env;
-        public BaiVietControllers(IBaiVietBusiness baiVietBusiness, IConfiguration configuration, IWebHostEnvironment env)
+
+        public BaiVietControllers(IBaiVietBusiness baiVietBusiness)
         {
             _baiVietBusiness = baiVietBusiness;
-            _path = configuration["AppSettings:PATH"];
-            _env = env;
+
         }
 
         [Route("get-baiviet-id/{id}")]

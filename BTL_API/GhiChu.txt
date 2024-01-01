@@ -98,4 +98,12 @@
 }
 
 
+-------------------TÌm kiếm HDB----------------
+{
+  "page": "1",
+  "pageSize": "5",
+  "ma_hdb": "HDB01",
+  "ten_kh": "Nguyễn Văn Quỳnh"
+}
+
 

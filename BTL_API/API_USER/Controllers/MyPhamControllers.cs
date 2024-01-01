@@ -12,13 +12,11 @@ namespace API_USER.Controllers
     public class MyPhamControllers : ControllerBase
     {
         private IMyPhamBusiness _myPhamBusiness;
-        private string _path;
-        private IWebHostEnvironment _env;
-        public MyPhamControllers(IMyPhamBusiness myPhamBusiness, IConfiguration configuration, IWebHostEnvironment env)
+
+        public MyPhamControllers(IMyPhamBusiness myPhamBusiness)
         {
             _myPhamBusiness = myPhamBusiness;
-            _path = configuration["AppSettings:PATH"];
-            _env = env;
+
         }
 
         [Route("get-mypham-id/{id}")]

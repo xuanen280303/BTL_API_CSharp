@@ -9,8 +9,12 @@ namespace DAL.Interfaces
 {
     public partial interface IHoaDonBanRepository
     {
-        HoaDonBanModel GetHoaDonBanbyID(string id);
+        getbyidHoaDonBanModel GetHoaDonBanbyID(int id);
         List<HoaDonBanModel> GetAll();
         bool Create(HoaDonBanModel model);
+        bool Update(HoaDonBanModel model);
+        bool Delete(string id);
+        public List<HoaDonBanModel> SearchHDB(int pageIndex, int pageSize, out long total, int ma_hdb, string ten_kh);
+        
     }
 }

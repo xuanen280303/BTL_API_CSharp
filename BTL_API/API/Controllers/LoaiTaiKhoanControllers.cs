@@ -2,10 +2,11 @@
 using BLL;
 using BLL.Interfaces;
 using DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_ADMIN.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LoaiTaiKhoanControllers : ControllerBase

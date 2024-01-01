@@ -1,0 +1,58 @@
+﻿{
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:57708"
+  },
+
+
+  "Routes": [
+
+
+    //ADMIN
+
+    {
+      "UpstreamPathTemplate": "/api/MyPham-Admin/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/MyPhamControllers/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5260
+        }
+      ]
+    },
+
+
+    //USER
+    {
+      "UpstreamPathTemplate": "/api/LoaiMP-User/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/LoaiMPControllers/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 50001
+        }
+      ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/MyPham-User/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/MyPhamControllers/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 50001
+        }
+      ]
+    }
+
+
+
+  ]
+
+  
+}
