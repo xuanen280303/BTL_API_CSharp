@@ -38,7 +38,7 @@ namespace BLL
         {
             return _hdb.Delete(id);
         }
-        public List<HoaDonBanModel> SearchHDB(int pageIndex, int pageSize, out long total, int ma_hdb, string ten_kh)
+        public List<SearchHDBModel> SearchHDB(int pageIndex, int pageSize, out long total, int ma_hdb, string ten_kh)
         {
             return _hdb.SearchHDB(pageIndex, pageSize, out total, ma_hdb, ten_kh);
         }

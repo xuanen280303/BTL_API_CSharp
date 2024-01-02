@@ -16,7 +16,6 @@ namespace DAL.Interfaces
         {
             _dbHelper = dbHelper;
         }
-
         public getbyidHoaDonBanModel GetHoaDonBanbyID(int id)
         {
             string msgError = "";
@@ -32,7 +31,6 @@ namespace DAL.Interfaces
                 throw ex;
             }
         }
-
         public List<HoaDonBanModel> GetAll()
         {
             string msgError = "";
@@ -115,7 +113,7 @@ namespace DAL.Interfaces
             }
         }
 
-        public List<HoaDonBanModel> SearchHDB(int pageIndex, int pageSize, out long total, int ma_hdb, string ten_kh)
+        public List<SearchHDBModel> SearchHDB(int pageIndex, int pageSize, out long total, int ma_hdb, string ten_kh)
         {
             string msgError = "";
             total = 0;
@@ -130,7 +128,7 @@ namespace DAL.Interfaces
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
-                return dt.ConvertTo<HoaDonBanModel>().ToList();
+                return dt.ConvertTo<SearchHDBModel> ().ToList();
             }
             catch (Exception ex)
             {

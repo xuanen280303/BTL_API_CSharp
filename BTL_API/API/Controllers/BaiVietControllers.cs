@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API_ADMIN.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BaiVietControllers : ControllerBase

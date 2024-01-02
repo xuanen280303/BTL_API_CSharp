@@ -14,6 +14,6 @@ namespace BLL.Interfaces
         bool Create(HoaDonBanModel model);
         bool Update(HoaDonBanModel model);
         bool Delete(string id);
-        public List<HoaDonBanModel> SearchHDB(int pageIndex, int pageSize, out long total, int ma_hdb, string ten_kh);
+        public List<SearchHDBModel> SearchHDB(int pageIndex, int pageSize, out long total, int ma_hdb, string ten_kh);
     }
 }

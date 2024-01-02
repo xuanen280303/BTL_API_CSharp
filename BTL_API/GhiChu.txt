@@ -1,3 +1,57 @@
+--------------Thêm hoá đơn bán-------------------
+{
+  "hoTenKH": "Nguyễn Văn A",
+  "sdtkh": "0123456789",
+  "diaChiKH": "Hà Nội",
+  "trangThai": true,
+  "list_json_chitiethoadonban": [
+    {
+      "maMP": "MP01",
+      "slBan": 5,
+      "tongTien": 10000,
+      "ghiChu": 1
+    },
+    {
+      "maMP": "MP02",
+      "slBan": 10,
+      "tongTien": 15000,
+      "ghiChu": 1
+    } 
+  ]
+}
+
+---------------------SỬA HDB-----------------
+{
+  "maHDB": 60,
+  "hoTenKH": "Nguyễn Văn Annnn",
+  "sdtkh": "0123456789",
+  "diaChiKH": "Hà Nội",
+  "trangThai": true,
+  "list_json_chitiethoadonban": [
+    {
+      "maCTHDB":33,
+      "maMP": "MP01",
+      "slBan": 5,
+      "tongTien": 10000,
+      "ghiChu": 2
+    }
+  ]
+}
+
+---------------TÌM KIẾM HDB------------------
+{
+  "page": "1",
+  "pageSize": "5",
+  "ma_hdb": 50
+}
+
+{
+  "page": "1",
+  "pageSize": "5",
+  "ten_kh":"Nguyễn"
+}
+
+
 -----------Thêm và sửa NHÂN VIÊN----------------
 {
   "maNV": "NV28",

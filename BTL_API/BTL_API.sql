@@ -1701,22 +1701,25 @@ GO
 
 
 SELECT * FROM HoaDonBan
-----------------Hoá đơn bán------------------------
-EXEC gethoadonbanbyid 54
+
+-----------------------------HOÁ ĐƠn bán----------------------------
+EXEC gethoadonbanbyid 55
 ---------------------GET BY ID------------------
-create PROCEDURE gethoadonbanbyid(@id INT)
+CREATE PROCEDURE gethoadonbanbyid(@id int)
 AS
     BEGIN
-        SELECT h.*, 
+        SELECT h.*,
         (
-            SELECT c.*
+            SELECT c.*, sp.TenMP
             FROM ChiTietHoaDonBan AS c
+			inner join MyPham sp on sp.MaMP = c.MaMP
             WHERE h.MaHDB = c.MaHDB FOR JSON PATH
         ) AS list_json_chitiethoadonban
         FROM HoaDonBan AS h
         WHERE  h.MaHDB = @id;
     END;
-GO
+
+	drop proc gethoadonbanbyid
 
 ------------------GETALL-------------------
 exec sp_hoadonban_get_all 
@@ -1738,23 +1741,23 @@ SELECT * FROM ChiTietHoaDonBan
 DROP PROCEDURE [dbo].[sp_hoadon_create]
 -------------- thêm hóa đơn bán ------------------------
 EXEC sp_hoadon_create
-     @HoTenKH = N'khách mới 6',
+     @HoTenKH = N'khách mới 8',
      @SDTKH = N'0123456789',
      @DiaChiKH = N'HY',
      @TrangThai = 1,
-     @list_json_chitiethoadon = N'[{"maMP": "MP03", "sLBan": 4, "tongTien": 150000, "ghiChu": 1}, {"maMP": "MP04", "sLBan": 5, "tongTien": 250000, "ghiChu": 1}]';
+     @list_json_chitiethoadon = N'[{"maMP": "MP03", "sLBan": 4, "tongTien": 450000, "ghiChu": 1}, {"maMP": "MP04", "sLBan": 5, "tongTien": 250000, "ghiChu": 1}]';
 
 drop proc sp_hoadonban_create
 select * from HoaDonBan
 select * from ChiTietHoaDonBan
 
-GO
+
 create PROCEDURE [dbo].[sp_hoadonban_create]
 (	@HoTenKH              NVARCHAR(50), 
     @SDTKH                NVARCHAR(10),
     @DiaChiKH             NVARCHAR(250), 
     @TrangThai          BIT,
-    @list_json_chitiethoadon NVARCHAR(MAX)
+    @list_json_chitiethoadonban NVARCHAR(MAX)
 )
 AS
     BEGIN
@@ -1763,7 +1766,7 @@ AS
 		VALUES(@HoTenKH, @SDTKH, @DiaChiKH, @TrangThai, GETDATE(), NULL, NULL, NULL);
 
 				SET @MaHDB = (SELECT SCOPE_IDENTITY());
-                IF(@list_json_chitiethoadon IS NOT NULL) 
+                IF(@list_json_chitiethoadonban IS NOT NULL) 
 		BEGIN
 			 -- Insert data to temp table 
 		   SELECT
@@ -1774,36 +1777,31 @@ AS
 			  JSON_VALUE(p.value, '$.tongTien') as tongTien,
 			  JSON_VALUE(p.value, '$.ghiChu') AS ghiChu 
 			  INTO #Results 
-		   FROM OPENJSON(@list_json_chitiethoadon) AS p;
+		   FROM OPENJSON(@list_json_chitiethoadonban) AS p;
 
     -- Thực hiện thêm, sửa và xóa chi tiết hóa đơn dựa trên status
     -- Thêm chi tiết hóa đơn (Status = 1)
     INSERT INTO ChiTietHoaDonBan(MaHDB, MaMP, SLBan, TongTien)
     SELECT
-        @MaHDB,
-        #Results.maMP,
-        #Results.sLBan,
-        #Results.tongTien
-    FROM #Results
-    WHERE #Results.ghiChu = 1;
-
+        @MaHDB, #Results.maMP, #Results.sLBan, #Results.tongTien
+        FROM #Results WHERE #Results.ghiChu = 1;
 		-- Cập nhật tổng tiền vào hóa đơn
-        UPDATE HoaDonBan
+         UPDATE HoaDonBan
          SET TongTien = (SELECT SUM(TongTien) FROM ChiTietHoaDonBan WHERE MaHDB = @MaHDB)
          WHERE MaHDB = @MaHDB;
     END;
  END;
 
-
+exec sp_hoadonban_get_all
 -- PROC sửa thông tin hóa đơn tích hợp thêm sửa xóa chi tiết hóa đơn
 EXEC sp_hoadonban_update
-	@MaHDB = 55,
-     @HoTenKH = N'khách mới 6',
+	 @MaHDB = 55,
+     @HoTenKH = N'khách mới 66666666',
      @SDTKH = N'0123456789',
-     @DiaChiKH = N'HY',
+     @DiaChiKH = N'HY sửa mới',
      @TrangThai = 1,
-     @list_json_chitiethoadonban = N'[{"maMP": "MP06", "slBan": 5, "tongTien": 140000, "ghiChu": 1}, 
-									{"maCTHDB": "23", "slBan": 5, "tongTien": 250000, "ghiChu": 2},
+     @list_json_chitiethoadonban = N'[{"maMP": "MP06", "slBan": 5, "tongTien": 890000, "ghiChu": 1}, 
+									{"maCTHDB": "23", "slBan": 5, "tongTien": 10000, "ghiChu": 2},
 									{"maCTHDB": "24", "slBan": 10, "tongTien": 100000, "ghiChu": 2}]';
 
 select * from HoaDonBan
@@ -1871,7 +1869,9 @@ BEGIN
     END;
 END;
 
-EXEC sp_hoadonban_delete @MaHDB = 'HDB01';
+SELECT * FROM HoaDonBan
+exec sp_hoadonban_get_all
+EXEC sp_hoadonban_delete 54
 -- PROC xóa hóa đơn và chi tiết hóa đơn-------------------------
 CREATE PROCEDURE sp_hoadonban_delete
     @MaHDB Nvarchar(10)
@@ -1895,9 +1895,11 @@ END;
 SELECT * FROM HoaDonBan
 
 --------------- proc tìm kiếm hóa đơn bán---------------------
-select * from HoaDonBan
-exec sp_hoadonban_search 1, 10, 44, N''
-exec sp_hoadonban_search 1, 10, 0, N'Nguyễn'
+select * from TaiKhoan
+exec sp_hoadonban_get_all
+exec sp_hoadonban_search 1, 10, 55, N''
+exec sp_hoadonban_search 1, 10, 52, N''
+exec sp_hoadonban_search 1, 5, 0, N'Nguyễn'
 drop proc sp_hoadonban_search
 create PROCEDURE sp_hoadonban_search (@page_index  INT, 
                                       @page_size   INT,
@@ -1917,7 +1919,7 @@ AS
 									SELECT 
   				                        cthdb.*,
 										mp.MaLoaiMP,
-										mp.TenMP as Tenmp,
+										mp.TenMP,
 										mp.AnhDaiDien,
 										mp.GiaMoi,
 										mp.GiaCu
@@ -1949,7 +1951,7 @@ AS
 									SELECT 
   				                        cthdb.*,
 										mp.MaLoaiMP,
-										mp.TenMP AS TenMyPham,
+										mp.TenMP,
 										mp.AnhDaiDien,
 										mp.GiaMoi,
 										mp.GiaCu

@@ -22,6 +22,7 @@ namespace DTO
         public int MaCTHDB { get; set; }
         public int MaHDB { get; set; }
         public string MaMP { get; set; }
+        public string TenMP { get; set; }
         public int SLBan { get; set; }
         public decimal TongTien { get; set; }
         public int GhiChu { get; set; }
@@ -29,7 +30,6 @@ namespace DTO
     public class HoaDonBanModel
     {
         public int MaHDB { get; set; } 
-        public int IDKH { get; set; } 
         public string HoTenKH { get; set; }
         public string SDTKH { get; set; }
         public string DiaChiKH { get; set; }   

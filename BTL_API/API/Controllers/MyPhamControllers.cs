@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MyPhamControllers : ControllerBase
@@ -80,7 +80,7 @@ namespace API.Controllers
                 string ten_mp = "";
                 if (formData.Keys.Contains("ten_mp") && !string.IsNullOrEmpty(Convert.ToString(formData["ten_mp"]))) { ten_mp = Convert.ToString(formData["ten_mp"]); }
                 string mota_mp = "";
-                if (formData.Keys.Contains("mota_mp ") && !string.IsNullOrEmpty(Convert.ToString(formData["mota_mp "]))) { mota_mp = Convert.ToString(formData["mota_mp "]); }
+                if (formData.Keys.Contains("mota_mp") && !string.IsNullOrEmpty(Convert.ToString(formData["mota_mp "]))) { mota_mp = Convert.ToString(formData["mota_mp "]); }
                 long total = 0;
                 var data = _myPhamBusiness.Search(page, pageSize, out total, ten_mp, mota_mp);
                 return Ok(

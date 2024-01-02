@@ -10,9 +10,87 @@
     //ADMIN
 
     {
+      "UpstreamPathTemplate": "/api/User-Admin/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/User/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5260
+        }
+      ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/HoaDonBan-Admin/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/HoaDonBanControllers/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5260
+        }
+      ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/BaiViet-Admin/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/BaiVietControllers/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5260
+        }
+      ]
+    },
+
+    {
       "UpstreamPathTemplate": "/api/MyPham-Admin/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/MyPhamControllers/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5260
+        }
+      ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/NhanVien-Admin/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/NhanVienControllers/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5260
+        }
+      ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/NhaCC-Admin/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/NhaCCControllers/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5260
+        }
+      ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/KhachHang-Admin/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/KhachHangControllers/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -49,9 +127,6 @@
         }
       ]
     }
-
-
-
   ]
 
   
