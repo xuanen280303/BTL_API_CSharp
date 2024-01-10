@@ -75,7 +75,7 @@ namespace DAL.Interfaces
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoadon_update",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_hoadonban_update",
                 "@MaHDB", model.MaHDB,
                 "@HoTenKH", model.HoTenKH,
                 "@SDTKH", model.SDTKH,

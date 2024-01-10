@@ -76,9 +76,6 @@ namespace BLL
             return user;
         }
 
-
-
-
         public List<UserModel1> Search(int pageIndex, int pageSize, out long total, int maloaitk, string ten_tk, string email)
         {
             return _taikhoan.Search(pageIndex, pageSize, out total, maloaitk, ten_tk, email);

@@ -648,7 +648,7 @@ AS
         END;
     END;
 GO
-
+SELECT * FROM TaiKhoan
 -------------------------BÀI VIẾT--------------------
 ---------------------GET BY ID-------------------------
 ----Trả về inf của một bài viết dựa trên MaBV được truyền vào qua tham số @id
@@ -842,7 +842,6 @@ AS
 	END;
 GO
 
-
 -----------------------------XOÁ NHIỀU--------------------------------
 CREATE PROCEDURE sp_nhanvien_deleteS
 (
@@ -865,7 +864,6 @@ BEGIN
 	END;
 END;
 SELECT * FROM NhanVien
-
 
 exec [sp_nhanvien_search]  @page_index = 1 , @page_size = 1 , @ten_nv = N'Mai Thị Hoa' , @dia_chinv = N'Mỹ Hào, Hưng Yên'
 --------------------------TÌM KIẾM------------------------------
@@ -1391,7 +1389,7 @@ GO
 
 DROP PROCEDURE [dbo].[sp_mypham_searchlmp]
 
-exec [sp_mypham_searchlmp]  @page_index = 1 , @page_size = 1 , @maloai_mp = N'L01' 
+exec [sp_mypham_searchlmp]  @page_index = 1 , @page_size = 10 , @maloai_mp = N'L01' 
 -------------------------Tìm kiếm theo mã loại cho user----------------------------
 CREATE PROCEDURE [dbo].[sp_mypham_searchlmp] (@page_index  INT, 
                                        @page_size   INT,
@@ -1703,7 +1701,7 @@ GO
 SELECT * FROM HoaDonBan
 
 -----------------------------HOÁ ĐƠn bán----------------------------
-EXEC gethoadonbanbyid 55
+EXEC gethoadonbanbyid 56
 ---------------------GET BY ID------------------
 CREATE PROCEDURE gethoadonbanbyid(@id int)
 AS
@@ -1735,10 +1733,8 @@ Begin
         ) AS list_json_chitiethoadonban --Trả về json giúp dễ dàng tích hợp với các ứng dụng như website
         FROM HoaDonBan AS h
 End;
-SELECT * FROM MyPham
-SELECT * FROM HoaDonBan
-SELECT * FROM ChiTietHoaDonBan
-DROP PROCEDURE [dbo].[sp_hoadon_create]
+
+
 -------------- thêm hóa đơn bán ------------------------
 EXEC sp_hoadon_create
      @HoTenKH = N'khách mới 8',
@@ -1748,15 +1744,12 @@ EXEC sp_hoadon_create
      @list_json_chitiethoadon = N'[{"maMP": "MP03", "sLBan": 4, "tongTien": 450000, "ghiChu": 1}, {"maMP": "MP04", "sLBan": 5, "tongTien": 250000, "ghiChu": 1}]';
 
 drop proc sp_hoadonban_create
-select * from HoaDonBan
-select * from ChiTietHoaDonBan
-
-
+exec sp_hoadonban_get_all 
 create PROCEDURE [dbo].[sp_hoadonban_create]
 (	@HoTenKH              NVARCHAR(50), 
     @SDTKH                NVARCHAR(10),
     @DiaChiKH             NVARCHAR(250), 
-    @TrangThai          BIT,
+    @TrangThai            BIT,
     @list_json_chitiethoadonban NVARCHAR(MAX)
 )
 AS
@@ -1773,13 +1766,12 @@ AS
 			  JSON_VALUE(p.value, '$.maCTHDB') as maCTHDB,
 			  JSON_VALUE(p.value, '$.maHDB') as maHDB,
 			  JSON_VALUE(p.value, '$.maMP') as maMP,
-			  JSON_VALUE(p.value, '$.sLBan') as sLBan,
+			  JSON_VALUE(p.value, '$.slBan') as slBan,
 			  JSON_VALUE(p.value, '$.tongTien') as tongTien,
 			  JSON_VALUE(p.value, '$.ghiChu') AS ghiChu 
 			  INTO #Results 
 		   FROM OPENJSON(@list_json_chitiethoadonban) AS p;
 
-    -- Thực hiện thêm, sửa và xóa chi tiết hóa đơn dựa trên status
     -- Thêm chi tiết hóa đơn (Status = 1)
     INSERT INTO ChiTietHoaDonBan(MaHDB, MaMP, SLBan, TongTien)
     SELECT
@@ -1793,7 +1785,7 @@ AS
  END;
 
 exec sp_hoadonban_get_all
--- PROC sửa thông tin hóa đơn tích hợp thêm sửa xóa chi tiết hóa đơn
+-- PROC sửa thông tin hóa đơn tích hợp thêm sửa xóa chi tiết hóa đơn----------------
 EXEC sp_hoadonban_update
 	 @MaHDB = 55,
      @HoTenKH = N'khách mới 66666666',
@@ -1819,10 +1811,7 @@ CREATE PROCEDURE sp_hoadonban_update
 AS
 BEGIN
 	UPDATE HoaDonBan
-	SET HoTenKH  = @HoTenKH ,
-		SDTKH = @SDTKH,
-		DiaChiKH = @DiaChiKH,
-		TrangThai = @TrangThai
+	SET HoTenKH  = @HoTenKH , SDTKH = @SDTKH, DiaChiKH = @DiaChiKH, TrangThai = @TrangThai
 	WHERE MaHDB = @MaHDB;
     IF (@list_json_chitiethoadonban IS NOT NULL) 
     BEGIN
@@ -1845,24 +1834,17 @@ BEGIN
 
         -- Sửa chi tiết hóa đơn (Status = 2)
         UPDATE ChiTietHoaDonBan
-        SET
-            SLBan = #Results.SLBan,
-            TongTien = #Results.TongTien
+        SET SLBan = #Results.SLBan, TongTien = #Results.TongTien
         FROM #Results
-        WHERE ChiTietHoaDonBan.MaCTHDB = #Results.MaCTHDB
-            AND #Results.ghiChu = 2;
+        WHERE ChiTietHoaDonBan.MaCTHDB = #Results.MaCTHDB AND #Results.ghiChu = 2;
 
         -- Xóa chi tiết hóa đơn (Status = 3)
         DELETE FROM ChiTietHoaDonBan
         WHERE MaCTHDB IN (SELECT MaCTHDB FROM #Results WHERE #Results.ghiChu = 3);
 
-        -- Cập nhật thông tin hóa đơn
+        -- Cập nhật tổng tiền hóa đơn
         UPDATE HoaDonBan
-        SET
-            HoTenKH = @HoTenKH,
-            DiaChiKH = @DiaChiKH,
-            SDTKH = @SDTKH,
-            TrangThai = @TrangThai,
+        SET HoTenKH = @HoTenKH, DiaChiKH = @DiaChiKH, SDTKH = @SDTKH, TrangThai = @TrangThai,
             TongTien = (SELECT SUM(TongTien) FROM ChiTietHoaDonBan WHERE MaHDB = @MaHDB)
         WHERE MaHDB = @MaHDB;
         DROP TABLE #Results;

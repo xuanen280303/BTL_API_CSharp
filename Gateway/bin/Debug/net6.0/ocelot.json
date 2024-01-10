@@ -6,7 +6,6 @@
 
   "Routes": [
 
-
     //ADMIN
 
     {
@@ -103,6 +102,34 @@
 
     //USER
     {
+      //Đường dẫn sử dụng kết nối front, back
+      "UpstreamPathTemplate": "/api/User-User/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      //Đường dẫn nhận vào
+      "DownstreamPathTemplate": "/api/User/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 50001
+        }
+      ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/HoaDonBan-User/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/HoaDonBanControllers/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 50001
+        }
+      ]
+    },
+
+    {
       "UpstreamPathTemplate": "/api/LoaiMP-User/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/LoaiMPControllers/{everything}",
@@ -128,6 +155,4 @@
       ]
     }
   ]
-
-  
 }
